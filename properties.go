@@ -172,15 +172,6 @@ func joinNotDesirable() []string {
 	)
 }
 
-func PropertiesJoinPreferred(property string) bool {
-	for _, nd := range joinNotDesirable() {
-		if property == nd {
-			return false
-		}
-	}
-	return true
-}
-
 var imageTypeProperties = map[ImageType]string{
 	Image:            ImageProperty,
 	BoxArt:           BoxArtProperty,

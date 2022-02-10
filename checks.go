@@ -1,6 +1,9 @@
 package vangogh_data
 
-import "github.com/arelate/gog_atu"
+import (
+	"github.com/arelate/gog_atu"
+	"path"
+)
 
 func IsPagedProduct(pt ProductType) bool {
 	return containsProductType(PagedProducts(), pt)
@@ -84,4 +87,9 @@ func containsProductType(all []ProductType, pt ProductType) bool {
 		}
 	}
 	return false
+}
+
+func IsPathSupportingValidation(filePath string) bool {
+	ext := path.Ext(filePath)
+	return validatedExtensions[ext]
 }

@@ -58,7 +58,7 @@ var defaultProductUrls = map[ProductType]DefaultProductUrl{
 }
 
 func RemoteProductsUrl(pt ProductType) (ptUrl DefaultProductUrl, err error) {
-	if !ValidProductType(pt) {
+	if !IsValidProductType(pt) {
 		return nil, fmt.Errorf("vangogh_urls: no remote source for %s\n", pt)
 	}
 

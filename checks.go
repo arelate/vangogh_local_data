@@ -2,6 +2,8 @@ package vangogh_data
 
 import (
 	"github.com/arelate/gog_atu"
+	"github.com/boggydigital/kvas"
+	"os"
 	"path"
 )
 
@@ -39,8 +41,8 @@ func IsGetItemsSupported(pt ProductType) bool {
 }
 
 func IsImageTypeSupported(pt ProductType, it ImageType) bool {
-	if !ValidProductType(pt) ||
-		!ValidImageType(it) {
+	if !IsValidProductType(pt) ||
+		!IsValidImageType(it) {
 		return false
 	}
 
@@ -62,7 +64,7 @@ func IsMediaSupported(pt ProductType, mt gog_atu.Media) bool {
 	if !gog_atu.ValidMedia(mt) {
 		return false
 	}
-	if !ValidProductType(pt) {
+	if !IsValidProductType(pt) {
 		return false
 	}
 
@@ -92,4 +94,35 @@ func containsProductType(all []ProductType, pt ProductType) bool {
 func IsPathSupportingValidation(filePath string) bool {
 	ext := path.Ext(filePath)
 	return validatedExtensions[ext]
+}
+
+func IsSupportedProperty(pt ProductType, property string) bool {
+	for _, supportedProperty := range supportedProperties[pt] {
+		if property == supportedProperty {
+			return true
+		}
+	}
+	return false
+}
+
+func IsProductDownloaded(id string, rxa kvas.ReduxAssets) (bool, error) {
+	if err := rxa.IsSupported(SlugProperty); err != nil {
+		return false, err
+	}
+
+	slug, ok := rxa.GetFirstVal(SlugProperty, id)
+	if !ok {
+		return false, nil
+	}
+
+	pDir, err := AbsProductDownloadsDir(slug)
+	if err != nil {
+		return false, err
+	}
+
+	if _, err := os.Stat(pDir); os.IsNotExist(err) {
+		return false, nil
+	}
+
+	return true, nil
 }

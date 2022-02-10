@@ -69,7 +69,7 @@ func ParseProductType(productType string) ProductType {
 	return UnknownProductType
 }
 
-func ValidProductType(pt ProductType) bool {
+func IsValidProductType(pt ProductType) bool {
 	_, ok := productTypeStrings[pt]
 	return ok && pt != UnknownProductType
 }
@@ -212,4 +212,14 @@ func ProductTypesSupportingImageType(imageType ImageType) []ProductType {
 		}
 	}
 	return pts
+}
+
+func SupportedPropertiesOnly(pt ProductType, properties []string) []string {
+	supported := make([]string, 0, len(properties))
+	for _, prop := range properties {
+		if IsSupportedProperty(pt, prop) {
+			supported = append(supported, prop)
+		}
+	}
+	return supported
 }

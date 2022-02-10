@@ -56,3 +56,13 @@ func ProductTypeFromUrl(u *url.URL) ProductType {
 func MediaFromUrl(u *url.URL) gog_atu.Media {
 	return gog_atu.ParseMedia(ValueFromUrl(u, "media"))
 }
+
+func OperatingSystemsFromUrl(u *url.URL) []OperatingSystem {
+	osStrings := ValuesFromUrl(u, "operating-system")
+	return ParseManyOperatingSystems(osStrings)
+}
+
+func DownloadTypesFromUrl(u *url.URL) []DownloadType {
+	dtStrings := ValuesFromUrl(u, "download-type")
+	return ParseManyDownloadTypes(dtStrings)
+}

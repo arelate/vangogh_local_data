@@ -42,7 +42,7 @@ func ParseImageType(imageType string) ImageType {
 	return UnknownImageType
 }
 
-func ValidImageType(it ImageType) bool {
+func IsValidImageType(it ImageType) bool {
 	_, ok := imageTypeStrings[it]
 	return ok && it != UnknownImageType
 }
@@ -60,3 +60,12 @@ func AllImageTypes() []ImageType {
 
 //starting with empty collection and no image types require auth at the moment
 var imageTypeRequiresAuth []ImageType
+
+func ImageTypeFromProperty(property string) ImageType {
+	for it, prop := range imageTypeProperties {
+		if prop == property {
+			return it
+		}
+	}
+	return UnknownImageType
+}

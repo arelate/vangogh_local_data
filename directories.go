@@ -91,7 +91,7 @@ func AbsDirByImageId(imageId string) string {
 }
 
 func AbsLocalProductTypeDir(pt ProductType, mt gog_atu.Media) (string, error) {
-	if !ValidProductType(pt) {
+	if !IsValidProductType(pt) {
 		return "", fmt.Errorf("no local destination for product type %s", pt)
 	}
 	if !gog_atu.ValidMedia(mt) {

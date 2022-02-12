@@ -3,7 +3,9 @@ package vangogh_data
 import (
 	"github.com/arelate/gog_atu"
 	"net/url"
+	"strconv"
 	"strings"
+	"time"
 )
 
 func ValueFromUrl(u *url.URL, arg string) string {
@@ -65,4 +67,32 @@ func OperatingSystemsFromUrl(u *url.URL) []OperatingSystem {
 func DownloadTypesFromUrl(u *url.URL) []DownloadType {
 	dtStrings := ValuesFromUrl(u, "download-type")
 	return ParseManyDownloadTypes(dtStrings)
+}
+
+func IdSetFromUrl(u *url.URL) (idSet IdSet, err error) {
+
+	idSet = IdSetFromSlice(ValuesFromUrl(u, "id")...)
+
+	slugs := ValuesFromUrl(u, "slug")
+
+	slugIds, err := idSetFromSlugs(slugs, nil)
+	if err != nil {
+		return idSet, err
+	}
+	idSet.AddSet(slugIds)
+
+	return idSet, err
+}
+
+func SinceFromUrl(u *url.URL) (int64, error) {
+	str := ValueFromUrl(u, "since-hours-ago")
+	var sha int
+	var err error
+	if str != "" {
+		sha, err = strconv.Atoi(str)
+		if err != nil {
+			return 0, err
+		}
+	}
+	return time.Now().Unix() - int64(sha*60*60), err
 }

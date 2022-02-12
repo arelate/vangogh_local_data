@@ -7,48 +7,48 @@ import (
 )
 
 const (
-	IdProperty                 = "id"
-	TitleProperty              = "title"
-	DevelopersProperty         = "developers"
-	PublisherProperty          = "publisher"
-	ImageProperty              = "image"
-	BoxArtProperty             = "box-art"
-	BackgroundProperty         = "background"
-	GalaxyBackgroundProperty   = "galaxy-background"
-	IconProperty               = "icon"
-	LogoProperty               = "logo"
-	ScreenshotsProperty        = "screenshots"
-	RatingProperty             = "rating"
-	IncludesGamesProperty      = "includes-games"
-	IsIncludedByGamesProperty  = "is-included-by-games"
-	RequiresGamesProperty      = "requires-games"
-	IsRequiredByGamesProperty  = "is-required-by-games"
-	GenresProperty             = "genres"
-	FeaturesProperty           = "features"
-	SeriesProperty             = "series"
-	TagIdProperty              = "tag"
-	TagNameProperty            = "tag-name"
-	VideoIdProperty            = "video-id"
-	MissingVideoUrlProperty    = "missing-video-url"
-	OperatingSystemsProperty   = "os"
-	LanguageCodeProperty       = "lang-code"
-	LanguageNameProperty       = "lang-name"
-	NativeLanguageNameProperty = "native-lang-name"
-	SlugProperty               = "slug"
-	GOGReleaseDate             = "gog-release-date"
-	GOGOrderDate               = "gog-order-date"
-	GlobalReleaseDate          = "global-release-date"
-	TextProperties             = "text"
-	AllTextProperties          = "all-text"
-	ImageIdProperties          = "image-id"
-	TypesProperty              = "types"
-	LocalManualUrl             = "local-manual-url"
-	DownloadStatusError        = "download-status-error"
+	IdProperty                  = "id"
+	TitleProperty               = "title"
+	DevelopersProperty          = "developers"
+	PublisherProperty           = "publisher"
+	ImageProperty               = "image"
+	BoxArtProperty              = "box-art"
+	BackgroundProperty          = "background"
+	GalaxyBackgroundProperty    = "galaxy-background"
+	IconProperty                = "icon"
+	LogoProperty                = "logo"
+	ScreenshotsProperty         = "screenshots"
+	RatingProperty              = "rating"
+	IncludesGamesProperty       = "includes-games"
+	IsIncludedByGamesProperty   = "is-included-by-games"
+	RequiresGamesProperty       = "requires-games"
+	IsRequiredByGamesProperty   = "is-required-by-games"
+	GenresProperty              = "genres"
+	FeaturesProperty            = "features"
+	SeriesProperty              = "series"
+	TagIdProperty               = "tag"
+	TagNameProperty             = "tag-name"
+	VideoIdProperty             = "video-id"
+	MissingVideoUrlProperty     = "missing-video-url"
+	OperatingSystemsProperty    = "os"
+	LanguageCodeProperty        = "lang-code"
+	LanguageNameProperty        = "lang-name"
+	NativeLanguageNameProperty  = "native-lang-name"
+	SlugProperty                = "slug"
+	GOGReleaseDateProperty      = "gog-release-date"
+	GOGOrderDateProperty        = "gog-order-date"
+	GlobalReleaseDateProperty   = "global-release-date"
+	TextProperty                = "text"
+	AllTextProperty             = "all-text"
+	ImageIdProperty             = "image-id"
+	TypesProperty               = "types"
+	LocalManualUrlProperty      = "local-manual-url"
+	DownloadStatusErrorProperty = "download-status-error"
 )
 
 func AllProperties() []string {
 	all := []string{IdProperty}
-	return append(all, Extracted()...)
+	return append(all, ExtractedProperties()...)
 }
 
 func IsValidProperty(property string) bool {
@@ -60,7 +60,7 @@ func IsValidProperty(property string) bool {
 	return false
 }
 
-func Text() []string {
+func TextProperties() []string {
 	return []string{
 		TitleProperty,
 		DevelopersProperty,
@@ -68,8 +68,8 @@ func Text() []string {
 	}
 }
 
-func AllText() []string {
-	return append(Text(),
+func AllTextProperties() []string {
+	return append(TextProperties(),
 		IncludesGamesProperty,
 		IsIncludedByGamesProperty,
 		RequiresGamesProperty,
@@ -82,25 +82,25 @@ func AllText() []string {
 		OperatingSystemsProperty,
 		LanguageCodeProperty,
 		SlugProperty,
-		GlobalReleaseDate,
-		GOGOrderDate,
-		GOGReleaseDate,
+		GlobalReleaseDateProperty,
+		GOGOrderDateProperty,
+		GOGReleaseDateProperty,
 	)
 }
 
-func VideoId() []string {
+func VideoIdProperties() []string {
 	return []string{
 		VideoIdProperty,
 	}
 }
 
-func Computed() []string {
+func ComputedProperties() []string {
 	return []string{
 		TypesProperty,
 	}
 }
 
-func ImageId() []string {
+func ImageIdProperties() []string {
 	return []string{
 		ImageProperty,
 		BoxArtProperty,
@@ -112,14 +112,14 @@ func ImageId() []string {
 	}
 }
 
-func Extracted() []string {
-	all := AllText()
-	all = append(all, VideoId()...)
-	all = append(all, Computed()...)
-	return append(all, ImageId()...)
+func ExtractedProperties() []string {
+	all := AllTextProperties()
+	all = append(all, VideoIdProperties()...)
+	all = append(all, ComputedProperties()...)
+	return append(all, ImageIdProperties()...)
 }
 
-func Digestible() []string {
+func DigestibleProperties() []string {
 	return []string{
 		DevelopersProperty,
 		PublisherProperty,
@@ -133,10 +133,10 @@ func Digestible() []string {
 	}
 }
 
-func Searchable() []string {
-	searchable := make([]string, 0, len(Extracted())+3)
-	searchable = append(searchable, TextProperties, AllTextProperties, ImageIdProperties)
-	searchable = append(searchable, Extracted()...)
+func SearchableProperties() []string {
+	searchable := make([]string, 0, len(ExtractedProperties())+3)
+	searchable = append(searchable, TextProperty, AllTextProperty, ImageIdProperty)
+	searchable = append(searchable, ExtractedProperties()...)
 	return searchable
 }
 
@@ -157,14 +157,14 @@ var replacementProperties = map[string]string{
 }
 
 var collapsedExpanded = map[string][]string{
-	TextProperties:    Text(),
-	AllTextProperties: AllText(),
-	ImageIdProperties: ImageId(),
+	TextProperty:    TextProperties(),
+	AllTextProperty: AllTextProperties(),
+	ImageIdProperty: ImageIdProperties(),
 }
 
 func joinNotDesirable() []string {
 	return append(
-		ImageId(),
+		ImageIdProperties(),
 		IncludesGamesProperty,
 		IsIncludedByGamesProperty,
 		RequiresGamesProperty,
@@ -204,7 +204,7 @@ var supportedProperties = map[ProductType][]string{
 		VideoIdProperty,
 		OperatingSystemsProperty,
 		SlugProperty,
-		GOGReleaseDate,
+		GOGReleaseDateProperty,
 	},
 	ApiProductsV2: {
 		IdProperty,
@@ -228,15 +228,15 @@ var supportedProperties = map[ProductType][]string{
 		VideoIdProperty,
 		OperatingSystemsProperty,
 		LanguageCodeProperty,
-		GlobalReleaseDate,
-		GOGReleaseDate,
+		GlobalReleaseDateProperty,
+		GOGReleaseDateProperty,
 	},
 	Details: {
 		TitleProperty,
 		BackgroundProperty,
 		FeaturesProperty,
 		TagIdProperty,
-		GOGReleaseDate,
+		GOGReleaseDateProperty,
 	},
 	StoreProducts: {
 		IdProperty,
@@ -250,8 +250,8 @@ var supportedProperties = map[ProductType][]string{
 		VideoIdProperty,
 		OperatingSystemsProperty,
 		SlugProperty,
-		GlobalReleaseDate,
-		GOGReleaseDate,
+		GlobalReleaseDateProperty,
+		GOGReleaseDateProperty,
 	},
 }
 
@@ -306,9 +306,9 @@ func getPropertyValues(value interface{}, property string) []string {
 		return getImageIdSlice(value.(gog_atu.GalaxyBackgroundGetter).GetGalaxyBackground)
 	case GenresProperty:
 		return value.(gog_atu.GenresGetter).GetGenres()
-	case GlobalReleaseDate:
+	case GlobalReleaseDateProperty:
 		return dateSlice(value.(gog_atu.GlobalReleaseGetter).GetGlobalRelease)
-	case GOGReleaseDate:
+	case GOGReleaseDateProperty:
 		return dateSlice(value.(gog_atu.GOGReleaseGetter).GetGOGRelease)
 	case LanguageCodeProperty:
 		return value.(gog_atu.LanguageCodesGetter).GetLanguageCodes()

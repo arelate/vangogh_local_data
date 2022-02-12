@@ -1,6 +1,9 @@
 package vangogh_data
 
-import "github.com/arelate/gog_atu"
+import (
+	"github.com/arelate/gog_atu"
+	"github.com/boggydigital/kvas"
+)
 
 type ProductType int
 
@@ -222,4 +225,23 @@ func SupportedPropertiesOnly(pt ProductType, properties []string) []string {
 		}
 	}
 	return supported
+}
+
+func Cut(ids []string, pt ProductType, mt gog_atu.Media) error {
+	ptDir, err := AbsLocalProductTypeDir(pt, mt)
+	if err != nil {
+		return err
+	}
+	kvPt, err := kvas.ConnectLocal(ptDir, kvas.JsonExt)
+	if err != nil {
+		return err
+	}
+
+	for _, id := range ids {
+		if _, err := kvPt.Cut(id); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }

@@ -1,9 +1,9 @@
-module github.com/arelate/vangogh_data
+module github.com/arelate/vangogh_local_data
 
 go 1.17
 
 require (
-	github.com/arelate/gog_atu v0.1.1
+	github.com/arelate/gog_integration v0.1.4
 	github.com/boggydigital/gost v0.1.1
 	github.com/boggydigital/kvas v0.3.5
 	github.com/boggydigital/nod v0.1.10

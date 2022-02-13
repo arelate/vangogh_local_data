@@ -1,7 +1,7 @@
-package vangogh_data
+package vangogh_local_data
 
 import (
-	"github.com/arelate/gog_atu"
+	"github.com/arelate/gog_integration"
 	"github.com/boggydigital/kvas"
 	"time"
 )
@@ -285,55 +285,55 @@ func fillProperties(value interface{}, properties []string) map[string][]string 
 func getPropertyValues(value interface{}, property string) []string {
 	switch property {
 	case BackgroundProperty:
-		return getImageIdSlice(value.(gog_atu.BackgroundGetter).GetBackground)
+		return getImageIdSlice(value.(gog_integration.BackgroundGetter).GetBackground)
 	case BoxArtProperty:
-		return getImageIdSlice(value.(gog_atu.BoxArtGetter).GetBoxArt)
+		return getImageIdSlice(value.(gog_integration.BoxArtGetter).GetBoxArt)
 	case DevelopersProperty:
-		return value.(gog_atu.DevelopersGetter).GetDevelopers()
+		return value.(gog_integration.DevelopersGetter).GetDevelopers()
 	case FeaturesProperty:
-		return value.(gog_atu.FeaturesGetter).GetFeatures()
+		return value.(gog_integration.FeaturesGetter).GetFeatures()
 	case IconProperty:
-		return getImageIdSlice(value.(gog_atu.IconGetter).GetIcon)
+		return getImageIdSlice(value.(gog_integration.IconGetter).GetIcon)
 	case ImageProperty:
-		return getImageIdSlice(value.(gog_atu.ImageGetter).GetImage)
+		return getImageIdSlice(value.(gog_integration.ImageGetter).GetImage)
 	case IncludesGamesProperty:
-		return value.(gog_atu.IncludesGamesGetter).GetIncludesGames()
+		return value.(gog_integration.IncludesGamesGetter).GetIncludesGames()
 	case IsIncludedByGamesProperty:
-		return value.(gog_atu.IsIncludedInGamesGetter).GetIsIncludedInGames()
+		return value.(gog_integration.IsIncludedInGamesGetter).GetIsIncludedInGames()
 	case IsRequiredByGamesProperty:
-		return value.(gog_atu.IsRequiredByGamesGetter).GetIsRequiredByGames()
+		return value.(gog_integration.IsRequiredByGamesGetter).GetIsRequiredByGames()
 	case GalaxyBackgroundProperty:
-		return getImageIdSlice(value.(gog_atu.GalaxyBackgroundGetter).GetGalaxyBackground)
+		return getImageIdSlice(value.(gog_integration.GalaxyBackgroundGetter).GetGalaxyBackground)
 	case GenresProperty:
-		return value.(gog_atu.GenresGetter).GetGenres()
+		return value.(gog_integration.GenresGetter).GetGenres()
 	case GlobalReleaseDateProperty:
-		return dateSlice(value.(gog_atu.GlobalReleaseGetter).GetGlobalRelease)
+		return dateSlice(value.(gog_integration.GlobalReleaseGetter).GetGlobalRelease)
 	case GOGReleaseDateProperty:
-		return dateSlice(value.(gog_atu.GOGReleaseGetter).GetGOGRelease)
+		return dateSlice(value.(gog_integration.GOGReleaseGetter).GetGOGRelease)
 	case LanguageCodeProperty:
-		return value.(gog_atu.LanguageCodesGetter).GetLanguageCodes()
+		return value.(gog_integration.LanguageCodesGetter).GetLanguageCodes()
 	case LogoProperty:
-		return getImageIdSlice(value.(gog_atu.LogoGetter).GetLogo)
+		return getImageIdSlice(value.(gog_integration.LogoGetter).GetLogo)
 	case OperatingSystemsProperty:
-		return value.(gog_atu.OperatingSystemsGetter).GetOperatingSystems()
+		return value.(gog_integration.OperatingSystemsGetter).GetOperatingSystems()
 	case PublisherProperty:
-		return getSlice(value.(gog_atu.PublisherGetter).GetPublisher)
+		return getSlice(value.(gog_integration.PublisherGetter).GetPublisher)
 	case RatingProperty:
-		return getSlice(value.(gog_atu.RatingGetter).GetRating)
+		return getSlice(value.(gog_integration.RatingGetter).GetRating)
 	case RequiresGamesProperty:
-		return value.(gog_atu.RequiresGamesGetter).GetRequiresGames()
+		return value.(gog_integration.RequiresGamesGetter).GetRequiresGames()
 	case SeriesProperty:
-		return getSlice(value.(gog_atu.SeriesGetter).GetSeries)
+		return getSlice(value.(gog_integration.SeriesGetter).GetSeries)
 	case ScreenshotsProperty:
 		return getScreenshots(value)
 	case SlugProperty:
-		return getSlice(value.(gog_atu.SlugGetter).GetSlug)
+		return getSlice(value.(gog_integration.SlugGetter).GetSlug)
 	case TagIdProperty:
-		return value.(gog_atu.TagIdsGetter).GetTagIds()
+		return value.(gog_integration.TagIdsGetter).GetTagIds()
 	case TitleProperty:
-		return getSlice(value.(gog_atu.TitleGetter).GetTitle)
+		return getSlice(value.(gog_integration.TitleGetter).GetTitle)
 	case VideoIdProperty:
-		return value.(gog_atu.VideoIdsGetter).GetVideoIds()
+		return value.(gog_integration.VideoIdsGetter).GetVideoIds()
 	default:
 		return []string{}
 	}
@@ -366,18 +366,18 @@ func getImageIdSlice(stringer func() string) []string {
 	strings := getSlice(stringer)
 	imageIds := make([]string, 0, len(strings))
 	for _, str := range strings {
-		imageIds = append(imageIds, gog_atu.ImageId(str))
+		imageIds = append(imageIds, gog_integration.ImageId(str))
 	}
 	return imageIds
 }
 
 func getScreenshots(value interface{}) []string {
-	screenshotsGetter := value.(gog_atu.ScreenshotsGetter)
+	screenshotsGetter := value.(gog_integration.ScreenshotsGetter)
 	if screenshotsGetter != nil {
 		screenshots := screenshotsGetter.GetScreenshots()
 		imageIds := make([]string, 0, len(screenshots))
 		for _, scr := range screenshots {
-			imageIds = append(imageIds, gog_atu.ImageId(scr))
+			imageIds = append(imageIds, gog_integration.ImageId(scr))
 		}
 		return imageIds
 	}

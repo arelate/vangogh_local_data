@@ -1,7 +1,7 @@
-package vangogh_data
+package vangogh_local_data
 
 import (
-	"github.com/arelate/gog_atu"
+	"github.com/arelate/gog_integration"
 	"github.com/boggydigital/yt_urls"
 	"os"
 	"path"
@@ -65,12 +65,12 @@ func AbsSkipListPath() string {
 func AbsLocalImagePath(imageId string) string {
 	dir := AbsDirByImageId(imageId)
 
-	jpgPath := filepath.Join(dir, imageId+gog_atu.JpgExt)
+	jpgPath := filepath.Join(dir, imageId+gog_integration.JpgExt)
 
 	if _, err := os.Stat(jpgPath); err == nil {
 		return jpgPath
 	} else if os.IsNotExist(err) {
-		pngPath := filepath.Join(dir, imageId+gog_atu.PngExt)
+		pngPath := filepath.Join(dir, imageId+gog_integration.PngExt)
 		if _, err := os.Stat(pngPath); err == nil {
 			return pngPath
 		}

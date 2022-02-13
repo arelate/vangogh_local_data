@@ -1,19 +1,19 @@
-package vangogh_data
+package vangogh_local_data
 
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/arelate/gog_atu"
+	"github.com/arelate/gog_integration"
 	"github.com/boggydigital/kvas"
 )
 
 type ValueReader struct {
 	productType ProductType
-	mediaType   gog_atu.Media
+	mediaType   gog_integration.Media
 	valueSet    kvas.KeyValues
 }
 
-func NewReader(pt ProductType, mt gog_atu.Media) (*ValueReader, error) {
+func NewReader(pt ProductType, mt gog_integration.Media) (*ValueReader, error) {
 	dst, err := AbsLocalProductTypeDir(pt, mt)
 	if err != nil {
 		return nil, err
@@ -76,62 +76,62 @@ func (vr *ValueReader) IsModifiedAfter(id string, timestamp int64) bool {
 	return vr.valueSet.IsModifiedAfter(id, timestamp)
 }
 
-func (vr *ValueReader) StoreProduct(id string) (storeProduct *gog_atu.StoreProduct, err error) {
+func (vr *ValueReader) StoreProduct(id string) (storeProduct *gog_integration.StoreProduct, err error) {
 	err = vr.readValue(id, &storeProduct)
 	return storeProduct, err
 }
 
-func (vr *ValueReader) AccountProduct(id string) (accountProduct *gog_atu.AccountProduct, err error) {
+func (vr *ValueReader) AccountProduct(id string) (accountProduct *gog_integration.AccountProduct, err error) {
 	err = vr.readValue(id, &accountProduct)
 	return accountProduct, err
 }
 
-func (vr *ValueReader) WishlistProduct(id string) (wishlistProduct *gog_atu.StoreProduct, err error) {
+func (vr *ValueReader) WishlistProduct(id string) (wishlistProduct *gog_integration.StoreProduct, err error) {
 	err = vr.readValue(id, &wishlistProduct)
 	return wishlistProduct, err
 }
 
-func (vr *ValueReader) Details(id string) (details *gog_atu.Details, err error) {
+func (vr *ValueReader) Details(id string) (details *gog_integration.Details, err error) {
 	err = vr.readValue(id, &details)
 	return details, err
 }
 
-func (vr *ValueReader) ApiProductV1(id string) (apiProductV1 *gog_atu.ApiProductV1, err error) {
+func (vr *ValueReader) ApiProductV1(id string) (apiProductV1 *gog_integration.ApiProductV1, err error) {
 	err = vr.readValue(id, &apiProductV1)
 	return apiProductV1, err
 }
 
-func (vr *ValueReader) ApiProductV2(id string) (apiProductV2 *gog_atu.ApiProductV2, err error) {
+func (vr *ValueReader) ApiProductV2(id string) (apiProductV2 *gog_integration.ApiProductV2, err error) {
 	err = vr.readValue(id, &apiProductV2)
 	return apiProductV2, err
 }
 
-func (vr *ValueReader) StorePage(page string) (storePage *gog_atu.StorePage, err error) {
+func (vr *ValueReader) StorePage(page string) (storePage *gog_integration.StorePage, err error) {
 	err = vr.readValue(page, &storePage)
 	return storePage, err
 }
 
-func (vr *ValueReader) AccountPage(page string) (accountPage *gog_atu.AccountPage, err error) {
+func (vr *ValueReader) AccountPage(page string) (accountPage *gog_integration.AccountPage, err error) {
 	err = vr.readValue(page, &accountPage)
 	return accountPage, err
 }
 
-func (vr *ValueReader) WishlistPage(page string) (wishlistPage *gog_atu.WishlistPage, err error) {
+func (vr *ValueReader) WishlistPage(page string) (wishlistPage *gog_integration.WishlistPage, err error) {
 	err = vr.readValue(page, &wishlistPage)
 	return wishlistPage, err
 }
 
-func (vr *ValueReader) Licences(id string) (licences *gog_atu.Licences, err error) {
+func (vr *ValueReader) Licences(id string) (licences *gog_integration.Licences, err error) {
 	err = vr.readValue(id, &licences)
 	return licences, err
 }
 
-func (vr *ValueReader) OrderPage(page string) (orderPage *gog_atu.OrderPage, err error) {
+func (vr *ValueReader) OrderPage(page string) (orderPage *gog_integration.OrderPage, err error) {
 	err = vr.readValue(page, &orderPage)
 	return orderPage, err
 }
 
-func (vr *ValueReader) Order(id string) (order *gog_atu.Order, err error) {
+func (vr *ValueReader) Order(id string) (order *gog_integration.Order, err error) {
 	err = vr.readValue(id, &order)
 	return order, err
 }
@@ -171,7 +171,7 @@ func (vr *ValueReader) ProductType() ProductType {
 	return vr.productType
 }
 
-func (vr *ValueReader) ProductsGetter(page string) (productsGetter gog_atu.ProductsGetter, err error) {
+func (vr *ValueReader) ProductsGetter(page string) (productsGetter gog_integration.ProductsGetter, err error) {
 	switch vr.productType {
 	case StorePage:
 		productsGetter, err = vr.StorePage(page)
@@ -189,7 +189,7 @@ func (vr *ValueReader) ProductsGetter(page string) (productsGetter gog_atu.Produ
 	return productsGetter, err
 }
 
-func (vr *ValueReader) CopyToType(id string, toPt ProductType, toMt gog_atu.Media) error {
+func (vr *ValueReader) CopyToType(id string, toPt ProductType, toMt gog_integration.Media) error {
 
 	if !IsCopySupported(vr.productType, toPt) {
 		return fmt.Errorf("vangogh_values: copy type from %s to %s is unsupported", vr.productType, toPt)

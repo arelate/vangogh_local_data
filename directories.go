@@ -1,8 +1,8 @@
-package vangogh_data
+package vangogh_local_data
 
 import (
 	"fmt"
-	"github.com/arelate/gog_atu"
+	"github.com/arelate/gog_integration"
 	"path"
 	"path/filepath"
 	"strings"
@@ -90,11 +90,11 @@ func AbsDirByImageId(imageId string) string {
 	return filepath.Join(absImagesDir(), imageId[0:2])
 }
 
-func AbsLocalProductTypeDir(pt ProductType, mt gog_atu.Media) (string, error) {
+func AbsLocalProductTypeDir(pt ProductType, mt gog_integration.Media) (string, error) {
 	if !IsValidProductType(pt) {
 		return "", fmt.Errorf("no local destination for product type %s", pt)
 	}
-	if !gog_atu.ValidMedia(mt) {
+	if !gog_integration.IsValidMedia(mt) {
 		return "", fmt.Errorf("no local destination for media %s", pt)
 	}
 
@@ -103,7 +103,7 @@ func AbsLocalProductTypeDir(pt ProductType, mt gog_atu.Media) (string, error) {
 		pt == LicenceProducts ||
 		pt == Orders ||
 		pt == OrderPage {
-		mt = gog_atu.Game
+		mt = gog_integration.Game
 	}
 
 	return filepath.Join(AbsMetadataDir(), pt.String(), mt.String()), nil

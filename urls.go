@@ -1,8 +1,8 @@
-package vangogh_data
+package vangogh_local_data
 
 import (
 	"fmt"
-	"github.com/arelate/gog_atu"
+	"github.com/arelate/gog_integration"
 	"net/url"
 )
 
@@ -17,7 +17,7 @@ func ImagePropertyUrls(imageIds []string, it ImageType) ([]*url.URL, error) {
 		fallthrough
 	case Icon:
 		// transparency doesn't look right in .jpg variants
-		ext = gog_atu.PngExt
+		ext = gog_integration.PngExt
 	case BoxArt:
 		fallthrough
 	case Image:
@@ -27,14 +27,14 @@ func ImagePropertyUrls(imageIds []string, it ImageType) ([]*url.URL, error) {
 	case GalaxyBackground:
 		fallthrough
 	case Screenshots:
-		ext = gog_atu.JpgExt
+		ext = gog_integration.JpgExt
 	}
 
 	for _, imageId := range imageIds {
 		if imageId == "" {
 			continue
 		}
-		imageUrl, err := gog_atu.ImageUrl(imageId, ext)
+		imageUrl, err := gog_integration.ImageUrl(imageId, ext)
 		if err != nil {
 			return urls, err
 		}
@@ -44,17 +44,17 @@ func ImagePropertyUrls(imageIds []string, it ImageType) ([]*url.URL, error) {
 	return urls, nil
 }
 
-type DefaultProductUrl func(string, gog_atu.Media) *url.URL
+type DefaultProductUrl func(string, gog_integration.Media) *url.URL
 
 var defaultProductUrls = map[ProductType]DefaultProductUrl{
-	StorePage:     gog_atu.DefaultStorePageUrl,
-	AccountPage:   gog_atu.DefaultAccountPageUrl,
-	WishlistPage:  gog_atu.DefaultWishlistPageUrl,
-	Details:       gog_atu.DetailsUrl,
-	ApiProductsV1: gog_atu.ApiProductV1Url,
-	ApiProductsV2: gog_atu.ApiProductV2Url,
-	Licences:      gog_atu.DefaultLicencesUrl,
-	OrderPage:     gog_atu.DefaultOrdersPageUrl,
+	StorePage:     gog_integration.DefaultStorePageUrl,
+	AccountPage:   gog_integration.DefaultAccountPageUrl,
+	WishlistPage:  gog_integration.DefaultWishlistPageUrl,
+	Details:       gog_integration.DetailsUrl,
+	ApiProductsV1: gog_integration.ApiProductV1Url,
+	ApiProductsV2: gog_integration.ApiProductV2Url,
+	Licences:      gog_integration.DefaultLicencesUrl,
+	OrderPage:     gog_integration.DefaultOrdersPageUrl,
 }
 
 func RemoteProductsUrl(pt ProductType) (ptUrl DefaultProductUrl, err error) {

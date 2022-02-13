@@ -1,7 +1,7 @@
-package vangogh_data
+package vangogh_local_data
 
 import (
-	"github.com/arelate/gog_atu"
+	"github.com/arelate/gog_integration"
 	"net/url"
 	"strconv"
 	"strings"
@@ -55,8 +55,8 @@ func ProductTypeFromUrl(u *url.URL) ProductType {
 	return ParseProductType(ValueFromUrl(u, "product-type"))
 }
 
-func MediaFromUrl(u *url.URL) gog_atu.Media {
-	return gog_atu.ParseMedia(ValueFromUrl(u, "media"))
+func MediaFromUrl(u *url.URL) gog_integration.Media {
+	return gog_integration.ParseMedia(ValueFromUrl(u, "media"))
 }
 
 func OperatingSystemsFromUrl(u *url.URL) []OperatingSystem {

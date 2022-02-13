@@ -1,8 +1,8 @@
-package vangogh_data
+package vangogh_local_data
 
 import (
 	"fmt"
-	"github.com/arelate/gog_atu"
+	"github.com/arelate/gog_integration"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
 	"log"
@@ -32,7 +32,7 @@ type Download struct {
 
 func convertManualDownload(
 	productTitle string,
-	mdl *gog_atu.ManualDownload,
+	mdl *gog_integration.ManualDownload,
 	dt DownloadType,
 	os OperatingSystem,
 	langCode string) Download {
@@ -102,18 +102,18 @@ func (dl *Download) DirSuffix() string {
 
 type DownloadsList []Download
 
-func FromDetails(det *gog_atu.Details, mt gog_atu.Media, rxa kvas.ReduxAssets) (DownloadsList, error) {
+func FromDetails(det *gog_integration.Details, mt gog_integration.Media, rxa kvas.ReduxAssets) (DownloadsList, error) {
 	switch mt {
-	case gog_atu.Game:
+	case gog_integration.Game:
 		return fromGameDetails(det, rxa)
-	case gog_atu.Movie:
+	case gog_integration.Movie:
 		return fromMovieDetails(det)
 	default:
 		return nil, fmt.Errorf("vangogh_downloads: unsupported media %s", mt)
 	}
 }
 
-func fromGameDetails(det *gog_atu.Details, rxa kvas.ReduxAssets) (DownloadsList, error) {
+func fromGameDetails(det *gog_integration.Details, rxa kvas.ReduxAssets) (DownloadsList, error) {
 	dlList := make(DownloadsList, 0)
 
 	if det == nil {
@@ -137,7 +137,7 @@ func fromGameDetails(det *gog_atu.Details, rxa kvas.ReduxAssets) (DownloadsList,
 	return dlList, nil
 }
 
-func convertGameDetails(det *gog_atu.Details, rxa kvas.ReduxAssets, dt DownloadType) (DownloadsList, error) {
+func convertGameDetails(det *gog_integration.Details, rxa kvas.ReduxAssets, dt DownloadType) (DownloadsList, error) {
 
 	dlList := make(DownloadsList, 0)
 
@@ -182,7 +182,7 @@ func convertGameDetails(det *gog_atu.Details, rxa kvas.ReduxAssets, dt DownloadT
 	return dlList, nil
 }
 
-func fromMovieDetails(det *gog_atu.Details) (DownloadsList, error) {
+func fromMovieDetails(det *gog_integration.Details) (DownloadsList, error) {
 	dlList := make(DownloadsList, 0)
 
 	if det == nil {
@@ -274,7 +274,7 @@ type DownloadsListProcessor interface {
 
 func MapDownloads(
 	idSet IdSet,
-	mt gog_atu.Media,
+	mt gog_integration.Media,
 	rxa kvas.ReduxAssets,
 	operatingSystems []OperatingSystem,
 	downloadTypes []DownloadType,

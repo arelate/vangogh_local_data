@@ -1,7 +1,7 @@
-package vangogh_data
+package vangogh_local_data
 
 import (
-	"github.com/arelate/gog_atu"
+	"github.com/arelate/gog_integration"
 	"github.com/boggydigital/kvas"
 )
 
@@ -172,8 +172,8 @@ var supportsGetItems = []ProductType{
 
 // unsupported is used instead of supported in similar cases to
 // avoid all, but one repetitive data
-var unsupportedMedia = map[ProductType][]gog_atu.Media{
-	ApiProductsV2: {gog_atu.Movie},
+var unsupportedMedia = map[ProductType][]gog_integration.Media{
+	ApiProductsV2: {gog_integration.Movie},
 }
 
 var supportsCopyFromTo = map[ProductType]ProductType{
@@ -227,7 +227,7 @@ func SupportedPropertiesOnly(pt ProductType, properties []string) []string {
 	return supported
 }
 
-func Cut(ids []string, pt ProductType, mt gog_atu.Media) error {
+func Cut(ids []string, pt ProductType, mt gog_integration.Media) error {
 	ptDir, err := AbsLocalProductTypeDir(pt, mt)
 	if err != nil {
 		return err

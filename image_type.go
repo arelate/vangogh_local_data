@@ -1,4 +1,4 @@
-package vangogh_data
+package vangogh_local_data
 
 type ImageType int
 

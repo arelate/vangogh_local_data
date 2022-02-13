@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/arelate/gog_integration v0.1.4
 	github.com/boggydigital/gost v0.1.1
-	github.com/boggydigital/kvas v0.3.5
+	github.com/boggydigital/kvas v0.3.6
 	github.com/boggydigital/nod v0.1.10
 	github.com/boggydigital/yt_urls v0.1.7
 )

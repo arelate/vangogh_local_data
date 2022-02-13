@@ -140,13 +140,17 @@ func SearchableProperties() []string {
 	return searchable
 }
 
-var fullMatch = map[string]bool{
+var atomicProperties = kvas.ReduxAtomics{
 	LanguageCodeProperty:       true,
 	NativeLanguageNameProperty: true,
 	SlugProperty:               true,
 }
 
-var replacementProperties = map[string]string{
+func IsPropertyAtomic(property string) bool {
+	return atomicProperties.IsAtomic(property)
+}
+
+var transitiveProperties = kvas.ReduxTransitives{
 	IncludesGamesProperty:     TitleProperty,
 	IsIncludedByGamesProperty: TitleProperty,
 	RequiresGamesProperty:     TitleProperty,
@@ -156,10 +160,26 @@ var replacementProperties = map[string]string{
 	VideoIdProperty:           MissingVideoUrlProperty,
 }
 
-var collapsedExpanded = map[string][]string{
+func IsPropertyTransitive(property string) bool {
+	return transitiveProperties.IsTransitive(property)
+}
+
+var aggregateProperties = kvas.ReduxAggregates{
 	TextProperty:    TextProperties(),
 	AllTextProperty: AllTextProperties(),
 	ImageIdProperty: ImageIdProperties(),
+}
+
+func IsPropertyAggregate(property string) bool {
+	return aggregateProperties.IsAggregate(property)
+}
+
+func DetailAggregateProperty(property string) []string {
+	return aggregateProperties.Detail(property)
+}
+
+func DetailAllAggregateProperties(properties ...string) map[string]bool {
+	return aggregateProperties.DetailAll(properties...)
 }
 
 func joinNotDesirable() []string {
@@ -258,9 +278,9 @@ var supportedProperties = map[ProductType][]string{
 func ConnectReduxAssets(properties ...string) (kvas.ReduxAssets, error) {
 	return kvas.ConnectReduxAssets(AbsExtractsDir(),
 		&kvas.ReduxFabric{
-			Aggregates:  collapsedExpanded,
-			Transitives: replacementProperties,
-			Atomics:     fullMatch,
+			Aggregates:  aggregateProperties,
+			Transitives: transitiveProperties,
+			Atomics:     atomicProperties,
 		},
 		properties...)
 }

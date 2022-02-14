@@ -34,10 +34,10 @@ func AbsLocalChecksumPath(p string) string {
 		return ""
 	}
 	dir, filename := path.Split(p)
-	if strings.HasPrefix(dir, absDownloadsDir()) {
-		dir = strings.Replace(dir, absDownloadsDir(), absChecksumsDir(), 1)
+	if strings.HasPrefix(dir, AbsDownloadsDir()) {
+		dir = strings.Replace(dir, AbsDownloadsDir(), AbsChecksumsDir(), 1)
 	} else {
-		dir = filepath.Join(absChecksumsDir(), dir)
+		dir = filepath.Join(AbsChecksumsDir(), dir)
 	}
 	return filepath.Join(dir, filename+xmlExt)
 }

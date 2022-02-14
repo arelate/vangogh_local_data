@@ -48,7 +48,7 @@ const (
 
 func AllProperties() []string {
 	all := []string{IdProperty}
-	return append(all, ExtractedProperties()...)
+	return append(all, ReduxProperties()...)
 }
 
 func IsValidProperty(property string) bool {
@@ -112,7 +112,7 @@ func ImageIdProperties() []string {
 	}
 }
 
-func ExtractedProperties() []string {
+func ReduxProperties() []string {
 	all := AllTextProperties()
 	all = append(all, VideoIdProperties()...)
 	all = append(all, ComputedProperties()...)
@@ -134,9 +134,9 @@ func DigestibleProperties() []string {
 }
 
 func SearchableProperties() []string {
-	searchable := make([]string, 0, len(ExtractedProperties())+3)
+	searchable := make([]string, 0, len(ReduxProperties())+3)
 	searchable = append(searchable, TextProperty, AllTextProperty, ImageIdProperty)
-	searchable = append(searchable, ExtractedProperties()...)
+	searchable = append(searchable, ReduxProperties()...)
 	return searchable
 }
 
@@ -276,7 +276,7 @@ var supportedProperties = map[ProductType][]string{
 }
 
 func ConnectReduxAssets(properties ...string) (kvas.ReduxAssets, error) {
-	return kvas.ConnectReduxAssets(AbsExtractsDir(),
+	return kvas.ConnectReduxAssets(AbsReduxDir(),
 		&kvas.ReduxFabric{
 			Aggregates:  aggregateProperties,
 			Transitives: transitiveProperties,

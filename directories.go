@@ -17,7 +17,7 @@ const (
 	extrasDir     = "extras"
 	dlcDir        = "dlc"
 	checksumsDir  = "checksums"
-	extractsDir   = "_extracts"
+	reduxDir      = "_redux"
 )
 
 var rootDir = ""
@@ -42,15 +42,15 @@ func AbsMetadataDir() string {
 	return filepath.Join(rootDir, metadataDir)
 }
 
-func AbsExtractsDir() string {
-	return filepath.Join(AbsMetadataDir(), extractsDir)
+func AbsReduxDir() string {
+	return filepath.Join(AbsMetadataDir(), reduxDir)
 }
 
 func AbsRecycleBinDir() string {
 	return filepath.Join(rootDir, recycleBinDir)
 }
 
-func absDownloadsDir() string {
+func AbsDownloadsDir() string {
 	return filepath.Join(rootDir, downloadsDir)
 }
 
@@ -62,7 +62,7 @@ func RelDLCDir() string {
 	return dlcDir
 }
 
-func absChecksumsDir() string {
+func AbsChecksumsDir() string {
 	return filepath.Join(rootDir, checksumsDir)
 }
 
@@ -129,5 +129,5 @@ func AbsProductDownloadsDir(slug string) (string, error) {
 }
 
 func AbsDownloadDirFromRel(p string) string {
-	return filepath.Join(absDownloadsDir(), p)
+	return filepath.Join(AbsDownloadsDir(), p)
 }

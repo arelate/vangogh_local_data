@@ -88,13 +88,11 @@ func SinceFromUrl(u *url.URL) (int64, error) {
 	str := ValueFromUrl(u, "since-hours-ago")
 	var sha int
 	var err error
-	var since int64
 	if str != "" {
 		sha, err = strconv.Atoi(str)
 		if err != nil {
 			return 0, err
 		}
-		since = time.Now().Unix() - int64(sha*60*60)
 	}
-	return since, err
+	return time.Now().Unix() - int64(sha*60*60), err
 }

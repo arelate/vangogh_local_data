@@ -68,10 +68,10 @@ func (is IdSet) All() []string {
 }
 
 func (is IdSet) Sort(rxa kvas.ReduxAssets, property string, desc bool) []string {
-	for _, ips := range is {
-		ips.property, _ = rxa.GetFirstVal(property, ips.id)
+	for i := 0; i < len(is); i++ {
+		is[i].property, _ = rxa.GetFirstVal(property, is[i].id)
 		if property != TitleProperty {
-			ips.title, _ = rxa.GetFirstVal(TitleProperty, ips.id)
+			is[i].title, _ = rxa.GetFirstVal(TitleProperty, is[i].id)
 		}
 	}
 
@@ -94,8 +94,8 @@ func (is IdSet) Add(keys ...string) {
 func (is IdSet) Remove(keys ...string) {
 	for _, id := range keys {
 		index := -1
-		for i, ipt := range is {
-			if ipt.id == id {
+		for i := 0; i < len(is); i++ {
+			if is[i].id == id {
 				index = i
 				break
 			}

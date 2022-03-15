@@ -13,49 +13,130 @@ const (
 	DefaultDesc = false
 )
 
-type IdSet struct {
-	gost.SortStrSet
+type idPropertyTitle struct {
+	id       string
+	property string
+	title    string
+}
+
+type IdSet []idPropertyTitle
+
+func (is IdSet) Len() int {
+	return len(is)
+}
+
+func (is IdSet) Swap(i, j int) {
+	is[i], is[j] = is[j], is[i]
+}
+
+func (is IdSet) Less(i, j int) bool {
+	if is[i].property == is[j].property {
+		return is[i].title < is[j].title
+	} else {
+		return is[i].property < is[j].property
+	}
 }
 
 func NewIdSet() IdSet {
-	return IdSet{SortStrSet: gost.NewSortStrSet()}
+	return make(IdSet, 0)
 }
 
-func IdSetFromSlice(ids ...string) IdSet {
-	idSet := NewIdSet()
-	idSet.Add(ids...)
-	return idSet
-}
-
-func IdSetFromMap(ids map[string]bool) IdSet {
-	idSet := NewIdSet()
-	for id := range ids {
-		idSet.Add(id)
+func IdSetFromSlice(keys ...string) IdSet {
+	idSet := make(IdSet, 0, len(keys))
+	for _, id := range keys {
+		idSet = append(idSet, idPropertyTitle{id: id})
 	}
 	return idSet
+}
+
+func IdSetFromMap(keys map[string]bool) IdSet {
+	idSet := make(IdSet, 0, len(keys))
+	for id := range keys {
+		idSet = append(idSet, idPropertyTitle{id: id})
+	}
+	return idSet
+}
+
+func (is IdSet) All() []string {
+	keys := make([]string, 0, len(is))
+
+	for i := 0; i < len(is); i++ {
+		keys = append(keys, is[i].id)
+	}
+
+	return keys
 }
 
 func (is IdSet) Sort(rxa kvas.ReduxAssets, property string, desc bool) []string {
-	ips := make(map[string]string, 0)
-
-	for _, id := range is.All() {
-		prop, _ := rxa.GetFirstVal(property, id)
-		ips[id] = prop
+	for _, ips := range is {
+		ips.property, _ = rxa.GetFirstVal(property, ips.id)
+		if property != TitleProperty {
+			ips.title, _ = rxa.GetFirstVal(TitleProperty, ips.id)
+		}
 	}
 
-	return is.SortByStrVal(ips, desc)
+	var sortInterface sort.Interface = is
+	if desc {
+		sortInterface = sort.Reverse(sortInterface)
+	}
+
+	sort.Sort(sortInterface)
+
+	return is.All()
+}
+
+func (is IdSet) Add(keys ...string) {
+	for _, id := range keys {
+		is = append(is, idPropertyTitle{id: id})
+	}
+}
+
+func (is IdSet) Remove(keys ...string) {
+	for _, id := range keys {
+		index := -1
+		for i, ipt := range is {
+			if ipt.id == id {
+				index = i
+				break
+			}
+		}
+		if index >= 0 {
+			is[index] = is[len(is)-1]
+			is = is[:len(is)-1]
+		}
+	}
 }
 
 func (is IdSet) AddSet(another IdSet) {
-	for _, id := range another.All() {
-		is.Add(id)
+	for _, ipt := range another {
+		is = append(is, ipt)
 	}
 }
 
 func (is IdSet) AddMap(another map[string]bool) {
 	for id := range another {
-		is.Add(id)
+		is = append(is, idPropertyTitle{id: id})
 	}
+}
+
+func (is IdSet) Has(id string) bool {
+	for _, ipt := range is {
+		if ipt.id == id {
+			return true
+		}
+	}
+	return false
+}
+
+func (is IdSet) Except(other IdSet) []string {
+	result := make([]string, 0, len(is))
+	for _, ipt := range is {
+		if other.Has(ipt.id) {
+			continue
+		}
+		result = append(result, ipt.id)
+	}
+	return result
 }
 
 func idSetFromSlugs(slugs []string, rxa kvas.ReduxAssets) (slugId IdSet, err error) {
@@ -84,7 +165,7 @@ func idSetFromSlugs(slugs []string, rxa kvas.ReduxAssets) (slugId IdSet, err err
 }
 
 func PropertyListsFromIdSet(
-	ids IdSet,
+	idSet IdSet,
 	propertyFilter map[string][]string,
 	properties []string,
 	rxa kvas.ReduxAssets) (map[string][]string, error) {
@@ -102,8 +183,8 @@ func PropertyListsFromIdSet(
 
 	itps := make(map[string][]string)
 
-	for _, id := range ids.All() {
-		itp, err := propertyListFromId(id, propertyFilter, propSet.All(), rxa)
+	for _, ipt := range idSet {
+		itp, err := propertyListFromId(ipt.id, propertyFilter, propSet.All(), rxa)
 		if err != nil {
 			return itps, err
 		}

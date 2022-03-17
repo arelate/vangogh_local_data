@@ -273,7 +273,7 @@ type DownloadsListProcessor interface {
 }
 
 func MapDownloads(
-	idSet IdSet,
+	idSet *IdSet,
 	mt gog_integration.Media,
 	rxa kvas.ReduxAssets,
 	operatingSystems []OperatingSystem,

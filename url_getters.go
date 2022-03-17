@@ -69,7 +69,7 @@ func DownloadTypesFromUrl(u *url.URL) []DownloadType {
 	return ParseManyDownloadTypes(dtStrings)
 }
 
-func IdSetFromUrl(u *url.URL) (idSet IdSet, err error) {
+func IdSetFromUrl(u *url.URL) (idSet *IdSet, err error) {
 
 	idSet = IdSetFromSlice(ValuesFromUrl(u, "id")...)
 

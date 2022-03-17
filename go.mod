@@ -1,6 +1,6 @@
 module github.com/arelate/vangogh_local_data
 
-go 1.17
+go 1.18
 
 require (
 	github.com/arelate/gog_integration v0.1.4

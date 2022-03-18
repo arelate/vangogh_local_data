@@ -39,7 +39,11 @@ func (is *sortableIdSet) Less(i, j int) bool {
 	}
 }
 
-func SortIds(ids []string, rxa kvas.ReduxAssets, property string, desc bool) []string {
+func SortIds(ids []string, rxa kvas.ReduxAssets, property string, desc bool) ([]string, error) {
+
+	if err := rxa.IsSupported(property, TitleProperty); err != nil {
+		return nil, err
+	}
 
 	sis := &sortableIdSet{
 		ipt: make([]idPropertyTitle, 0, len(ids)),
@@ -66,7 +70,7 @@ func SortIds(ids []string, rxa kvas.ReduxAssets, property string, desc bool) []s
 		sorted = append(sorted, ipt.id)
 	}
 
-	return sorted
+	return sorted, nil
 }
 
 func idSetFromSlugs(slugs []string, rxa kvas.ReduxAssets) (map[string]bool, error) {

@@ -227,7 +227,7 @@ func SupportedPropertiesOnly(pt ProductType, properties []string) []string {
 	return supported
 }
 
-func Cut(ids []string, pt ProductType, mt gog_integration.Media) error {
+func Cut(idSet map[string]bool, pt ProductType, mt gog_integration.Media) error {
 	ptDir, err := AbsLocalProductTypeDir(pt, mt)
 	if err != nil {
 		return err
@@ -237,7 +237,7 @@ func Cut(ids []string, pt ProductType, mt gog_integration.Media) error {
 		return err
 	}
 
-	for _, id := range ids {
+	for id := range idSet {
 		if _, err := kvPt.Cut(id); err != nil {
 			return err
 		}

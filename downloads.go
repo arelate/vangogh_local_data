@@ -273,7 +273,7 @@ type DownloadsListProcessor interface {
 }
 
 func MapDownloads(
-	idSet *IdSet,
+	idSet map[string]bool,
 	mt gog_integration.Media,
 	rxa kvas.ReduxAssets,
 	operatingSystems []OperatingSystem,
@@ -297,9 +297,9 @@ func MapDownloads(
 		return err
 	}
 
-	tpw.TotalInt(idSet.Len())
+	tpw.TotalInt(len(idSet))
 
-	for _, id := range idSet.All() {
+	for id := range idSet {
 
 		detSlug, ok := rxa.GetFirstVal(SlugProperty, id)
 

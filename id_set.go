@@ -2,8 +2,8 @@ package vangogh_local_data
 
 import (
 	"fmt"
-	"github.com/boggydigital/gost"
 	"github.com/boggydigital/kvas"
+	"golang.org/x/exp/maps"
 	"sort"
 	"strings"
 )
@@ -103,12 +103,15 @@ func PropertyListsFromIdSet(
 	properties []string,
 	rxa kvas.ReduxAssets) (map[string][]string, error) {
 
-	propSet := gost.NewStrSetWith(properties...)
-	propSet.Add(TitleProperty)
+	propSet := make(map[string]bool)
+	for _, p := range properties {
+		propSet[p] = true
+	}
+	propSet[TitleProperty] = true
 
 	if rxa == nil {
 		var err error
-		rxa, err = ConnectReduxAssets(propSet.All()...)
+		rxa, err = ConnectReduxAssets(maps.Keys(propSet)...)
 		if err != nil {
 			return nil, err
 		}
@@ -117,7 +120,7 @@ func PropertyListsFromIdSet(
 	itps := make(map[string][]string)
 
 	for id := range idSet {
-		itp, err := propertyListFromId(id, propertyFilter, propSet.All(), rxa)
+		itp, err := propertyListFromId(id, propertyFilter, maps.Keys(propSet), rxa)
 		if err != nil {
 			return itps, err
 		}

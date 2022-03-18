@@ -181,27 +181,11 @@ var supportsCopyFromTo = map[ProductType]ProductType{
 }
 
 var supportedImageTypes = map[ProductType][]ImageType{
-	StoreProducts: {
-		Image,
-		Screenshots,
-	},
+	StoreProducts:    {Image, Screenshots},
 	AccountProducts:  {Image},
 	WishlistProducts: {Image},
-	Details:          {Background},
-	ApiProductsV1: {
-		Icon,
-		Background,
-		Screenshots,
-	},
-	ApiProductsV2: {
-		Image,
-		BoxArt,
-		Logo,
-		Icon,
-		Background,
-		GalaxyBackground,
-		Screenshots,
-	},
+	ApiProductsV1:    {Screenshots},
+	ApiProductsV2:    {Image, Screenshots},
 }
 
 func ProductTypesSupportingImageType(imageType ImageType) []ProductType {

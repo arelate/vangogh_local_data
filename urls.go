@@ -12,19 +12,7 @@ func ImagePropertyUrls(imageIds []string, it ImageType) ([]*url.URL, error) {
 	//	var getUrl func(string) (*url.URL, error)
 	var ext string
 	switch it {
-	case Logo:
-		// transparency doesn't look right in .jpg variants
-		fallthrough
-	case Icon:
-		// transparency doesn't look right in .jpg variants
-		ext = gog_integration.PngExt
-	case BoxArt:
-		fallthrough
 	case Image:
-		fallthrough
-	case Background:
-		fallthrough
-	case GalaxyBackground:
 		fallthrough
 	case Screenshots:
 		ext = gog_integration.JpgExt

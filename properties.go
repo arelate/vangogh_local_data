@@ -12,11 +12,6 @@ const (
 	DevelopersProperty          = "developers"
 	PublisherProperty           = "publisher"
 	ImageProperty               = "image"
-	BoxArtProperty              = "box-art"
-	BackgroundProperty          = "background"
-	GalaxyBackgroundProperty    = "galaxy-background"
-	IconProperty                = "icon"
-	LogoProperty                = "logo"
 	ScreenshotsProperty         = "screenshots"
 	RatingProperty              = "rating"
 	IncludesGamesProperty       = "includes-games"
@@ -103,11 +98,6 @@ func ComputedProperties() []string {
 func ImageIdProperties() []string {
 	return []string{
 		ImageProperty,
-		BoxArtProperty,
-		BackgroundProperty,
-		GalaxyBackgroundProperty,
-		IconProperty,
-		LogoProperty,
 		ScreenshotsProperty,
 	}
 }
@@ -193,13 +183,8 @@ func joinNotDesirable() []string {
 }
 
 var imageTypeProperties = map[ImageType]string{
-	Image:            ImageProperty,
-	BoxArt:           BoxArtProperty,
-	Background:       BackgroundProperty,
-	GalaxyBackground: GalaxyBackgroundProperty,
-	Logo:             LogoProperty,
-	Icon:             IconProperty,
-	Screenshots:      ScreenshotsProperty,
+	Image:       ImageProperty,
+	Screenshots: ScreenshotsProperty,
 }
 
 func PropertyFromImageType(it ImageType) string {
@@ -218,8 +203,6 @@ var supportedProperties = map[ProductType][]string{
 	ApiProductsV1: {
 		IdProperty,
 		TitleProperty,
-		IconProperty,
-		BackgroundProperty,
 		ScreenshotsProperty,
 		VideoIdProperty,
 		OperatingSystemsProperty,
@@ -232,11 +215,6 @@ var supportedProperties = map[ProductType][]string{
 		DevelopersProperty,
 		PublisherProperty,
 		ImageProperty,
-		BoxArtProperty,
-		IconProperty,
-		LogoProperty,
-		BackgroundProperty,
-		GalaxyBackgroundProperty,
 		ScreenshotsProperty,
 		IncludesGamesProperty,
 		IsIncludedByGamesProperty,
@@ -253,7 +231,6 @@ var supportedProperties = map[ProductType][]string{
 	},
 	Details: {
 		TitleProperty,
-		BackgroundProperty,
 		FeaturesProperty,
 		TagIdProperty,
 		GOGReleaseDateProperty,
@@ -304,16 +281,10 @@ func fillProperties(value interface{}, properties []string) map[string][]string 
 
 func getPropertyValues(value interface{}, property string) []string {
 	switch property {
-	case BackgroundProperty:
-		return getImageIdSlice(value.(gog_integration.BackgroundGetter).GetBackground)
-	case BoxArtProperty:
-		return getImageIdSlice(value.(gog_integration.BoxArtGetter).GetBoxArt)
 	case DevelopersProperty:
 		return value.(gog_integration.DevelopersGetter).GetDevelopers()
 	case FeaturesProperty:
 		return value.(gog_integration.FeaturesGetter).GetFeatures()
-	case IconProperty:
-		return getImageIdSlice(value.(gog_integration.IconGetter).GetIcon)
 	case ImageProperty:
 		return getImageIdSlice(value.(gog_integration.ImageGetter).GetImage)
 	case IncludesGamesProperty:
@@ -322,8 +293,6 @@ func getPropertyValues(value interface{}, property string) []string {
 		return value.(gog_integration.IsIncludedInGamesGetter).GetIsIncludedInGames()
 	case IsRequiredByGamesProperty:
 		return value.(gog_integration.IsRequiredByGamesGetter).GetIsRequiredByGames()
-	case GalaxyBackgroundProperty:
-		return getImageIdSlice(value.(gog_integration.GalaxyBackgroundGetter).GetGalaxyBackground)
 	case GenresProperty:
 		return value.(gog_integration.GenresGetter).GetGenres()
 	case GlobalReleaseDateProperty:
@@ -332,8 +301,6 @@ func getPropertyValues(value interface{}, property string) []string {
 		return dateSlice(value.(gog_integration.GOGReleaseGetter).GetGOGRelease)
 	case LanguageCodeProperty:
 		return value.(gog_integration.LanguageCodesGetter).GetLanguageCodes()
-	case LogoProperty:
-		return getImageIdSlice(value.(gog_integration.LogoGetter).GetLogo)
 	case OperatingSystemsProperty:
 		return value.(gog_integration.OperatingSystemsGetter).GetOperatingSystems()
 	case PublisherProperty:

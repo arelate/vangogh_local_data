@@ -39,6 +39,11 @@ const (
 	TypesProperty               = "types"
 	LocalManualUrlProperty      = "local-manual-url"
 	DownloadStatusErrorProperty = "download-status-error"
+	StoreUrlProperty            = "store-url"
+	ForumUrlProperty            = "forum-url"
+	SupportUrlProperty          = "support-url"
+	ChanglogProperty            = "changelog"
+	DescriptionProperty         = "description"
 )
 
 func AllProperties() []string {
@@ -60,6 +65,21 @@ func TextProperties() []string {
 		TitleProperty,
 		DevelopersProperty,
 		PublisherProperty,
+	}
+}
+
+func UrlProperties() []string {
+	return []string{
+		StoreUrlProperty,
+		ForumUrlProperty,
+		SupportUrlProperty,
+	}
+}
+
+func LongTextProperties() []string {
+	return []string{
+		DescriptionProperty,
+		ChanglogProperty,
 	}
 }
 
@@ -106,7 +126,9 @@ func ReduxProperties() []string {
 	all := AllTextProperties()
 	all = append(all, VideoIdProperties()...)
 	all = append(all, ComputedProperties()...)
-	return append(all, ImageIdProperties()...)
+	all = append(all, ImageIdProperties()...)
+	all = append(all, UrlProperties()...)
+	return append(all, LongTextProperties()...)
 }
 
 func DigestibleProperties() []string {
@@ -199,6 +221,7 @@ var supportedProperties = map[ProductType][]string{
 		RatingProperty,
 		OperatingSystemsProperty,
 		SlugProperty,
+		StoreUrlProperty,
 	},
 	ApiProductsV1: {
 		IdProperty,
@@ -208,6 +231,11 @@ var supportedProperties = map[ProductType][]string{
 		OperatingSystemsProperty,
 		SlugProperty,
 		GOGReleaseDateProperty,
+		StoreUrlProperty,
+		ForumUrlProperty,
+		SupportUrlProperty,
+		ChanglogProperty,
+		DescriptionProperty,
 	},
 	ApiProductsV2: {
 		IdProperty,
@@ -228,12 +256,18 @@ var supportedProperties = map[ProductType][]string{
 		LanguageCodeProperty,
 		GlobalReleaseDateProperty,
 		GOGReleaseDateProperty,
+		StoreUrlProperty,
+		ForumUrlProperty,
+		SupportUrlProperty,
+		DescriptionProperty,
 	},
 	Details: {
 		TitleProperty,
 		FeaturesProperty,
 		TagIdProperty,
 		GOGReleaseDateProperty,
+		ForumUrlProperty,
+		ChanglogProperty,
 	},
 	StoreProducts: {
 		IdProperty,
@@ -249,6 +283,9 @@ var supportedProperties = map[ProductType][]string{
 		SlugProperty,
 		GlobalReleaseDateProperty,
 		GOGReleaseDateProperty,
+		StoreUrlProperty,
+		ForumUrlProperty,
+		SupportUrlProperty,
 	},
 }
 
@@ -281,10 +318,16 @@ func fillProperties(value interface{}, properties []string) map[string][]string 
 
 func getPropertyValues(value interface{}, property string) []string {
 	switch property {
+	case ChanglogProperty:
+		return getSlice(value.(gog_integration.ChangelogGetter).GetChangelog)
+	case DescriptionProperty:
+		return getSlice(value.(gog_integration.DescriptionGetter).GetDescription)
 	case DevelopersProperty:
 		return value.(gog_integration.DevelopersGetter).GetDevelopers()
 	case FeaturesProperty:
 		return value.(gog_integration.FeaturesGetter).GetFeatures()
+	case ForumUrlProperty:
+		return getSlice(value.(gog_integration.ForumUrlGetter).GetForumUrl)
 	case ImageProperty:
 		return getImageIdSlice(value.(gog_integration.ImageGetter).GetImage)
 	case IncludesGamesProperty:
@@ -315,6 +358,10 @@ func getPropertyValues(value interface{}, property string) []string {
 		return getScreenshots(value)
 	case SlugProperty:
 		return getSlice(value.(gog_integration.SlugGetter).GetSlug)
+	case StoreUrlProperty:
+		return getSlice(value.(gog_integration.StoreUrlGetter).GetStoreUrl)
+	case SupportUrlProperty:
+		return getSlice(value.(gog_integration.SupportUrlGetter).GetSupportUrl)
 	case TagIdProperty:
 		return value.(gog_integration.TagIdsGetter).GetTagIds()
 	case TitleProperty:

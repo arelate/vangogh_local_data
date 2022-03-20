@@ -6,6 +6,14 @@ import (
 )
 
 func MoveToRecycleBin(absPath string) error {
+	if absPath == "" {
+		return nil
+	}
+
+	if _, err := os.Stat(absPath); os.IsNotExist(err) {
+		return nil
+	}
+
 	relPath, err := filepath.Rel(Pwd(), absPath)
 	if err != nil {
 		return err

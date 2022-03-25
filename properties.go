@@ -44,7 +44,7 @@ const (
 	SupportUrlProperty          = "support-url"
 	ChanglogProperty            = "changelog"
 	DescriptionProperty         = "description"
-	Wishlisted                  = "wishlisted"
+	WishlistedProperty          = "wishlisted"
 )
 
 func AllProperties() []string {
@@ -130,7 +130,7 @@ func ReduxProperties() []string {
 	all = append(all, ImageIdProperties()...)
 	all = append(all, UrlProperties()...)
 	all = append(all, LongTextProperties()...)
-	return append(all, Wishlisted)
+	return append(all, WishlistedProperty)
 }
 
 func DigestibleProperties() []string {

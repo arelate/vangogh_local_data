@@ -45,6 +45,7 @@ const (
 	ChanglogProperty            = "changelog"
 	DescriptionProperty         = "description"
 	WishlistedProperty          = "wishlisted"
+	ProductTypeProperty         = "product-type"
 )
 
 func AllProperties() []string {
@@ -130,7 +131,7 @@ func ReduxProperties() []string {
 	all = append(all, ImageIdProperties()...)
 	all = append(all, UrlProperties()...)
 	all = append(all, LongTextProperties()...)
-	return append(all, WishlistedProperty)
+	return append(all, WishlistedProperty, ProductTypeProperty)
 }
 
 func DigestibleProperties() []string {
@@ -262,6 +263,7 @@ var supportedProperties = map[ProductType][]string{
 		ForumUrlProperty,
 		SupportUrlProperty,
 		DescriptionProperty,
+		ProductTypeProperty,
 	},
 	Details: {
 		TitleProperty,
@@ -348,6 +350,8 @@ func getPropertyValues(value interface{}, property string) []string {
 		return value.(gog_integration.LanguageCodesGetter).GetLanguageCodes()
 	case OperatingSystemsProperty:
 		return value.(gog_integration.OperatingSystemsGetter).GetOperatingSystems()
+	case ProductTypeProperty:
+		return getSlice(value.(gog_integration.ProductTypeGetter).GetProductType)
 	case PublisherProperty:
 		return getSlice(value.(gog_integration.PublisherGetter).GetPublisher)
 	case RatingProperty:

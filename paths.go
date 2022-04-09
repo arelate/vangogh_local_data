@@ -59,7 +59,7 @@ func relRecycleBinPath(p string) (string, error) {
 }
 
 func AbsSkipListPath() string {
-	return filepath.Join(rootDir, skipListFilename)
+	return filepath.Join(absRootDir, skipListFilename)
 }
 
 func AbsLocalImagePath(imageId string) string {

@@ -9,61 +9,66 @@ import (
 )
 
 const (
-	metadataDir   = "metadata"
-	imagesDir     = "images"
-	videosDir     = "videos"
-	recycleBinDir = "recycle_bin"
-	downloadsDir  = "downloads"
-	extrasDir     = "extras"
-	dlcDir        = "dlc"
-	checksumsDir  = "checksums"
-	reduxDir      = "_redux"
+	relMetadataDir   = "metadata"
+	relItemsDir      = "items"
+	relImagesDir     = "images"
+	relVideosDir     = "videos"
+	relRecycleBinDir = "recycle_bin"
+	relDownloadsDir  = "downloads"
+	relExtrasDir     = "extras"
+	relDLCDir        = "dlc"
+	relChecksumsDir  = "checksums"
+	relReduxDir      = "_redux"
 )
 
-var rootDir = ""
+var absRootDir = ""
 
 func ChRoot(rd string) {
-	rootDir = rd
+	absRootDir = rd
 }
 
 func Pwd() string {
-	return rootDir
+	return absRootDir
 }
 
 func absVideosDir() string {
-	return filepath.Join(rootDir, videosDir)
+	return filepath.Join(absRootDir, relVideosDir)
 }
 
 func absImagesDir() string {
-	return filepath.Join(rootDir, imagesDir)
+	return filepath.Join(absRootDir, relImagesDir)
+}
+
+func AbsItemsDir() string {
+	return filepath.Join(absRootDir, relItemsDir)
 }
 
 func AbsMetadataDir() string {
-	return filepath.Join(rootDir, metadataDir)
+	return filepath.Join(absRootDir, relMetadataDir)
 }
 
 func AbsReduxDir() string {
-	return filepath.Join(AbsMetadataDir(), reduxDir)
+	return filepath.Join(AbsMetadataDir(), relReduxDir)
 }
 
 func AbsRecycleBinDir() string {
-	return filepath.Join(rootDir, recycleBinDir)
+	return filepath.Join(absRootDir, relRecycleBinDir)
 }
 
 func AbsDownloadsDir() string {
-	return filepath.Join(rootDir, downloadsDir)
+	return filepath.Join(absRootDir, relDownloadsDir)
 }
 
 func RelExtrasDir() string {
-	return extrasDir
+	return relExtrasDir
 }
 
 func RelDLCDir() string {
-	return dlcDir
+	return relDLCDir
 }
 
 func AbsChecksumsDir() string {
-	return filepath.Join(rootDir, checksumsDir)
+	return filepath.Join(absRootDir, relChecksumsDir)
 }
 
 func AbsDirByVideoId(videoId string) string {

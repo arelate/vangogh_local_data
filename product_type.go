@@ -92,6 +92,13 @@ func ArrayProducts() []ProductType {
 	}
 }
 
+func FastSyncProducts() []ProductType {
+	return []ProductType{
+		AccountPage,
+		WishlistPage,
+	}
+}
+
 var detailMainProductTypes = map[ProductType][]ProductType{
 	Details: {LicenceProducts, AccountProducts},
 	ApiProductsV1: {

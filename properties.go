@@ -44,6 +44,7 @@ const (
 	SupportUrlProperty          = "support-url"
 	ChanglogProperty            = "changelog"
 	DescriptionProperty         = "description"
+	CopyrightsProperty          = "copyrights"
 	WishlistedProperty          = "wishlisted"
 	ProductTypeProperty         = "product-type"
 )
@@ -82,6 +83,7 @@ func LongTextProperties() []string {
 	return []string{
 		DescriptionProperty,
 		ChanglogProperty,
+		CopyrightsProperty,
 	}
 }
 
@@ -263,6 +265,7 @@ var supportedProperties = map[ProductType][]string{
 		ForumUrlProperty,
 		SupportUrlProperty,
 		DescriptionProperty,
+		CopyrightsProperty,
 		ProductTypeProperty,
 	},
 	Details: {
@@ -324,6 +327,8 @@ func getPropertyValues(value interface{}, property string) []string {
 	switch property {
 	case ChanglogProperty:
 		return getSlice(value.(gog_integration.ChangelogGetter).GetChangelog)
+	case CopyrightsProperty:
+		return getSlice(value.(gog_integration.CopyrightsGetter).GetCopyrights)
 	case DescriptionProperty:
 		return getSlice(value.(gog_integration.DescriptionGetter).GetDescription)
 	case DevelopersProperty:

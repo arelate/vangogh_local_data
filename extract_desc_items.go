@@ -2,8 +2,15 @@ package vangogh_local_data
 
 import "regexp"
 
-var re = regexp.MustCompile(`https://items.gog.com/([-\pL0-9()!@:%_,'™\ \+\[\].~#?&\/\/=]*)`)
+var (
+	descItems     = regexp.MustCompile(`https://items.gog.com/([-\pL0-9()!@:%_,'™\ \+\[\].~#?&\/\/=]*)`)
+	descGameLinks = regexp.MustCompile(`https://www.gog.com/game/([-\pL0-9()!@:%_,'™\ \+\[\].~#?&\/\/=]*)`)
+)
 
 func ExtractDescItems(desc string) []string {
-	return re.FindAllString(desc, -1)
+	return descItems.FindAllString(desc, -1)
+}
+
+func ExtractGameLinks(desc string) []string {
+	return descGameLinks.FindAllString(desc, -1)
 }

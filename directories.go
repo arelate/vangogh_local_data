@@ -39,7 +39,7 @@ func absImagesDir() string {
 	return filepath.Join(absRootDir, relImagesDir)
 }
 
-func AbsItemsDir() string {
+func absItemsDir() string {
 	return filepath.Join(absRootDir, relItemsDir)
 }
 
@@ -72,10 +72,7 @@ func AbsChecksumsDir() string {
 }
 
 func AbsDirByVideoId(videoId string) string {
-	if videoId == "" {
-		return ""
-	}
-	if len(videoId) < 1 {
+	if videoId == "" || len(videoId) < 1 {
 		return ""
 	}
 
@@ -86,13 +83,28 @@ func AbsDirByImageId(imageId string) string {
 	if imageId == "" {
 		return ""
 	}
+
+	imageId = strings.TrimPrefix(imageId, "/")
+
 	if len(imageId) < 2 {
 		return ""
 	}
 
-	imageId = strings.TrimPrefix(imageId, "/")
-
 	return filepath.Join(absImagesDir(), imageId[0:2])
+}
+
+func AbsItemPath(path string) string {
+	if path == "" {
+		return ""
+	}
+
+	path = strings.TrimPrefix(path, "/")
+
+	if len(path) < 1 {
+		return ""
+	}
+
+	return filepath.Join(absItemsDir(), path[0:1], path)
 }
 
 func AbsLocalProductTypeDir(pt ProductType, mt gog_integration.Media) (string, error) {

@@ -98,7 +98,12 @@ func AbsItemPath(path string) string {
 		return ""
 	}
 
-	path = strings.TrimPrefix(path, "/")
+	//GOG.com quirk - some item URLs path has multiple slashes
+	//e.g. https://items.gog.com//atom_rpg_trudograd/mp4/TGWMap_Night_%281%29.gif.mp4
+	//so we need to keep trimming while there is something to trim
+	for strings.HasPrefix(path, "/") {
+		path = strings.TrimPrefix(path, "/")
+	}
 
 	if len(path) < 1 {
 		return ""

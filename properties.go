@@ -19,6 +19,7 @@ const (
 	RequiresGamesProperty       = "requires-games"
 	IsRequiredByGamesProperty   = "is-required-by-games"
 	GenresProperty              = "genres"
+	PropertiesProperty          = "properties"
 	FeaturesProperty            = "features"
 	SeriesProperty              = "series"
 	TagIdProperty               = "tag"
@@ -94,6 +95,7 @@ func AllTextProperties() []string {
 		RequiresGamesProperty,
 		IsRequiredByGamesProperty,
 		GenresProperty,
+		PropertiesProperty,
 		FeaturesProperty,
 		SeriesProperty,
 		RatingProperty,
@@ -141,6 +143,7 @@ func DigestibleProperties() []string {
 		DevelopersProperty,
 		PublisherProperty,
 		GenresProperty,
+		PropertiesProperty,
 		FeaturesProperty,
 		SeriesProperty,
 		TagIdProperty,
@@ -254,6 +257,7 @@ var supportedProperties = map[ProductType][]string{
 		RequiresGamesProperty,
 		IsRequiredByGamesProperty,
 		GenresProperty,
+		PropertiesProperty,
 		FeaturesProperty,
 		SeriesProperty,
 		VideoIdProperty,
@@ -357,6 +361,8 @@ func getPropertyValues(value interface{}, property string) []string {
 		return value.(gog_integration.OperatingSystemsGetter).GetOperatingSystems()
 	case ProductTypeProperty:
 		return getSlice(value.(gog_integration.ProductTypeGetter).GetProductType)
+	case PropertiesProperty:
+		return value.(gog_integration.PropertiesGetter).GetProperties()
 	case PublisherProperty:
 		return getSlice(value.(gog_integration.PublisherGetter).GetPublisher)
 	case RatingProperty:

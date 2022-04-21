@@ -44,7 +44,8 @@ const (
 	ForumUrlProperty            = "forum-url"
 	SupportUrlProperty          = "support-url"
 	ChanglogProperty            = "changelog"
-	DescriptionProperty         = "description"
+	DescriptionOverviewProperty = "description-overview"
+	DescriptionFeaturesProperty = "description-features"
 	CopyrightsProperty          = "copyrights"
 	WishlistedProperty          = "wishlisted"
 	ProductTypeProperty         = "product-type"
@@ -82,7 +83,8 @@ func UrlProperties() []string {
 
 func LongTextProperties() []string {
 	return []string{
-		DescriptionProperty,
+		DescriptionOverviewProperty,
+		DescriptionFeaturesProperty,
 		ChanglogProperty,
 		CopyrightsProperty,
 	}
@@ -243,7 +245,8 @@ var supportedProperties = map[ProductType][]string{
 		ForumUrlProperty,
 		SupportUrlProperty,
 		ChanglogProperty,
-		DescriptionProperty,
+		DescriptionOverviewProperty,
+		DescriptionFeaturesProperty,
 	},
 	ApiProductsV2: {
 		IdProperty,
@@ -268,7 +271,8 @@ var supportedProperties = map[ProductType][]string{
 		StoreUrlProperty,
 		ForumUrlProperty,
 		SupportUrlProperty,
-		DescriptionProperty,
+		DescriptionOverviewProperty,
+		DescriptionFeaturesProperty,
 		CopyrightsProperty,
 		ProductTypeProperty,
 	},
@@ -333,8 +337,10 @@ func getPropertyValues(value interface{}, property string) []string {
 		return getSlice(value.(gog_integration.ChangelogGetter).GetChangelog)
 	case CopyrightsProperty:
 		return getSlice(value.(gog_integration.CopyrightsGetter).GetCopyrights)
-	case DescriptionProperty:
-		return getSlice(value.(gog_integration.DescriptionGetter).GetDescription)
+	case DescriptionFeaturesProperty:
+		return getSlice(value.(gog_integration.DescriptionFeaturesGetter).GetDescriptionFeatures)
+	case DescriptionOverviewProperty:
+		return getSlice(value.(gog_integration.DescriptionOverviewGetter).GetDescriptionOverview)
 	case DevelopersProperty:
 		return value.(gog_integration.DevelopersGetter).GetDevelopers()
 	case FeaturesProperty:

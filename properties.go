@@ -48,6 +48,7 @@ const (
 	DescriptionFeaturesProperty = "description-features"
 	CopyrightsProperty          = "copyrights"
 	WishlistedProperty          = "wishlisted"
+	OwnedProperty               = "owned"
 	ProductTypeProperty         = "product-type"
 )
 
@@ -137,7 +138,7 @@ func ReduxProperties() []string {
 	all = append(all, ImageIdProperties()...)
 	all = append(all, UrlProperties()...)
 	all = append(all, LongTextProperties()...)
-	return append(all, WishlistedProperty, ProductTypeProperty)
+	return append(all, WishlistedProperty, OwnedProperty, ProductTypeProperty)
 }
 
 func DigestibleProperties() []string {

@@ -99,6 +99,13 @@ func FastSyncProducts() []ProductType {
 	}
 }
 
+func FastPageFetchProducts() []ProductType {
+	return []ProductType{
+		OrderPage,
+		WishlistPage,
+	}
+}
+
 var detailMainProductTypes = map[ProductType][]ProductType{
 	Details: {LicenceProducts, AccountProducts},
 	ApiProductsV1: {

@@ -19,6 +19,10 @@ func IsDetailProduct(pt ProductType) bool {
 	return containsProductType(DetailProducts(), pt)
 }
 
+func IsFastPageFetchProduct(pt ProductType) bool {
+	return containsProductType(FastPageFetchProducts(), pt)
+}
+
 func IsProductRequiresAuth(pt ProductType) bool {
 	return containsProductType(requireAuth, pt)
 }

@@ -50,6 +50,11 @@ const (
 	WishlistedProperty          = "wishlisted"
 	OwnedProperty               = "owned"
 	ProductTypeProperty         = "product-type"
+	InDevelopmentProperty       = "in-development"
+	PreOrderProperty            = "pre-order"
+	TBAProperty                 = "tba"
+	ComingSoonProperty          = "coming-soon"
+	IsUsingDOSBoxProperty       = "is-using-dosbox"
 )
 
 func AllProperties() []string {
@@ -131,6 +136,15 @@ func ImageIdProperties() []string {
 	}
 }
 
+func AvailabilityProperties() []string {
+	return []string{
+		InDevelopmentProperty,
+		PreOrderProperty,
+		TBAProperty,
+		ComingSoonProperty,
+	}
+}
+
 func ReduxProperties() []string {
 	all := AllTextProperties()
 	all = append(all, VideoIdProperties()...)
@@ -138,7 +152,8 @@ func ReduxProperties() []string {
 	all = append(all, ImageIdProperties()...)
 	all = append(all, UrlProperties()...)
 	all = append(all, LongTextProperties()...)
-	return append(all, WishlistedProperty, OwnedProperty, ProductTypeProperty)
+	all = append(all, AvailabilityProperties()...)
+	return append(all, WishlistedProperty, OwnedProperty, ProductTypeProperty, IsUsingDOSBoxProperty)
 }
 
 func DigestibleProperties() []string {
@@ -248,6 +263,8 @@ var supportedProperties = map[ProductType][]string{
 		ChanglogProperty,
 		DescriptionOverviewProperty,
 		DescriptionFeaturesProperty,
+		InDevelopmentProperty,
+		PreOrderProperty,
 	},
 	ApiProductsV2: {
 		IdProperty,
@@ -276,6 +293,9 @@ var supportedProperties = map[ProductType][]string{
 		DescriptionFeaturesProperty,
 		CopyrightsProperty,
 		ProductTypeProperty,
+		InDevelopmentProperty,
+		PreOrderProperty,
+		IsUsingDOSBoxProperty,
 	},
 	Details: {
 		TitleProperty,
@@ -302,6 +322,8 @@ var supportedProperties = map[ProductType][]string{
 		StoreUrlProperty,
 		ForumUrlProperty,
 		SupportUrlProperty,
+		TBAProperty,
+		ComingSoonProperty,
 	},
 }
 
@@ -336,6 +358,8 @@ func getPropertyValues(value interface{}, property string) []string {
 	switch property {
 	case ChanglogProperty:
 		return getSlice(value.(gog_integration.ChangelogGetter).GetChangelog)
+	case ComingSoonProperty:
+		return boolSlice(value.(gog_integration.ComingSoonGetter).GetComingSoon)
 	case CopyrightsProperty:
 		return getSlice(value.(gog_integration.CopyrightsGetter).GetCopyrights)
 	case DescriptionFeaturesProperty:
@@ -352,10 +376,14 @@ func getPropertyValues(value interface{}, property string) []string {
 		return getImageIdSlice(value.(gog_integration.ImageGetter).GetImage)
 	case IncludesGamesProperty:
 		return value.(gog_integration.IncludesGamesGetter).GetIncludesGames()
+	case InDevelopmentProperty:
+		return boolSlice(value.(gog_integration.InDevelopmentGetter).GetInDevelopment)
 	case IsIncludedByGamesProperty:
 		return value.(gog_integration.IsIncludedInGamesGetter).GetIsIncludedInGames()
 	case IsRequiredByGamesProperty:
 		return value.(gog_integration.IsRequiredByGamesGetter).GetIsRequiredByGames()
+	case IsUsingDOSBoxProperty:
+		return boolSlice(value.(gog_integration.IsUsingDOSBoxGetter).IsUsingDOSBox)
 	case GenresProperty:
 		return value.(gog_integration.GenresGetter).GetGenres()
 	case GlobalReleaseDateProperty:
@@ -366,6 +394,8 @@ func getPropertyValues(value interface{}, property string) []string {
 		return value.(gog_integration.LanguageCodesGetter).GetLanguageCodes()
 	case OperatingSystemsProperty:
 		return value.(gog_integration.OperatingSystemsGetter).GetOperatingSystems()
+	case PreOrderProperty:
+		return boolSlice(value.(gog_integration.PreOrderGetter).GetPreOrder)
 	case ProductTypeProperty:
 		return getSlice(value.(gog_integration.ProductTypeGetter).GetProductType)
 	case PropertiesProperty:
@@ -388,6 +418,8 @@ func getPropertyValues(value interface{}, property string) []string {
 		return getSlice(value.(gog_integration.SupportUrlGetter).GetSupportUrl)
 	case TagIdProperty:
 		return value.(gog_integration.TagIdsGetter).GetTagIds()
+	case TBAProperty:
+		return boolSlice(value.(gog_integration.TBAGetter).GetTBA)
 	case TitleProperty:
 		return getSlice(value.(gog_integration.TitleGetter).GetTitle)
 	case VideoIdProperty:
@@ -395,6 +427,18 @@ func getPropertyValues(value interface{}, property string) []string {
 	default:
 		return []string{}
 	}
+}
+
+func boolSlice(confirmer func() bool) []string {
+	facts := make([]string, 0)
+	if confirmer != nil {
+		val := "false"
+		if confirmer() {
+			val = "true"
+		}
+		facts = append(facts, val)
+	}
+	return facts
 }
 
 func dateSlice(timestamper func() int64) []string {

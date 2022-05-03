@@ -221,3 +221,11 @@ func (vr *ValueReader) CopyToType(id string, toPt ProductType, toMt gog_integrat
 
 	return nil
 }
+
+func (vr *ValueReader) IndexCurrentModTime() (int64, error) {
+	return vr.valueSet.IndexCurrentModTime()
+}
+
+func (vr *ValueReader) CurrentModTime(id string) (int64, error) {
+	return vr.valueSet.CurrentModTime(id)
+}

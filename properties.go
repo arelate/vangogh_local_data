@@ -3,6 +3,7 @@ package vangogh_local_data
 import (
 	"github.com/arelate/gog_integration"
 	"github.com/boggydigital/kvas"
+	"strconv"
 	"time"
 )
 
@@ -57,6 +58,11 @@ const (
 	ComingSoonProperty             = "coming-soon"
 	IsUsingDOSBoxProperty          = "is-using-dosbox"
 	IsUsingScummVMProperty         = "is-using-scummvm"
+	BasePriceProperty              = "base-price"
+	PriceProperty                  = "price"
+	IsFreeProperty                 = "is-free"
+	IsDiscountedProperty           = "is-discounted"
+	DiscountPercentageProperty     = "discount-percentage"
 )
 
 func AllProperties() []string {
@@ -163,6 +169,16 @@ func AdvancedProductProperties() []string {
 	}
 }
 
+func PriceProperties() []string {
+	return []string{
+		BasePriceProperty,
+		PriceProperty,
+		IsFreeProperty,
+		IsDiscountedProperty,
+		DiscountPercentageProperty,
+	}
+}
+
 func ReduxProperties() []string {
 	all := AllTextProperties()
 	all = append(all, VideoIdProperties()...)
@@ -172,7 +188,9 @@ func ReduxProperties() []string {
 	all = append(all, LongTextProperties()...)
 	all = append(all, AvailabilityProperties()...)
 	all = append(all, AccountStatusProperties()...)
-	return append(all, AdvancedProductProperties()...)
+	all = append(all, AdvancedProductProperties()...)
+	all = append(all, PriceProperties()...)
+	return all
 }
 
 func DigestibleProperties() []string {
@@ -345,6 +363,11 @@ var supportedProperties = map[ProductType][]string{
 		SupportUrlProperty,
 		TBAProperty,
 		ComingSoonProperty,
+		BasePriceProperty,
+		PriceProperty,
+		IsFreeProperty,
+		IsDiscountedProperty,
+		DiscountPercentageProperty,
 	},
 }
 
@@ -379,6 +402,8 @@ func getPropertyValues(value interface{}, property string) []string {
 	switch property {
 	case AdditionalRequirementsProperty:
 		return getSlice(value.(gog_integration.AdditionalRequirementsGetter).GetAdditionalRequirements)
+	case BasePriceProperty:
+		return getSlice(value.(gog_integration.BasePriceGetter).GetBasePrice)
 	case ChanglogProperty:
 		return getSlice(value.(gog_integration.ChangelogGetter).GetChangelog)
 	case ComingSoonProperty:
@@ -391,6 +416,8 @@ func getPropertyValues(value interface{}, property string) []string {
 		return getSlice(value.(gog_integration.DescriptionOverviewGetter).GetDescriptionOverview)
 	case DevelopersProperty:
 		return value.(gog_integration.DevelopersGetter).GetDevelopers()
+	case DiscountPercentageProperty:
+		return intSlice(value.(gog_integration.DiscountPercentageGetter).GetDiscountPercentage)
 	case FeaturesProperty:
 		return value.(gog_integration.FeaturesGetter).GetFeatures()
 	case ForumUrlProperty:
@@ -401,6 +428,10 @@ func getPropertyValues(value interface{}, property string) []string {
 		return value.(gog_integration.IncludesGamesGetter).GetIncludesGames()
 	case InDevelopmentProperty:
 		return boolSlice(value.(gog_integration.InDevelopmentGetter).GetInDevelopment)
+	case IsDiscountedProperty:
+		return boolSlice(value.(gog_integration.IsDiscountedGetter).IsDiscounted)
+	case IsFreeProperty:
+		return boolSlice(value.(gog_integration.IsFreeGetter).IsFree)
 	case IsIncludedByGamesProperty:
 		return value.(gog_integration.IsIncludedInGamesGetter).GetIsIncludedInGames()
 	case IsRequiredByGamesProperty:
@@ -421,6 +452,8 @@ func getPropertyValues(value interface{}, property string) []string {
 		return value.(gog_integration.OperatingSystemsGetter).GetOperatingSystems()
 	case PreOrderProperty:
 		return boolSlice(value.(gog_integration.PreOrderGetter).GetPreOrder)
+	case PriceProperty:
+		return getSlice(value.(gog_integration.PriceGetter).GetPrice)
 	case ProductTypeProperty:
 		return getSlice(value.(gog_integration.ProductTypeGetter).GetProductType)
 	case PropertiesProperty:
@@ -476,6 +509,14 @@ func dateSlice(timestamper func() int64) []string {
 		}
 	}
 	return dates
+}
+
+func intSlice(integer func() int) []string {
+	values := make([]string, 0)
+	if integer != nil {
+		values = append(values, strconv.Itoa(integer()))
+	}
+	return values
 }
 
 func getSlice(stringer func() string) []string {

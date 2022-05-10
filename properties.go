@@ -56,6 +56,7 @@ const (
 	TBAProperty                    = "tba"
 	ComingSoonProperty             = "coming-soon"
 	IsUsingDOSBoxProperty          = "is-using-dosbox"
+	IsUsingScummVMProperty         = "is-using-scummvm"
 )
 
 func AllProperties() []string {
@@ -158,6 +159,7 @@ func AdvancedProductProperties() []string {
 	return []string{
 		ProductTypeProperty,
 		IsUsingDOSBoxProperty,
+		IsUsingScummVMProperty,
 	}
 }
 
@@ -314,6 +316,7 @@ var supportedProperties = map[ProductType][]string{
 		InDevelopmentProperty,
 		PreOrderProperty,
 		IsUsingDOSBoxProperty,
+		IsUsingScummVMProperty,
 	},
 	Details: {
 		TitleProperty,
@@ -404,6 +407,8 @@ func getPropertyValues(value interface{}, property string) []string {
 		return value.(gog_integration.IsRequiredByGamesGetter).GetIsRequiredByGames()
 	case IsUsingDOSBoxProperty:
 		return boolSlice(value.(gog_integration.IsUsingDOSBoxGetter).IsUsingDOSBox)
+	case IsUsingScummVMProperty:
+		return boolSlice(value.(gog_integration.IsUsingScummVMGetter).IsUsingScummVM)
 	case GenresProperty:
 		return value.(gog_integration.GenresGetter).GetGenres()
 	case GlobalReleaseDateProperty:

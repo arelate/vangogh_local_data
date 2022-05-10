@@ -7,54 +7,55 @@ import (
 )
 
 const (
-	IdProperty                  = "id"
-	TitleProperty               = "title"
-	DevelopersProperty          = "developers"
-	PublisherProperty           = "publisher"
-	ImageProperty               = "image"
-	ScreenshotsProperty         = "screenshots"
-	RatingProperty              = "rating"
-	IncludesGamesProperty       = "includes-games"
-	IsIncludedByGamesProperty   = "is-included-by-games"
-	RequiresGamesProperty       = "requires-games"
-	IsRequiredByGamesProperty   = "is-required-by-games"
-	GenresProperty              = "genres"
-	PropertiesProperty          = "properties"
-	FeaturesProperty            = "features"
-	SeriesProperty              = "series"
-	TagIdProperty               = "tag"
-	TagNameProperty             = "tag-name"
-	VideoIdProperty             = "video-id"
-	MissingVideoUrlProperty     = "missing-video-url"
-	OperatingSystemsProperty    = "os"
-	LanguageCodeProperty        = "lang-code"
-	LanguageNameProperty        = "lang-name"
-	NativeLanguageNameProperty  = "native-lang-name"
-	SlugProperty                = "slug"
-	GOGReleaseDateProperty      = "gog-release-date"
-	GOGOrderDateProperty        = "gog-order-date"
-	GlobalReleaseDateProperty   = "global-release-date"
-	TextProperty                = "text"
-	AllTextProperty             = "all-text"
-	ImageIdProperty             = "image-id"
-	TypesProperty               = "types"
-	LocalManualUrlProperty      = "local-manual-url"
-	DownloadStatusErrorProperty = "download-status-error"
-	StoreUrlProperty            = "store-url"
-	ForumUrlProperty            = "forum-url"
-	SupportUrlProperty          = "support-url"
-	ChanglogProperty            = "changelog"
-	DescriptionOverviewProperty = "description-overview"
-	DescriptionFeaturesProperty = "description-features"
-	CopyrightsProperty          = "copyrights"
-	WishlistedProperty          = "wishlisted"
-	OwnedProperty               = "owned"
-	ProductTypeProperty         = "product-type"
-	InDevelopmentProperty       = "in-development"
-	PreOrderProperty            = "pre-order"
-	TBAProperty                 = "tba"
-	ComingSoonProperty          = "coming-soon"
-	IsUsingDOSBoxProperty       = "is-using-dosbox"
+	IdProperty                     = "id"
+	TitleProperty                  = "title"
+	DevelopersProperty             = "developers"
+	PublisherProperty              = "publisher"
+	ImageProperty                  = "image"
+	ScreenshotsProperty            = "screenshots"
+	RatingProperty                 = "rating"
+	IncludesGamesProperty          = "includes-games"
+	IsIncludedByGamesProperty      = "is-included-by-games"
+	RequiresGamesProperty          = "requires-games"
+	IsRequiredByGamesProperty      = "is-required-by-games"
+	GenresProperty                 = "genres"
+	PropertiesProperty             = "properties"
+	FeaturesProperty               = "features"
+	SeriesProperty                 = "series"
+	TagIdProperty                  = "tag"
+	TagNameProperty                = "tag-name"
+	VideoIdProperty                = "video-id"
+	MissingVideoUrlProperty        = "missing-video-url"
+	OperatingSystemsProperty       = "os"
+	LanguageCodeProperty           = "lang-code"
+	LanguageNameProperty           = "lang-name"
+	NativeLanguageNameProperty     = "native-lang-name"
+	SlugProperty                   = "slug"
+	GOGReleaseDateProperty         = "gog-release-date"
+	GOGOrderDateProperty           = "gog-order-date"
+	GlobalReleaseDateProperty      = "global-release-date"
+	TextProperty                   = "text"
+	AllTextProperty                = "all-text"
+	ImageIdProperty                = "image-id"
+	TypesProperty                  = "types"
+	LocalManualUrlProperty         = "local-manual-url"
+	DownloadStatusErrorProperty    = "download-status-error"
+	StoreUrlProperty               = "store-url"
+	ForumUrlProperty               = "forum-url"
+	SupportUrlProperty             = "support-url"
+	ChanglogProperty               = "changelog"
+	DescriptionOverviewProperty    = "description-overview"
+	DescriptionFeaturesProperty    = "description-features"
+	AdditionalRequirementsProperty = "additional-requirements"
+	CopyrightsProperty             = "copyrights"
+	WishlistedProperty             = "wishlisted"
+	OwnedProperty                  = "owned"
+	ProductTypeProperty            = "product-type"
+	InDevelopmentProperty          = "in-development"
+	PreOrderProperty               = "pre-order"
+	TBAProperty                    = "tba"
+	ComingSoonProperty             = "coming-soon"
+	IsUsingDOSBoxProperty          = "is-using-dosbox"
 )
 
 func AllProperties() []string {
@@ -93,6 +94,7 @@ func LongTextProperties() []string {
 		DescriptionFeaturesProperty,
 		ChanglogProperty,
 		CopyrightsProperty,
+		AdditionalRequirementsProperty,
 	}
 }
 
@@ -145,6 +147,20 @@ func AvailabilityProperties() []string {
 	}
 }
 
+func AccountStatusProperties() []string {
+	return []string{
+		WishlistedProperty,
+		OwnedProperty,
+	}
+}
+
+func AdvancedProductProperties() []string {
+	return []string{
+		ProductTypeProperty,
+		IsUsingDOSBoxProperty,
+	}
+}
+
 func ReduxProperties() []string {
 	all := AllTextProperties()
 	all = append(all, VideoIdProperties()...)
@@ -153,7 +169,8 @@ func ReduxProperties() []string {
 	all = append(all, UrlProperties()...)
 	all = append(all, LongTextProperties()...)
 	all = append(all, AvailabilityProperties()...)
-	return append(all, WishlistedProperty, OwnedProperty, ProductTypeProperty, IsUsingDOSBoxProperty)
+	all = append(all, AccountStatusProperties()...)
+	return append(all, AdvancedProductProperties()...)
 }
 
 func DigestibleProperties() []string {
@@ -267,6 +284,7 @@ var supportedProperties = map[ProductType][]string{
 		PreOrderProperty,
 	},
 	ApiProductsV2: {
+		AdditionalRequirementsProperty,
 		IdProperty,
 		TitleProperty,
 		DevelopersProperty,
@@ -356,6 +374,8 @@ func fillProperties(value interface{}, properties []string) map[string][]string 
 
 func getPropertyValues(value interface{}, property string) []string {
 	switch property {
+	case AdditionalRequirementsProperty:
+		return getSlice(value.(gog_integration.AdditionalRequirementsGetter).GetAdditionalRequirements)
 	case ChanglogProperty:
 		return getSlice(value.(gog_integration.ChangelogGetter).GetChangelog)
 	case ComingSoonProperty:

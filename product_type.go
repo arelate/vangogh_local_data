@@ -92,13 +92,6 @@ func ArrayProducts() []ProductType {
 	}
 }
 
-func FastSyncProducts() []ProductType {
-	return []ProductType{
-		AccountPage,
-		WishlistPage,
-	}
-}
-
 func FastPageFetchProducts() []ProductType {
 	return []ProductType{
 		OrderPage,

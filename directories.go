@@ -124,7 +124,8 @@ func AbsLocalProductTypeDir(pt ProductType, mt gog_integration.Media) (string, e
 	if pt == Licences ||
 		pt == LicenceProducts ||
 		pt == Orders ||
-		pt == OrderPage {
+		pt == OrderPage ||
+		pt == SteamAppList {
 		mt = gog_integration.Game
 	}
 

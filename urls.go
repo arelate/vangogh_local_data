@@ -3,6 +3,7 @@ package vangogh_local_data
 import (
 	"fmt"
 	"github.com/arelate/gog_integration"
+	"github.com/arelate/steam_integration"
 	"net/url"
 )
 
@@ -43,6 +44,7 @@ var defaultProductUrls = map[ProductType]DefaultProductUrl{
 	ApiProductsV2: gog_integration.ApiProductV2Url,
 	Licences:      gog_integration.DefaultLicencesUrl,
 	OrderPage:     gog_integration.DefaultOrdersPageUrl,
+	SteamAppList:  steam_integration.VangoghAppListUrl,
 }
 
 func RemoteProductsUrl(pt ProductType) (ptUrl DefaultProductUrl, err error) {

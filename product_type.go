@@ -9,6 +9,7 @@ type ProductType int
 
 const (
 	UnknownProductType ProductType = iota
+	// GOG.com product types
 	StorePage
 	StoreProducts
 	AccountPage
@@ -22,23 +23,28 @@ const (
 	LicenceProducts
 	OrderPage
 	Orders
+	// Steam product types
+	SteamAppList
 )
 
 var productTypeStrings = map[ProductType]string{
 	UnknownProductType: "unknown-product-type",
-	StorePage:          "store-page",
-	StoreProducts:      "store-products",
-	AccountPage:        "account-page",
-	AccountProducts:    "account-products",
-	WishlistPage:       "wishlist-page",
-	WishlistProducts:   "wishlist-products",
-	Details:            "details",
-	ApiProductsV1:      "api-products-v1",
-	ApiProductsV2:      "api-products-v2",
-	Licences:           "licences",
-	LicenceProducts:    "licence-products",
-	OrderPage:          "order-page",
-	Orders:             "orders",
+	// GOG.com product types
+	StorePage:        "store-page",
+	StoreProducts:    "store-products",
+	AccountPage:      "account-page",
+	AccountProducts:  "account-products",
+	WishlistPage:     "wishlist-page",
+	WishlistProducts: "wishlist-products",
+	Details:          "details",
+	ApiProductsV1:    "api-products-v1",
+	ApiProductsV2:    "api-products-v2",
+	Licences:         "licences",
+	LicenceProducts:  "licence-products",
+	OrderPage:        "order-page",
+	Orders:           "orders",
+	// Steam product types
+	SteamAppList: "steam-app-list",
 }
 
 //the list is intentionally scoped to very few types we anticipate
@@ -89,6 +95,7 @@ func PagedProducts() []ProductType {
 func ArrayProducts() []ProductType {
 	return []ProductType{
 		Licences,
+		SteamAppList,
 	}
 }
 
@@ -175,6 +182,7 @@ var supportsGetItems = []ProductType{
 	ApiProductsV1,
 	ApiProductsV2,
 	Licences,
+	SteamAppList,
 }
 
 // unsupported is used instead of supported in similar cases to

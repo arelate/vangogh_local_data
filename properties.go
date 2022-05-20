@@ -63,6 +63,7 @@ const (
 	IsFreeProperty                 = "is-free"
 	IsDiscountedProperty           = "is-discounted"
 	DiscountPercentageProperty     = "discount-percentage"
+	SteamAppId                     = "steam-app-id"
 )
 
 func AllProperties() []string {
@@ -179,6 +180,12 @@ func PriceProperties() []string {
 	}
 }
 
+func ExternalDataSourcesProperties() []string {
+	return []string{
+		SteamAppId,
+	}
+}
+
 func ReduxProperties() []string {
 	all := AllTextProperties()
 	all = append(all, VideoIdProperties()...)
@@ -190,6 +197,7 @@ func ReduxProperties() []string {
 	all = append(all, AccountStatusProperties()...)
 	all = append(all, AdvancedProductProperties()...)
 	all = append(all, PriceProperties()...)
+	all = append(all, ExternalDataSourcesProperties()...)
 	return all
 }
 

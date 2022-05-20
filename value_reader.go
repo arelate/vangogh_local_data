@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/arelate/gog_integration"
+	"github.com/arelate/steam_integration"
 	"github.com/boggydigital/kvas"
 )
 
@@ -134,6 +135,11 @@ func (vr *ValueReader) OrderPage(page string) (orderPage *gog_integration.OrderP
 func (vr *ValueReader) Order(id string) (order *gog_integration.Order, err error) {
 	err = vr.readValue(id, &order)
 	return order, err
+}
+
+func (vr *ValueReader) SteamGetAppListResponse() (steamAppListResponse *steam_integration.GetAppListResponse, err error) {
+	err = vr.readValue(SteamAppList.String(), &steamAppListResponse)
+	return steamAppListResponse, err
 }
 
 func (vr *ValueReader) ReadValue(key string) (interface{}, error) {

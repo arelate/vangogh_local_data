@@ -63,7 +63,8 @@ const (
 	IsFreeProperty                 = "is-free"
 	IsDiscountedProperty           = "is-discounted"
 	DiscountPercentageProperty     = "discount-percentage"
-	SteamAppId                     = "steam-app-id"
+	SteamAppIdProperty             = "steam-app-id"
+	LocalTagsProperty              = "local-tags"
 )
 
 func AllProperties() []string {
@@ -118,6 +119,7 @@ func AllTextProperties() []string {
 		SeriesProperty,
 		RatingProperty,
 		TagIdProperty,
+		LocalTagsProperty,
 		OperatingSystemsProperty,
 		LanguageCodeProperty,
 		SlugProperty,
@@ -182,7 +184,7 @@ func PriceProperties() []string {
 
 func ExternalDataSourcesProperties() []string {
 	return []string{
-		SteamAppId,
+		SteamAppIdProperty,
 	}
 }
 

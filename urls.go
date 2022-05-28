@@ -44,7 +44,7 @@ var defaultProductUrls = map[ProductType]DefaultProductUrl{
 	ApiProductsV2: gog_integration.ApiProductV2Url,
 	Licences:      gog_integration.DefaultLicencesUrl,
 	OrderPage:     gog_integration.DefaultOrdersPageUrl,
-	SteamAppList:  steam_integration.VangoghAppListUrl,
+	SteamAppList:  DefaultSteamAppListUrl,
 }
 
 func RemoteProductsUrl(pt ProductType) (ptUrl DefaultProductUrl, err error) {
@@ -58,4 +58,9 @@ func RemoteProductsUrl(pt ProductType) (ptUrl DefaultProductUrl, err error) {
 	}
 
 	return ptUrl, err
+}
+
+//DefaultSteamAppListUrl is a vangogh_local_data specific wrapper of steam_integration URL func
+func DefaultSteamAppListUrl(_ string, _ gog_integration.Media) *url.URL {
+	return steam_integration.AppListUrl()
 }

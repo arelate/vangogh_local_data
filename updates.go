@@ -13,6 +13,8 @@ var filterNewProductTypes = map[ProductType]bool{
 	//both ApiProductsVx are not interesting since they correspond to store-products or account-products
 	ApiProductsV1: true,
 	ApiProductsV2: true,
+	//news would typically be created for new products, so new in store should reflect that
+	SteamAppNews: true,
 }
 
 var filterUpdatedProductTypes = map[ProductType]bool{

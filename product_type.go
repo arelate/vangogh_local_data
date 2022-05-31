@@ -56,6 +56,7 @@ var productTypeHumanReadableStrings = map[ProductType]string{
 	WishlistProducts: "wishlist",
 	AccountProducts:  "account",
 	Details:          "account",
+	SteamAppNews:     "news",
 }
 
 func (pt ProductType) String() string {
@@ -155,6 +156,7 @@ func LocalProducts() []ProductType {
 		ApiProductsV2,
 		LicenceProducts,
 		Orders,
+		SteamAppNews,
 	}
 }
 

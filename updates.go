@@ -18,6 +18,10 @@ var filterNewProductTypes = map[ProductType]bool{
 }
 
 var filterUpdatedProductTypes = map[ProductType]bool{
+	Orders: true,
+	//not all licence-products have associated api-products-v1/api-products-v2,
+	//so in some cases we won't get a meaningful information like a title
+	LicenceProducts: true,
 	//most of the Updates are price changes for a sale, not that interesting for recurring sync
 	StoreProducts: true,
 	// wishlist-products are basically store-products, so see above

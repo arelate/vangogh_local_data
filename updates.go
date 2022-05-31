@@ -34,26 +34,22 @@ func Updates(mt gog_integration.Media, since int64) (map[string]map[string]bool,
 
 	for _, pt := range LocalProducts() {
 
-		if filterNewProductTypes[pt] {
-			continue
-		}
-
 		vr, err := NewReader(pt, mt)
 		if err != nil {
 			return updates, err
 		}
 
-		categorize(vr.CreatedAfter(since),
-			fmt.Sprintf("new in %s", pt.HumanReadableString()),
-			updates)
-
-		if filterUpdatedProductTypes[pt] {
-			continue
+		if !filterNewProductTypes[pt] {
+			categorize(vr.CreatedAfter(since),
+				fmt.Sprintf("new in %s", pt.HumanReadableString()),
+				updates)
 		}
 
-		categorize(vr.ModifiedAfter(since, true),
-			fmt.Sprintf("updated in %s", pt.HumanReadableString()),
-			updates)
+		if !filterUpdatedProductTypes[pt] {
+			categorize(vr.ModifiedAfter(since, true),
+				fmt.Sprintf("updated in %s", pt.HumanReadableString()),
+				updates)
+		}
 	}
 
 	return updates, nil

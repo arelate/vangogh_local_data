@@ -47,7 +47,7 @@ func Updates(mt gog_integration.Media, since int64) (map[string]map[string]bool,
 
 		if !filterUpdatedProductTypes[pt] {
 			categorize(vr.ModifiedAfter(since, true),
-				fmt.Sprintf("updated in %s", pt.HumanReadableString()),
+				fmt.Sprintf("updates in %s", pt.HumanReadableString()),
 				updates)
 		}
 	}

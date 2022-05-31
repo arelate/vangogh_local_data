@@ -69,7 +69,11 @@ func (pt ProductType) String() string {
 }
 
 func (pt ProductType) HumanReadableString() string {
-	return productTypeHumanReadableStrings[pt]
+	if hs, ok := productTypeHumanReadableStrings[pt]; ok {
+		return hs
+	} else {
+		return pt.String()
+	}
 }
 
 func ParseProductType(productType string) ProductType {

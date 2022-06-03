@@ -86,6 +86,7 @@ func TextProperties() []string {
 		TitleProperty,
 		DevelopersProperty,
 		PublisherProperty,
+		DescriptionOverviewProperty,
 	}
 }
 
@@ -126,7 +127,6 @@ func AllTextProperties() []string {
 		GlobalReleaseDateProperty,
 		GOGOrderDateProperty,
 		GOGReleaseDateProperty,
-		DescriptionOverviewProperty,
 	)
 }
 

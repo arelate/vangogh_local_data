@@ -44,7 +44,7 @@ const (
 	StoreUrlProperty               = "store-url"
 	ForumUrlProperty               = "forum-url"
 	SupportUrlProperty             = "support-url"
-	ChanglogProperty               = "changelog"
+	ChangelogProperty              = "changelog"
 	DescriptionOverviewProperty    = "description-overview"
 	DescriptionFeaturesProperty    = "description-features"
 	AdditionalRequirementsProperty = "additional-requirements"
@@ -101,7 +101,7 @@ func LongTextProperties() []string {
 	return []string{
 		DescriptionOverviewProperty,
 		DescriptionFeaturesProperty,
-		ChanglogProperty,
+		ChangelogProperty,
 		CopyrightsProperty,
 		AdditionalRequirementsProperty,
 	}
@@ -126,6 +126,7 @@ func AllTextProperties() []string {
 		GlobalReleaseDateProperty,
 		GOGOrderDateProperty,
 		GOGReleaseDateProperty,
+		DescriptionOverviewProperty,
 	)
 }
 
@@ -307,7 +308,7 @@ var supportedProperties = map[ProductType][]string{
 		StoreUrlProperty,
 		ForumUrlProperty,
 		SupportUrlProperty,
-		ChanglogProperty,
+		ChangelogProperty,
 		DescriptionOverviewProperty,
 		DescriptionFeaturesProperty,
 		InDevelopmentProperty,
@@ -352,7 +353,7 @@ var supportedProperties = map[ProductType][]string{
 		TagIdProperty,
 		GOGReleaseDateProperty,
 		ForumUrlProperty,
-		ChanglogProperty,
+		ChangelogProperty,
 	},
 	StoreProducts: {
 		IdProperty,
@@ -414,7 +415,7 @@ func getPropertyValues(value interface{}, property string) []string {
 		return getSlice(value.(gog_integration.AdditionalRequirementsGetter).GetAdditionalRequirements)
 	case BasePriceProperty:
 		return getSlice(value.(gog_integration.BasePriceGetter).GetBasePrice)
-	case ChanglogProperty:
+	case ChangelogProperty:
 		return getSlice(value.(gog_integration.ChangelogGetter).GetChangelog)
 	case ComingSoonProperty:
 		return boolSlice(value.(gog_integration.ComingSoonGetter).GetComingSoon)

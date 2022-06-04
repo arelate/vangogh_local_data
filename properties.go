@@ -87,6 +87,7 @@ func TextProperties() []string {
 		DevelopersProperty,
 		PublisherProperty,
 		DescriptionOverviewProperty,
+		DescriptionFeaturesProperty,
 	}
 }
 

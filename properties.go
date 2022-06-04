@@ -65,6 +65,8 @@ const (
 	DiscountPercentageProperty     = "discount-percentage"
 	SteamAppIdProperty             = "steam-app-id"
 	LocalTagsProperty              = "local-tags"
+	SortProperty                   = "sort"
+	DescendingProperty             = "desc"
 )
 
 func AllProperties() []string {

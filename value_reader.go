@@ -147,6 +147,11 @@ func (vr *ValueReader) SteamGetAppNewsResponse(id string) (steamAppNewsResponse 
 	return steamAppNewsResponse, err
 }
 
+func (vr *ValueReader) SteamAppReviews(id string) (steamAppReviews *steam_integration.AppReviews, err error) {
+	err = vr.readValue(id, &steamAppReviews)
+	return steamAppReviews, err
+}
+
 func (vr *ValueReader) ReadValue(key string) (interface{}, error) {
 	switch vr.productType {
 	case StoreProducts:
@@ -175,6 +180,8 @@ func (vr *ValueReader) ReadValue(key string) (interface{}, error) {
 		return vr.Licences(key)
 	case SteamAppNews:
 		return vr.SteamGetAppNewsResponse(key)
+	case SteamReviews:
+		return vr.SteamAppReviews(key)
 	default:
 		return nil, fmt.Errorf("vangogh_values: cannot create %s value", vr.productType)
 	}

@@ -26,6 +26,7 @@ const (
 	// Steam product types
 	SteamAppList
 	SteamAppNews
+	SteamReviews
 )
 
 var productTypeStrings = map[ProductType]string{
@@ -47,6 +48,7 @@ var productTypeStrings = map[ProductType]string{
 	// Steam product types
 	SteamAppList: "steam-app-list",
 	SteamAppNews: "steam-app-news",
+	SteamReviews: "steam-reviews",
 }
 
 //the list is intentionally scoped to very few types we anticipate
@@ -129,6 +131,10 @@ var detailMainProductTypes = map[ProductType][]ProductType{
 		StoreProducts,
 		AccountProducts,
 	},
+	SteamReviews: {
+		StoreProducts,
+		AccountProducts,
+	},
 }
 
 func DetailProducts() []ProductType {
@@ -161,6 +167,7 @@ func LocalProducts() []ProductType {
 		LicenceProducts,
 		Orders,
 		SteamAppNews,
+		SteamReviews,
 	}
 }
 
@@ -196,6 +203,7 @@ var supportsGetItems = []ProductType{
 	Licences,
 	SteamAppList,
 	SteamAppNews,
+	SteamReviews,
 }
 
 // unsupported is used instead of supported in similar cases to

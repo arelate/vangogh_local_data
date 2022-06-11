@@ -15,6 +15,8 @@ var filterNewProductTypes = map[ProductType]bool{
 	ApiProductsV2: true,
 	//news would typically be created for new products, so new in store should reflect that
 	SteamAppNews: true,
+	//reviews are not that interesting by themselves
+	SteamReviews: true,
 }
 
 var filterUpdatedProductTypes = map[ProductType]bool{
@@ -31,6 +33,8 @@ var filterUpdatedProductTypes = map[ProductType]bool{
 	//same as above for those product types
 	ApiProductsV1: true,
 	ApiProductsV2: true,
+	//reviews are not that interesting by themselves
+	SteamReviews: true,
 }
 
 func Updates(mt gog_integration.Media, since int64) (map[string]map[string]bool, error) {

@@ -45,8 +45,9 @@ var defaultProductUrls = map[ProductType]DefaultProductUrl{
 	Licences:      gog_integration.DefaultLicencesUrl,
 	OrderPage:     gog_integration.DefaultOrdersPageUrl,
 	SteamAppList:  DefaultSteamAppListUrl,
-	// steam app news would require app level transformation of GOG.com id -> Steam AppID
+	// steam data types typically require app level transformation of GOG.com id -> Steam AppID
 	SteamAppNews: nil,
+	SteamReviews: nil,
 }
 
 func RemoteProductsUrl(pt ProductType) (ptUrl DefaultProductUrl, err error) {

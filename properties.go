@@ -2,6 +2,7 @@ package vangogh_local_data
 
 import (
 	"github.com/arelate/gog_integration"
+	"github.com/arelate/steam_integration"
 	"github.com/boggydigital/kvas"
 	"strconv"
 	"time"
@@ -67,6 +68,7 @@ const (
 	LocalTagsProperty              = "local-tags"
 	SortProperty                   = "sort"
 	DescendingProperty             = "desc"
+	SteamReviewScoreDesc           = "steam-review-score-desc"
 )
 
 func AllProperties() []string {
@@ -189,6 +191,7 @@ func PriceProperties() []string {
 func ExternalDataSourcesProperties() []string {
 	return []string{
 		SteamAppIdProperty,
+		SteamReviewScoreDesc,
 	}
 }
 
@@ -219,6 +222,7 @@ func DigestibleProperties() []string {
 		LanguageCodeProperty,
 		OperatingSystemsProperty,
 		MissingVideoUrlProperty,
+		SteamReviewScoreDesc,
 	}
 }
 
@@ -383,6 +387,9 @@ var supportedProperties = map[ProductType][]string{
 		IsDiscountedProperty,
 		DiscountPercentageProperty,
 	},
+	SteamReviews: {
+		SteamReviewScoreDesc,
+	},
 }
 
 func ConnectReduxAssets(properties ...string) (kvas.ReduxAssets, error) {
@@ -484,6 +491,8 @@ func getPropertyValues(value interface{}, property string) []string {
 		return getScreenshots(value)
 	case SlugProperty:
 		return getSlice(value.(gog_integration.SlugGetter).GetSlug)
+	case SteamReviewScoreDesc:
+		return getSlice(value.(steam_integration.ReviewScoreDescGetter).GetReviewScoreDesc)
 	case StoreUrlProperty:
 		return getSlice(value.(gog_integration.StoreUrlGetter).GetStoreUrl)
 	case SupportUrlProperty:

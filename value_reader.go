@@ -6,6 +6,7 @@ import (
 	"github.com/arelate/gog_integration"
 	"github.com/arelate/steam_integration"
 	"github.com/boggydigital/kvas"
+	"golang.org/x/net/html"
 )
 
 type ValueReader struct {
@@ -152,6 +153,24 @@ func (vr *ValueReader) SteamAppReviews(id string) (steamAppReviews *steam_integr
 	return steamAppReviews, err
 }
 
+//SteamStorePage reads HTML content of the locally downloaded Steam store page and
+//return an HTML document for traversal. This approach is different from other data
+//types that have defined schemas.
+func (vr *ValueReader) SteamStorePage(id string) (steamStorePage *html.Node, err error) {
+	spReadCloser, err := vr.valueSet.Get(id)
+	if err != nil {
+		return nil, err
+	}
+
+	if spReadCloser == nil {
+		return nil, nil
+	}
+
+	defer spReadCloser.Close()
+
+	return html.Parse(spReadCloser)
+}
+
 func (vr *ValueReader) ReadValue(key string) (interface{}, error) {
 	switch vr.productType {
 	case StoreProducts:
@@ -182,6 +201,8 @@ func (vr *ValueReader) ReadValue(key string) (interface{}, error) {
 		return vr.SteamGetAppNewsResponse(key)
 	case SteamReviews:
 		return vr.SteamAppReviews(key)
+	case SteamStorePage:
+		return vr.SteamStorePage(key)
 	default:
 		return nil, fmt.Errorf("vangogh_values: cannot create %s value", vr.productType)
 	}

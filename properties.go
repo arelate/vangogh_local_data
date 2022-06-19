@@ -68,7 +68,8 @@ const (
 	LocalTagsProperty              = "local-tags"
 	SortProperty                   = "sort"
 	DescendingProperty             = "desc"
-	SteamReviewScoreDesc           = "steam-review-score-desc"
+	SteamReviewScoreDescProperty   = "steam-review-score-desc"
+	SteamTagsProperty              = "steam-tags"
 )
 
 func AllProperties() []string {
@@ -191,7 +192,8 @@ func PriceProperties() []string {
 func ExternalDataSourcesProperties() []string {
 	return []string{
 		SteamAppIdProperty,
-		SteamReviewScoreDesc,
+		SteamReviewScoreDescProperty,
+		SteamTagsProperty,
 	}
 }
 
@@ -222,7 +224,8 @@ func DigestibleProperties() []string {
 		LanguageCodeProperty,
 		OperatingSystemsProperty,
 		MissingVideoUrlProperty,
-		SteamReviewScoreDesc,
+		SteamReviewScoreDescProperty,
+		SteamTagsProperty,
 	}
 }
 
@@ -388,7 +391,10 @@ var supportedProperties = map[ProductType][]string{
 		DiscountPercentageProperty,
 	},
 	SteamReviews: {
-		SteamReviewScoreDesc,
+		SteamReviewScoreDescProperty,
+	},
+	SteamStorePage: {
+		SteamTagsProperty,
 	},
 }
 
@@ -491,7 +497,7 @@ func getPropertyValues(value interface{}, property string) []string {
 		return getScreenshots(value)
 	case SlugProperty:
 		return getSlice(value.(gog_integration.SlugGetter).GetSlug)
-	case SteamReviewScoreDesc:
+	case SteamReviewScoreDescProperty:
 		return getSlice(value.(steam_integration.ReviewScoreDescGetter).GetReviewScoreDesc)
 	case StoreUrlProperty:
 		return getSlice(value.(gog_integration.StoreUrlGetter).GetStoreUrl)

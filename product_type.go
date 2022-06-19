@@ -27,6 +27,7 @@ const (
 	SteamAppList
 	SteamAppNews
 	SteamReviews
+	SteamStorePage
 )
 
 var productTypeStrings = map[ProductType]string{
@@ -46,9 +47,10 @@ var productTypeStrings = map[ProductType]string{
 	OrderPage:        "order-page",
 	Orders:           "orders",
 	// Steam product types
-	SteamAppList: "steam-app-list",
-	SteamAppNews: "steam-app-news",
-	SteamReviews: "steam-reviews",
+	SteamAppList:   "steam-app-list",
+	SteamAppNews:   "steam-app-news",
+	SteamReviews:   "steam-reviews",
+	SteamStorePage: "steam-store-page",
 }
 
 //the list is intentionally scoped to very few types we anticipate
@@ -135,6 +137,9 @@ var detailMainProductTypes = map[ProductType][]ProductType{
 		StoreProducts,
 		AccountProducts,
 	},
+	SteamStorePage: {
+		StoreProducts,
+	},
 }
 
 func DetailProducts() []ProductType {
@@ -168,6 +173,7 @@ func LocalProducts() []ProductType {
 		Orders,
 		SteamAppNews,
 		SteamReviews,
+		SteamStorePage,
 	}
 }
 
@@ -204,12 +210,17 @@ var supportsGetItems = []ProductType{
 	SteamAppList,
 	SteamAppNews,
 	SteamReviews,
+	SteamStorePage,
 }
 
 // unsupported is used instead of supported in similar cases to
 // avoid all, but one repetitive data
 var unsupportedMedia = map[ProductType][]gog_integration.Media{
-	ApiProductsV2: {gog_integration.Movie},
+	ApiProductsV2:  {gog_integration.Movie},
+	SteamAppList:   {gog_integration.Movie},
+	SteamAppNews:   {gog_integration.Movie},
+	SteamReviews:   {gog_integration.Movie},
+	SteamStorePage: {gog_integration.Movie},
 }
 
 var supportsCopyFromTo = map[ProductType]ProductType{

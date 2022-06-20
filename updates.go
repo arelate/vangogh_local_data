@@ -17,6 +17,8 @@ var filterNewProductTypes = map[ProductType]bool{
 	SteamAppNews: true,
 	//reviews are not that interesting by themselves
 	SteamReviews: true,
+	//Steam product pages (currently) are only used for tags
+	SteamStorePage: true,
 }
 
 var filterUpdatedProductTypes = map[ProductType]bool{
@@ -35,6 +37,8 @@ var filterUpdatedProductTypes = map[ProductType]bool{
 	ApiProductsV2: true,
 	//reviews are not that interesting by themselves
 	SteamReviews: true,
+	//Steam product pages (currently) are only used for tags
+	SteamStorePage: true,
 }
 
 func Updates(mt gog_integration.Media, since int64) (map[string]map[string]bool, error) {

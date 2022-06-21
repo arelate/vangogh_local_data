@@ -3,22 +3,22 @@ package vangogh_local_data
 import (
 	"fmt"
 	"github.com/arelate/gog_integration"
-	"path"
 	"path/filepath"
 	"strings"
 )
 
 const (
-	relMetadataDir   = "metadata"
-	relItemsDir      = "items"
-	relImagesDir     = "images"
-	relVideosDir     = "videos"
-	relRecycleBinDir = "recycle_bin"
-	relDownloadsDir  = "downloads"
-	relExtrasDir     = "extras"
-	relDLCDir        = "dlc"
-	relChecksumsDir  = "checksums"
-	relReduxDir      = "_redux"
+	relMetadataDir        = "metadata"
+	relItemsDir           = "items"
+	relImagesDir          = "images"
+	relVideosDir          = "videos"
+	relVideoThumbnailsDir = "video_thumbnails"
+	relRecycleBinDir      = "recycle_bin"
+	relDownloadsDir       = "downloads"
+	relExtrasDir          = "extras"
+	relDLCDir             = "dlc"
+	relChecksumsDir       = "checksums"
+	relReduxDir           = "_redux"
 )
 
 var absRootDir = ""
@@ -33,6 +33,10 @@ func Pwd() string {
 
 func absVideosDir() string {
 	return filepath.Join(absRootDir, relVideosDir)
+}
+
+func absVideoThumbnailsDir() string {
+	return filepath.Join(absRootDir, relVideoThumbnailsDir)
 }
 
 func absImagesDir() string {
@@ -71,12 +75,20 @@ func AbsChecksumsDir() string {
 	return filepath.Join(absRootDir, relChecksumsDir)
 }
 
-func AbsDirByVideoId(videoId string) string {
+func absDirByVideoId(videoId string, absDir string) string {
 	if videoId == "" || len(videoId) < 1 {
 		return ""
 	}
 
-	return path.Join(absVideosDir(), strings.ToLower(videoId[0:1]))
+	return filepath.Join(absDir, strings.ToLower(videoId[0:1]))
+}
+
+func AbsVideoDirByVideoId(videoId string) string {
+	return absDirByVideoId(videoId, absVideosDir())
+}
+
+func AbsVideoThumbnailDirByVideoId(videoId string) string {
+	return absDirByVideoId(videoId, absVideoThumbnailsDir())
 }
 
 func AbsDirByImageId(imageId string) string {

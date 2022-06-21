@@ -129,6 +129,7 @@ var detailMainProductTypes = map[ProductType][]ProductType{
 		AccountProducts,
 		ApiProductsV2, // includes-games, is-included-in-games, requires-games, is-required-by-games
 	},
+	//Steam product types are updated on GOG.com store or account product changes
 	SteamAppNews: {
 		StoreProducts,
 		AccountProducts,
@@ -139,6 +140,7 @@ var detailMainProductTypes = map[ProductType][]ProductType{
 	},
 	SteamStorePage: {
 		StoreProducts,
+		AccountProducts,
 	},
 }
 

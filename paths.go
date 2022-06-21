@@ -43,7 +43,7 @@ func AbsLocalChecksumPath(p string) string {
 }
 
 func absLocalVideoPath(videoId string, videoDirDelegate func(videoId string) string) string {
-	videoPath := filepath.Join(videoDirDelegate(videoId), videoId+yt_urls.DefaultExt)
+	videoPath := filepath.Join(videoDirDelegate(videoId), videoId+yt_urls.DefaultVideoExt)
 
 	if _, err := os.Stat(videoPath); err == nil {
 		return videoPath

@@ -7,11 +7,11 @@ require (
 	github.com/arelate/steam_integration v0.1.13
 	github.com/boggydigital/kvas v0.3.13
 	github.com/boggydigital/nod v0.1.11
-	github.com/boggydigital/yt_urls v0.1.7
+	github.com/boggydigital/yt_urls v0.1.15
 	golang.org/x/exp v0.0.0-20220317015231-48e79f11773a
 )
 
 require (
 	github.com/boggydigital/match_node v0.1.5 // indirect
-	golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2 // indirect
+	golang.org/x/net v0.0.0-20220617184016-355a448f1bc9 // indirect
 )

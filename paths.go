@@ -42,8 +42,8 @@ func AbsLocalChecksumPath(p string) string {
 	return filepath.Join(dir, filename+xmlExt)
 }
 
-func absLocalVideoPath(videoId string, videoDirDelegate func(videoId string) string) string {
-	videoPath := filepath.Join(videoDirDelegate(videoId), videoId+yt_urls.DefaultVideoExt)
+func absLocalVideoPath(videoId string, videoDirDelegate func(videoId string) string, ext string) string {
+	videoPath := filepath.Join(videoDirDelegate(videoId), videoId+ext)
 
 	if _, err := os.Stat(videoPath); err == nil {
 		return videoPath
@@ -53,11 +53,11 @@ func absLocalVideoPath(videoId string, videoDirDelegate func(videoId string) str
 }
 
 func AbsLocalVideoPath(videoId string) string {
-	return absLocalVideoPath(videoId, AbsVideoDirByVideoId)
+	return absLocalVideoPath(videoId, AbsVideoDirByVideoId, yt_urls.DefaultVideoExt)
 }
 
 func AbsLocalThumbnailPath(videoId string) string {
-	return absLocalVideoPath(videoId, AbsThumbnailDirByVideoId)
+	return absLocalVideoPath(videoId, AbsThumbnailDirByVideoId, yt_urls.DefaultThumbnailExt)
 }
 
 func relRecycleBinPath(p string) (string, error) {

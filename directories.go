@@ -8,17 +8,17 @@ import (
 )
 
 const (
-	relMetadataDir        = "metadata"
-	relItemsDir           = "items"
-	relImagesDir          = "images"
-	relVideosDir          = "videos"
-	relVideoThumbnailsDir = "video_thumbnails"
-	relRecycleBinDir      = "recycle_bin"
-	relDownloadsDir       = "downloads"
-	relExtrasDir          = "extras"
-	relDLCDir             = "dlc"
-	relChecksumsDir       = "checksums"
-	relReduxDir           = "_redux"
+	relMetadataDir   = "metadata"
+	relItemsDir      = "items"
+	relImagesDir     = "images"
+	relVideosDir     = "videos"
+	relThumbnailsDir = "thumbnails"
+	relRecycleBinDir = "recycle_bin"
+	relDownloadsDir  = "downloads"
+	relExtrasDir     = "extras"
+	relDLCDir        = "dlc"
+	relChecksumsDir  = "checksums"
+	relReduxDir      = "_redux"
 )
 
 var absRootDir = ""
@@ -35,8 +35,8 @@ func absVideosDir() string {
 	return filepath.Join(absRootDir, relVideosDir)
 }
 
-func absVideoThumbnailsDir() string {
-	return filepath.Join(absRootDir, relVideoThumbnailsDir)
+func absThumbnailsDir() string {
+	return filepath.Join(absRootDir, relThumbnailsDir)
 }
 
 func absImagesDir() string {
@@ -87,8 +87,8 @@ func AbsVideoDirByVideoId(videoId string) string {
 	return absDirByVideoId(videoId, absVideosDir())
 }
 
-func AbsVideoThumbnailDirByVideoId(videoId string) string {
-	return absDirByVideoId(videoId, absVideoThumbnailsDir())
+func AbsThumbnailDirByVideoId(videoId string) string {
+	return absDirByVideoId(videoId, absThumbnailsDir())
 }
 
 func AbsDirByImageId(imageId string) string {

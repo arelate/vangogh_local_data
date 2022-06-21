@@ -56,8 +56,8 @@ func AbsLocalVideoPath(videoId string) string {
 	return absLocalVideoPath(videoId, AbsVideoDirByVideoId)
 }
 
-func AbsLocalVideoThumbnailPath(videoId string) string {
-	return absLocalVideoPath(videoId, AbsVideoThumbnailDirByVideoId)
+func AbsLocalThumbnailPath(videoId string) string {
+	return absLocalVideoPath(videoId, AbsThumbnailDirByVideoId)
 }
 
 func relRecycleBinPath(p string) (string, error) {

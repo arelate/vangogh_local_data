@@ -8,17 +8,18 @@ import (
 )
 
 const (
-	relMetadataDir   = "metadata"
-	relItemsDir      = "items"
-	relImagesDir     = "images"
-	relVideosDir     = "videos"
-	relThumbnailsDir = "thumbnails"
-	relRecycleBinDir = "recycle_bin"
-	relDownloadsDir  = "downloads"
-	relExtrasDir     = "extras"
-	relDLCDir        = "dlc"
-	relChecksumsDir  = "checksums"
-	relReduxDir      = "_redux"
+	relMetadataDir        = "metadata"
+	relItemsDir           = "items"
+	relImagesDir          = "images"
+	relImageThumbnailsDir = "image_thumbnails"
+	relVideosDir          = "videos"
+	relVideoThumbnailsDir = "video_thumbnails"
+	relRecycleBinDir      = "recycle_bin"
+	relDownloadsDir       = "downloads"
+	relExtrasDir          = "extras"
+	relDLCDir             = "dlc"
+	relChecksumsDir       = "checksums"
+	relReduxDir           = "_redux"
 )
 
 var absRootDir = ""
@@ -35,12 +36,16 @@ func absVideosDir() string {
 	return filepath.Join(absRootDir, relVideosDir)
 }
 
-func absThumbnailsDir() string {
-	return filepath.Join(absRootDir, relThumbnailsDir)
+func absVideoThumbnailsDir() string {
+	return filepath.Join(absRootDir, relVideoThumbnailsDir)
 }
 
 func absImagesDir() string {
 	return filepath.Join(absRootDir, relImagesDir)
+}
+
+func absImageThumbnailsDir() string {
+	return filepath.Join(absRootDir, relImageThumbnailsDir)
 }
 
 func absItemsDir() string {
@@ -75,23 +80,23 @@ func AbsChecksumsDir() string {
 	return filepath.Join(absRootDir, relChecksumsDir)
 }
 
-func absDirByVideoId(videoId string, absDir string) string {
+func absDirByVideoId(videoId string, absDirDelegate func() string) string {
 	if videoId == "" || len(videoId) < 1 {
 		return ""
 	}
 
-	return filepath.Join(absDir, strings.ToLower(videoId[0:1]))
+	return filepath.Join(absDirDelegate(), strings.ToLower(videoId[0:1]))
 }
 
 func AbsVideoDirByVideoId(videoId string) string {
-	return absDirByVideoId(videoId, absVideosDir())
+	return absDirByVideoId(videoId, absVideosDir)
 }
 
-func AbsThumbnailDirByVideoId(videoId string) string {
-	return absDirByVideoId(videoId, absThumbnailsDir())
+func AbsVideoThumbnailsDirByVideoId(videoId string) string {
+	return absDirByVideoId(videoId, absVideoThumbnailsDir)
 }
 
-func AbsDirByImageId(imageId string) string {
+func absDirByImageId(imageId string, absDirDelegate func() string) string {
 	if imageId == "" {
 		return ""
 	}
@@ -102,7 +107,15 @@ func AbsDirByImageId(imageId string) string {
 		return ""
 	}
 
-	return filepath.Join(absImagesDir(), imageId[0:2])
+	return filepath.Join(absDirDelegate(), imageId[0:2])
+}
+
+func AbsImagesDirByImageId(imageId string) string {
+	return absDirByImageId(imageId, absImagesDir)
+}
+
+func AbsImageThumbnailsDirByImageId(imageId string) string {
+	return absDirByImageId(imageId, absImageThumbnailsDir)
 }
 
 func AbsItemPath(path string) string {

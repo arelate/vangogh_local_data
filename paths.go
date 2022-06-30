@@ -9,8 +9,11 @@ import (
 	"strings"
 )
 
-const xmlExt = ".xml"
-const skipListFilename = "skiplist.txt"
+const (
+	xmlExt             = ".xml"
+	skipListFilename   = "skiplist.txt"
+	imageThumbnailsExt = ".gif"
+)
 
 var validatedExtensions = map[string]bool{
 	".exe": true,
@@ -56,8 +59,8 @@ func AbsLocalVideoPath(videoId string) string {
 	return absLocalVideoPath(videoId, AbsVideoDirByVideoId, yt_urls.DefaultVideoExt)
 }
 
-func AbsLocalThumbnailPath(videoId string) string {
-	return absLocalVideoPath(videoId, AbsThumbnailDirByVideoId, yt_urls.DefaultThumbnailExt)
+func AbsLocalVideoThumbnailPath(videoId string) string {
+	return absLocalVideoPath(videoId, AbsVideoThumbnailsDirByVideoId, yt_urls.DefaultThumbnailExt)
 }
 
 func relRecycleBinPath(p string) (string, error) {
@@ -68,19 +71,20 @@ func AbsSkipListPath() string {
 	return filepath.Join(absRootDir, skipListFilename)
 }
 
-func AbsLocalImagePath(imageId string) string {
-	dir := AbsDirByImageId(imageId)
+func absLocalImagePath(imageId string, imageDirDelegate func(imageId string) string, ext string) string {
+	imagePath := filepath.Join(imageDirDelegate(imageId), imageId+ext)
 
-	jpgPath := filepath.Join(dir, imageId+gog_integration.JpgExt)
-
-	if _, err := os.Stat(jpgPath); err == nil {
-		return jpgPath
-	} else if os.IsNotExist(err) {
-		pngPath := filepath.Join(dir, imageId+gog_integration.PngExt)
-		if _, err := os.Stat(pngPath); err == nil {
-			return pngPath
-		}
+	if _, err := os.Stat(imagePath); err == nil {
+		return imagePath
+	} else {
+		return ""
 	}
+}
 
-	return ""
+func AbsLocalImagePath(imageId string) string {
+	return absLocalImagePath(imageId, AbsImagesDirByImageId, gog_integration.JpgExt)
+}
+
+func AbsLocalImageThumbnailPath(imageId string) string {
+	return absLocalImagePath(imageId, AbsImageThumbnailsDirByImageId, imageThumbnailsExt)
 }

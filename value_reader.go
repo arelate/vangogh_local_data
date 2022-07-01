@@ -63,6 +63,10 @@ func (vr *ValueReader) Has(id string) bool {
 	return vr.valueSet.Has(id)
 }
 
+func (vr *ValueReader) Set(id string, data io.Reader) error {
+	return vr.valueSet.Set(id, data)
+}
+
 func (vr *ValueReader) Cut(id string) (bool, error) {
 	return vr.valueSet.Cut(id)
 }

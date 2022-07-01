@@ -25,10 +25,6 @@ func LocalImageIds() (map[string]bool, error) {
 	return walkFiles(absImagesDir(), filenameAsId)
 }
 
-func LocalImageThumbnailIds() (map[string]bool, error) {
-	return walkFiles(absImageThumbnailsDir(), filenameAsId)
-}
-
 func LocalVideoIds() (map[string]bool, error) {
 	return walkFiles(absVideosDir(), filenameAsId)
 }

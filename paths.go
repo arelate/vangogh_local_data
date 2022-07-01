@@ -84,7 +84,3 @@ func absLocalImagePath(imageId string, imageDirDelegate func(imageId string) str
 func AbsLocalImagePath(imageId string) string {
 	return absLocalImagePath(imageId, AbsImagesDirByImageId, gog_integration.JpgExt)
 }
-
-func AbsLocalImageThumbnailPath(imageId string) string {
-	return absLocalImagePath(imageId, AbsImageThumbnailsDirByImageId, imageThumbnailsExt)
-}

@@ -11,7 +11,6 @@ const (
 	relMetadataDir        = "metadata"
 	relItemsDir           = "items"
 	relImagesDir          = "images"
-	relImageThumbnailsDir = "image_thumbnails"
 	relVideosDir          = "videos"
 	relVideoThumbnailsDir = "video_thumbnails"
 	relRecycleBinDir      = "recycle_bin"
@@ -42,10 +41,6 @@ func absVideoThumbnailsDir() string {
 
 func absImagesDir() string {
 	return filepath.Join(absRootDir, relImagesDir)
-}
-
-func absImageThumbnailsDir() string {
-	return filepath.Join(absRootDir, relImageThumbnailsDir)
 }
 
 func absItemsDir() string {
@@ -112,10 +107,6 @@ func absDirByImageId(imageId string, absDirDelegate func() string) string {
 
 func AbsImagesDirByImageId(imageId string) string {
 	return absDirByImageId(imageId, absImagesDir)
-}
-
-func AbsImageThumbnailsDirByImageId(imageId string) string {
-	return absDirByImageId(imageId, absImageThumbnailsDir)
 }
 
 func AbsItemPath(path string) string {

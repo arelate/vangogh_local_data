@@ -9,6 +9,8 @@ type ProductType int
 
 const (
 	UnknownProductType ProductType = iota
+	// vangogh dehydrated image
+	DehydratedImages
 	// GOG.com product types
 	StorePage
 	StoreProducts
@@ -32,6 +34,8 @@ const (
 
 var productTypeStrings = map[ProductType]string{
 	UnknownProductType: "unknown-product-type",
+	// vangogh dehydrated images
+	DehydratedImages: "dehydrated-images",
 	// GOG.com product types
 	StorePage:        "store-page",
 	StoreProducts:    "store-products",

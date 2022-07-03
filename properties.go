@@ -70,6 +70,7 @@ const (
 	DescendingProperty             = "desc"
 	SteamReviewScoreDescProperty   = "steam-review-score-desc"
 	SteamTagsProperty              = "steam-tags"
+	DehydratedImageProperty        = "dehydrated-image"
 )
 
 func AllProperties() []string {
@@ -197,6 +198,12 @@ func ExternalDataSourcesProperties() []string {
 	}
 }
 
+func MediaContentProperties() []string {
+	return []string{
+		DehydratedImageProperty,
+	}
+}
+
 func ReduxProperties() []string {
 	all := AllTextProperties()
 	all = append(all, VideoIdProperties()...)
@@ -209,6 +216,7 @@ func ReduxProperties() []string {
 	all = append(all, AdvancedProductProperties()...)
 	all = append(all, PriceProperties()...)
 	all = append(all, ExternalDataSourcesProperties()...)
+	all = append(all, MediaContentProperties()...)
 	return all
 }
 

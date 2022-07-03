@@ -176,26 +176,6 @@ func (vr *ValueReader) SteamStorePage(id string) (steamStorePage *html.Node, err
 	return html.Parse(spReadCloser)
 }
 
-func (vr *ValueReader) DehydratedImage(id string) (dehydratedImage string, err error) {
-	spReadCloser, err := vr.valueSet.Get(id)
-	if err != nil {
-		return "", err
-	}
-
-	if spReadCloser == nil {
-		return "", nil
-	}
-
-	defer spReadCloser.Close()
-
-	bts, err := io.ReadAll(spReadCloser)
-	if err != nil {
-		return "", err
-	}
-
-	return string(bts), nil
-}
-
 func (vr *ValueReader) ReadValue(key string) (interface{}, error) {
 	switch vr.productType {
 	case StoreProducts:
@@ -228,8 +208,6 @@ func (vr *ValueReader) ReadValue(key string) (interface{}, error) {
 		return vr.SteamAppReviews(key)
 	case SteamStorePage:
 		return vr.SteamStorePage(key)
-	case DehydratedImages:
-		return vr.DehydratedImage(key)
 	default:
 		return nil, fmt.Errorf("vangogh_values: cannot create %s value", vr.productType)
 	}

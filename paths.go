@@ -85,6 +85,10 @@ func AbsLocalImagePath(imageId string) string {
 	return absLocalImagePath(imageId, AbsImagesDirByImageId, gog_integration.JpgExt)
 }
 
+func AbsTempPath(f string) string {
+	return filepath.Join(absTempDir, f)
+}
+
 func AbsCookiePath() string {
-	return filepath.Join(absTempDir, cookiesFilename)
+	return AbsTempPath(cookiesFilename)
 }

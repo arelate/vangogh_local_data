@@ -254,6 +254,12 @@ func (vr *ValueReader) CopyToType(id string, toPt ProductType, toMt gog_integrat
 		return nil
 	}
 
+	//destination type already has item with that id,
+	//not going to overwrite
+	if vsToType.Has(id) {
+		return nil
+	}
+
 	rc, err := vr.valueSet.Get(id)
 	if err != nil {
 		return err

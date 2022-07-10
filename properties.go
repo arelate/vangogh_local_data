@@ -71,6 +71,10 @@ const (
 	SteamReviewScoreDescProperty   = "steam-review-score-desc"
 	SteamTagsProperty              = "steam-tags"
 	DehydratedImageProperty        = "dehydrated-image"
+
+	// property values
+	TrueValue  = "true"
+	FalseValue = "false"
 )
 
 func AllProperties() []string {
@@ -527,9 +531,9 @@ func getPropertyValues(value interface{}, property string) []string {
 func boolSlice(confirmer func() bool) []string {
 	facts := make([]string, 0)
 	if confirmer != nil {
-		val := "false"
+		val := FalseValue
 		if confirmer() {
-			val = "true"
+			val = TrueValue
 		}
 		facts = append(facts, val)
 	}

@@ -21,7 +21,10 @@ const (
 	relReduxDir           = "_redux"
 )
 
-var absRootDir = ""
+var (
+	absRootDir = ""
+	absTempDir = ""
+)
 
 func ChRoot(rd string) {
 	absRootDir = rd
@@ -29,6 +32,14 @@ func ChRoot(rd string) {
 
 func Pwd() string {
 	return absRootDir
+}
+
+func SetTempDir(d string) {
+	absTempDir = d
+}
+
+func AbsTempDir() string {
+	return absTempDir
 }
 
 func absVideosDir() string {

@@ -10,9 +10,9 @@ import (
 )
 
 const (
-	xmlExt             = ".xml"
-	skipListFilename   = "skiplist.txt"
-	imageThumbnailsExt = ".gif"
+	xmlExt           = ".xml"
+	skipListFilename = "skiplist.txt"
+	cookiesFilename  = "cookies.txt"
 )
 
 var validatedExtensions = map[string]bool{
@@ -83,4 +83,8 @@ func absLocalImagePath(imageId string, imageDirDelegate func(imageId string) str
 
 func AbsLocalImagePath(imageId string) string {
 	return absLocalImagePath(imageId, AbsImagesDirByImageId, gog_integration.JpgExt)
+}
+
+func AbsCookiePath() string {
+	return filepath.Join(absTempDir, cookiesFilename)
 }

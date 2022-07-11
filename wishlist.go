@@ -37,6 +37,13 @@ func AddToLocalWishlist(
 			return processedIds, err
 		}
 
+		// remove "false" reduction
+		if rxa.HasVal(WishlistedProperty, id, FalseValue) {
+			if err := rxa.CutVal(WishlistedProperty, id, FalseValue); err != nil {
+				return processedIds, err
+			}
+		}
+
 		if !rxa.HasVal(WishlistedProperty, id, TrueValue) {
 			if err := rxa.AddVal(WishlistedProperty, id, TrueValue); err != nil {
 				return processedIds, err
@@ -65,8 +72,16 @@ func RemoveFromLocalWishlist(
 			continue
 		}
 
-		if err := rxa.CutVal(WishlistedProperty, id, "true"); err != nil {
-			return processedIds, err
+		if rxa.HasVal(WishlistedProperty, id, TrueValue) {
+			if err := rxa.CutVal(WishlistedProperty, id, TrueValue); err != nil {
+				return processedIds, err
+			}
+		}
+
+		if !rxa.HasVal(WishlistedProperty, id, FalseValue) {
+			if err := rxa.AddVal(WishlistedProperty, id, FalseValue); err != nil {
+				return processedIds, err
+			}
 		}
 
 		processedIds = append(processedIds, id)

@@ -20,7 +20,12 @@ func ValueFromUrl(u *url.URL, arg string) string {
 func ValuesFromUrl(u *url.URL, arg string) []string {
 	if FlagFromUrl(u, arg) {
 		val := ValueFromUrl(u, arg)
-		return strings.Split(val, ",")
+		values := strings.Split(val, ",")
+		//account for empty strings
+		if len(values) == 1 && values[0] == "" {
+			values = []string{}
+		}
+		return values
 	}
 	return nil
 }

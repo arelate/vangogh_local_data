@@ -1,6 +1,8 @@
 package vangogh_local_data
 
-import "github.com/boggydigital/nod"
+import (
+	"github.com/boggydigital/nod"
+)
 
 func AddLocalTag(ids []string, tagName string, tpw nod.TotalProgressWriter) error {
 	rxa, err := ConnectReduxAssets(LocalTagsProperty)
@@ -56,4 +58,8 @@ func RemoveLocalTag(ids []string, tagName string, tpw nod.TotalProgressWriter) e
 	}
 
 	return nil
+}
+
+func DiffLocalTags(id string, newTags []string) (add []string, rem []string, err error) {
+	return diffTagProperty(LocalTagsProperty, id, newTags)
 }

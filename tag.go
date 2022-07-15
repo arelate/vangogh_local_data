@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/arelate/gog_integration"
-	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
+	"golang.org/x/exp/slices"
 	"net/http"
 	"net/url"
 )
@@ -24,8 +24,10 @@ func postTagResp(httpClient *http.Client, url *url.URL, respVal interface{}) err
 	return json.NewDecoder(resp.Body).Decode(&respVal)
 }
 
-func TagIdByName(tagName string, rxa kvas.ReduxAssets) (string, error) {
-	if err := rxa.IsSupported(TagNameProperty); err != nil {
+func TagIdByName(tagName string) (string, error) {
+
+	rxa, err := ConnectReduxAssets(TagNameProperty)
+	if err != nil {
 		return "", err
 	}
 
@@ -45,9 +47,10 @@ func TagIdByName(tagName string, rxa kvas.ReduxAssets) (string, error) {
 	return tagId, nil
 }
 
-func CreateTag(httpClient *http.Client, tagName string, rxa kvas.ReduxAssets) error {
+func CreateTag(httpClient *http.Client, tagName string) error {
 
-	if err := rxa.IsSupported(TagNameProperty); err != nil {
+	rxa, err := ConnectReduxAssets(TagNameProperty)
+	if err != nil {
 		return err
 	}
 
@@ -69,9 +72,10 @@ func CreateTag(httpClient *http.Client, tagName string, rxa kvas.ReduxAssets) er
 	return nil
 }
 
-func DeleteTag(httpClient *http.Client, tagName, tagId string, rxa kvas.ReduxAssets) error {
+func DeleteTag(httpClient *http.Client, tagName, tagId string) error {
 
-	if err := rxa.IsSupported(TagNameProperty); err != nil {
+	rxa, err := ConnectReduxAssets(TagNameProperty)
+	if err != nil {
 		return err
 	}
 
@@ -95,20 +99,20 @@ func DeleteTag(httpClient *http.Client, tagName, tagId string, rxa kvas.ReduxAss
 
 func AddTag(
 	httpClient *http.Client,
-	idSet map[string]bool,
+	ids []string,
 	tagId string,
-	rxa kvas.ReduxAssets,
 	tpw nod.TotalProgressWriter) error {
 
-	if err := rxa.IsSupported(TagIdProperty); err != nil {
+	rxa, err := ConnectReduxAssets(TagIdProperty)
+	if err != nil {
 		return err
 	}
 
 	if tpw != nil {
-		tpw.TotalInt(len(idSet))
+		tpw.TotalInt(len(ids))
 	}
 
-	for id := range idSet {
+	for _, id := range ids {
 
 		if rxa.HasVal(TagIdProperty, id, tagId) {
 			if tpw != nil {
@@ -149,20 +153,20 @@ func AddTag(
 
 func RemoveTag(
 	httpClient *http.Client,
-	idSet map[string]bool,
+	ids []string,
 	tagId string,
-	rxa kvas.ReduxAssets,
 	tpw nod.TotalProgressWriter) error {
 
-	if err := rxa.IsSupported(TagIdProperty); err != nil {
+	rxa, err := ConnectReduxAssets(TagIdProperty)
+	if err != nil {
 		return err
 	}
 
 	if tpw != nil {
-		tpw.TotalInt(len(idSet))
+		tpw.TotalInt(len(ids))
 	}
 
-	for id := range idSet {
+	for _, id := range ids {
 
 		if !rxa.HasVal(TagIdProperty, id, tagId) {
 			if tpw != nil {
@@ -199,4 +203,41 @@ func RemoveTag(
 	}
 
 	return nil
+}
+
+func diffTagProperty(
+	tagProperty string,
+	id string,
+	newTags []string) (add []string, rem []string, err error) {
+
+	add = make([]string, 0)
+	rem = make([]string, 0)
+
+	rxa, err := ConnectReduxAssets(tagProperty)
+	if err != nil {
+		return add, rem, err
+	}
+
+	currentVals, ok := rxa.GetAllUnchangedValues(tagProperty, id)
+	if !ok {
+		return add, rem, err
+	}
+
+	for _, tag := range newTags {
+		if !slices.Contains(currentVals, tag) {
+			add = append(add, tag)
+		}
+	}
+
+	for _, tag := range currentVals {
+		if !slices.Contains(newTags, tag) {
+			rem = append(rem, tag)
+		}
+	}
+
+	return add, rem, nil
+}
+
+func DiffTags(id string, newTags []string) (add []string, rem []string, err error) {
+	return diffTagProperty(TagIdProperty, id, newTags)
 }

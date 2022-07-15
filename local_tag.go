@@ -47,7 +47,7 @@ func AddLocalTags(ids, tags []string, tpw nod.TotalProgressWriter) error {
 	return nil
 }
 
-func RemoveLocalTag(ids, tags []string, tpw nod.TotalProgressWriter) error {
+func RemoveLocalTags(ids, tags []string, tpw nod.TotalProgressWriter) error {
 	rxa, err := ConnectReduxAssets(LocalTagsProperty)
 	if err != nil {
 		return err

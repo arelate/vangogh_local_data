@@ -1,59 +1,65 @@
 package vangogh_local_data
 
 import (
+	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
 )
 
-func AddLocalTag(ids []string, tagName string, tpw nod.TotalProgressWriter) error {
+func addLocalTag(id, tag string, rxa kvas.ReduxAssets, tpw nod.TotalProgressWriter) error {
+	if !rxa.HasVal(LocalTagsProperty, id, tag) {
+		if err := rxa.AddVal(LocalTagsProperty, id, tag); err != nil {
+			nod.Increment(tpw)
+			return err
+		}
+	}
+	nod.Increment(tpw)
+	return nil
+}
+
+func removeLocalTag(id, tag string, rxa kvas.ReduxAssets, tpw nod.TotalProgressWriter) error {
+	if rxa.HasVal(LocalTagsProperty, id, tag) {
+		if err := rxa.CutVal(LocalTagsProperty, id, tag); err != nil {
+			nod.Increment(tpw)
+			return err
+		}
+	}
+
+	nod.Increment(tpw)
+	return nil
+}
+
+func AddLocalTags(ids, tags []string, tpw nod.TotalProgressWriter) error {
 	rxa, err := ConnectReduxAssets(LocalTagsProperty)
 	if err != nil {
 		return err
 	}
 
-	if tpw != nil {
-		tpw.TotalInt(len(ids))
-	}
+	nod.TotalInt(tpw, len(ids)*len(tags))
 
 	for _, id := range ids {
-		if !rxa.HasVal(LocalTagsProperty, id, tagName) {
-			if err := rxa.AddVal(LocalTagsProperty, id, tagName); err != nil {
-				if tpw != nil {
-					tpw.Increment()
-				}
+		for _, tag := range tags {
+			if err := addLocalTag(id, tag, rxa, tpw); err != nil {
 				return err
 			}
-		}
-
-		if tpw != nil {
-			tpw.Increment()
 		}
 	}
 
 	return nil
 }
 
-func RemoveLocalTag(ids []string, tagName string, tpw nod.TotalProgressWriter) error {
+func RemoveLocalTag(ids, tags []string, tpw nod.TotalProgressWriter) error {
 	rxa, err := ConnectReduxAssets(LocalTagsProperty)
 	if err != nil {
 		return err
 	}
 
-	if tpw != nil {
-		tpw.TotalInt(len(ids))
-	}
+	nod.TotalInt(tpw, len(ids)*len(tags))
 
 	for _, id := range ids {
-		if rxa.HasVal(LocalTagsProperty, id, tagName) {
-			if err := rxa.CutVal(LocalTagsProperty, id, tagName); err != nil {
-				if tpw != nil {
-					tpw.Increment()
-				}
+		for _, tag := range tags {
+			if err := removeLocalTag(id, tag, rxa, tpw); err != nil {
 				return err
 			}
-		}
-
-		if tpw != nil {
-			tpw.Increment()
 		}
 	}
 

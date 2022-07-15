@@ -97,10 +97,9 @@ func DeleteTag(httpClient *http.Client, tagName, tagId string) error {
 	return nil
 }
 
-func AddTag(
+func AddTags(
 	httpClient *http.Client,
-	ids []string,
-	tagId string,
+	ids, tags []string,
 	tpw nod.TotalProgressWriter) error {
 
 	rxa, err := ConnectReduxAssets(TagIdProperty)
@@ -108,53 +107,44 @@ func AddTag(
 		return err
 	}
 
-	if tpw != nil {
-		tpw.TotalInt(len(ids))
-	}
+	nod.TotalInt(tpw, len(ids)*len(tags))
 
 	for _, id := range ids {
+		for _, tag := range tags {
 
-		if rxa.HasVal(TagIdProperty, id, tagId) {
-			if tpw != nil {
-				tpw.Increment()
+			if rxa.HasVal(TagIdProperty, id, tag) {
+				nod.Increment(tpw)
+				continue
 			}
-			continue
-		}
 
-		addTagUrl := gog_integration.AddTagUrl(id, tagId)
-		var artResp gog_integration.AddRemoveTagResp
-		if err := postTagResp(httpClient, addTagUrl, &artResp); err != nil {
-			if tpw != nil {
-				tpw.Increment()
+			addTagUrl := gog_integration.AddTagUrl(id, tag)
+			var artResp gog_integration.AddRemoveTagResp
+			if err := postTagResp(httpClient, addTagUrl, &artResp); err != nil {
+				if tpw != nil {
+					tpw.Increment()
+				}
+				return err
 			}
-			return err
-		}
-		if !artResp.Success {
-			if tpw != nil {
-				tpw.Increment()
+			if !artResp.Success {
+				nod.Increment(tpw)
+				return fmt.Errorf("failed to add tag %s", tag)
 			}
-			return fmt.Errorf("failed to add tag %s", tagId)
-		}
 
-		if err := rxa.AddVal(TagIdProperty, id, tagId); err != nil {
-			if tpw != nil {
-				tpw.Increment()
+			if err := rxa.AddVal(TagIdProperty, id, tag); err != nil {
+				nod.Increment(tpw)
+				return err
 			}
-			return err
-		}
 
-		if tpw != nil {
-			tpw.Increment()
+			nod.Increment(tpw)
 		}
 	}
 
 	return nil
 }
 
-func RemoveTag(
+func RemoveTags(
 	httpClient *http.Client,
-	ids []string,
-	tagId string,
+	ids, tags []string,
 	tpw nod.TotalProgressWriter) error {
 
 	rxa, err := ConnectReduxAssets(TagIdProperty)
@@ -162,43 +152,33 @@ func RemoveTag(
 		return err
 	}
 
-	if tpw != nil {
-		tpw.TotalInt(len(ids))
-	}
+	nod.TotalInt(tpw, len(ids)*len(tags))
 
 	for _, id := range ids {
+		for _, tag := range tags {
 
-		if !rxa.HasVal(TagIdProperty, id, tagId) {
-			if tpw != nil {
-				tpw.Increment()
+			if !rxa.HasVal(TagIdProperty, id, tag) {
+				nod.Increment(tpw)
+				continue
 			}
-			continue
-		}
 
-		removeTagUrl := gog_integration.RemoveTagUrl(id, tagId)
-		var artResp gog_integration.AddRemoveTagResp
-		if err := postTagResp(httpClient, removeTagUrl, &artResp); err != nil {
-			if tpw != nil {
-				tpw.Increment()
+			removeTagUrl := gog_integration.RemoveTagUrl(id, tag)
+			var artResp gog_integration.AddRemoveTagResp
+			if err := postTagResp(httpClient, removeTagUrl, &artResp); err != nil {
+				nod.Increment(tpw)
+				return err
 			}
-			return err
-		}
-		if !artResp.Success {
-			if tpw != nil {
-				tpw.Increment()
+			if !artResp.Success {
+				nod.Increment(tpw)
+				return fmt.Errorf("failed to remove tag %s", tag)
 			}
-			return fmt.Errorf("failed to remove tag %s", tagId)
-		}
 
-		if err := rxa.CutVal(TagIdProperty, id, tagId); err != nil {
-			if tpw != nil {
-				tpw.Increment()
+			if err := rxa.CutVal(TagIdProperty, id, tag); err != nil {
+				nod.Increment(tpw)
+				return err
 			}
-			return err
-		}
 
-		if tpw != nil {
-			tpw.Increment()
+			nod.Increment(tpw)
 		}
 	}
 

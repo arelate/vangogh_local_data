@@ -198,10 +198,8 @@ func diffTagProperty(
 		return add, rem, err
 	}
 
-	currentVals, ok := rxa.GetAllUnchangedValues(tagProperty, id)
-	if !ok {
-		return add, rem, err
-	}
+	//we need empty slice to detect new values
+	currentVals, _ := rxa.GetAllUnchangedValues(tagProperty, id)
 
 	for _, tag := range newTags {
 		if !slices.Contains(currentVals, tag) {

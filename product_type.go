@@ -159,7 +159,7 @@ func GOGDetailProducts() []ProductType {
 	return detailProducts(gogDetailMainProductTypes)
 }
 
-func SteamDetailsProducts() []ProductType {
+func SteamDetailProducts() []ProductType {
 	return detailProducts(steamDetailMainProductTypes)
 }
 
@@ -179,7 +179,7 @@ func GOGRemoteProducts() []ProductType {
 }
 
 func SteamRemoteProducts() []ProductType {
-	return SteamDetailsProducts()
+	return SteamDetailProducts()
 }
 
 func LocalProducts() []ProductType {

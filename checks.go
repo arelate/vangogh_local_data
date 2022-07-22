@@ -15,8 +15,12 @@ func IsArrayProduct(pt ProductType) bool {
 	return containsProductType(ArrayProducts(), pt)
 }
 
-func IsDetailProduct(pt ProductType) bool {
-	return containsProductType(DetailProducts(), pt)
+func IsGOGDetailProduct(pt ProductType) bool {
+	return containsProductType(GOGDetailProducts(), pt)
+}
+
+func IsSteamDetailProduct(pt ProductType) bool {
+	return containsProductType(SteamDetailProducts(), pt)
 }
 
 func IsFastPageFetchProduct(pt ProductType) bool {

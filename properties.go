@@ -72,6 +72,7 @@ const (
 	SteamTagsProperty              = "steam-tags"
 	DehydratedImageProperty        = "dehydrated-image"
 	SyncEventsProperty             = "sync-events"
+	LastSyncUpdatesProperty        = "last-sync-updates"
 
 	// property values
 	TrueValue  = "true"

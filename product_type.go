@@ -163,11 +163,21 @@ func SteamDetailProducts() []ProductType {
 	return detailProducts(steamDetailMainProductTypes)
 }
 
-func GOGMainProductTypes(pt ProductType) []ProductType {
+func MainProductTypes(pt ProductType) []ProductType {
+	if IsGOGDetailProduct(pt) {
+		return gogMainProductTypes(pt)
+	} else if IsSteamDetailProduct(pt) {
+		return steamMainProductTypes(pt)
+	} else {
+		return nil
+	}
+}
+
+func gogMainProductTypes(pt ProductType) []ProductType {
 	return gogDetailMainProductTypes[pt]
 }
 
-func SteamMainProductTypes(pt ProductType) []ProductType {
+func steamMainProductTypes(pt ProductType) []ProductType {
 	return steamDetailMainProductTypes[pt]
 }
 

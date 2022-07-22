@@ -117,7 +117,7 @@ func FastPageFetchProducts() []ProductType {
 	}
 }
 
-var detailMainProductTypes = map[ProductType][]ProductType{
+var gogDetailMainProductTypes = map[ProductType][]ProductType{
 	Details: {LicenceProducts, AccountProducts},
 	ApiProductsV1: {
 		StoreProducts,
@@ -129,6 +129,9 @@ var detailMainProductTypes = map[ProductType][]ProductType{
 		AccountProducts,
 		ApiProductsV2, // includes-games, is-included-in-games, requires-games, is-required-by-games
 	},
+}
+
+var steamDetailMainProductTypes = map[ProductType][]ProductType{
 	//Steam product types are updated on GOG.com store or account product changes
 	SteamAppNews: {
 		StoreProducts,
@@ -144,23 +147,39 @@ var detailMainProductTypes = map[ProductType][]ProductType{
 	},
 }
 
-func DetailProducts() []ProductType {
-	pts := make([]ProductType, 0, len(detailMainProductTypes))
-	for pt := range detailMainProductTypes {
+func detailProducts(dmp map[ProductType][]ProductType) []ProductType {
+	pts := make([]ProductType, 0, len(dmp))
+	for pt := range dmp {
 		pts = append(pts, pt)
 	}
 	return pts
 }
 
-func MainProductTypes(pt ProductType) []ProductType {
-	return detailMainProductTypes[pt]
+func GOGDetailProducts() []ProductType {
+	return detailProducts(gogDetailMainProductTypes)
 }
 
-func RemoteProducts() []ProductType {
+func SteamDetailsProducts() []ProductType {
+	return detailProducts(steamDetailMainProductTypes)
+}
+
+func GOGMainProductTypes(pt ProductType) []ProductType {
+	return gogDetailMainProductTypes[pt]
+}
+
+func SteamMainProductTypes(pt ProductType) []ProductType {
+	return steamDetailMainProductTypes[pt]
+}
+
+func GOGRemoteProducts() []ProductType {
 	remote := make([]ProductType, 0)
 	remote = append(remote, PagedProducts()...)
 	remote = append(remote, ArrayProducts()...)
-	return append(remote, DetailProducts()...)
+	return append(remote, GOGDetailProducts()...)
+}
+
+func SteamRemoteProducts() []ProductType {
+	return SteamDetailsProducts()
 }
 
 func LocalProducts() []ProductType {

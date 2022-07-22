@@ -71,6 +71,7 @@ const (
 	SteamReviewScoreDescProperty   = "steam-review-score-desc"
 	SteamTagsProperty              = "steam-tags"
 	DehydratedImageProperty        = "dehydrated-image"
+	SyncEventsProperty             = "sync-events"
 
 	// property values
 	TrueValue  = "true"

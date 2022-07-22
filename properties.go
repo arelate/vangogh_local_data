@@ -210,6 +210,12 @@ func MediaContentProperties() []string {
 	}
 }
 
+func SyncUpdatesProperties() []string {
+	return []string{
+		LastSyncUpdatesProperty,
+	}
+}
+
 func ReduxProperties() []string {
 	all := AllTextProperties()
 	all = append(all, VideoIdProperties()...)
@@ -223,6 +229,7 @@ func ReduxProperties() []string {
 	all = append(all, PriceProperties()...)
 	all = append(all, ExternalDataSourcesProperties()...)
 	all = append(all, MediaContentProperties()...)
+	all = append(all, SyncUpdatesProperties()...)
 	return all
 }
 

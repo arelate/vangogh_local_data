@@ -28,6 +28,7 @@ const (
 	TagNameProperty                = "tag-name"
 	VideoIdProperty                = "video-id"
 	MissingVideoUrlProperty        = "missing-video-url"
+	MissingVideoThumbnailProperty  = "missing-video-thumbnail"
 	OperatingSystemsProperty       = "os"
 	LanguageCodeProperty           = "lang-code"
 	LanguageNameProperty           = "lang-name"
@@ -71,6 +72,7 @@ const (
 	SteamReviewScoreDescProperty   = "steam-review-score-desc"
 	SteamTagsProperty              = "steam-tags"
 	DehydratedImageProperty        = "dehydrated-image"
+	MissingDehydratedImageProperty = "missing-dehydrated-image"
 	SyncEventsProperty             = "sync-events"
 	LastSyncUpdatesProperty        = "last-sync-updates"
 

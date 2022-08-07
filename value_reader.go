@@ -88,6 +88,11 @@ func (vr *ValueReader) StoreProduct(id string) (storeProduct *gog_integration.St
 	return storeProduct, err
 }
 
+func (vr *ValueReader) CatalogProduct(id string) (catalogProduct *gog_integration.CatalogProduct, err error) {
+	err = vr.readValue(id, &catalogProduct)
+	return catalogProduct, err
+}
+
 func (vr *ValueReader) AccountProduct(id string) (accountProduct *gog_integration.AccountProduct, err error) {
 	err = vr.readValue(id, &accountProduct)
 	return accountProduct, err
@@ -116,6 +121,11 @@ func (vr *ValueReader) ApiProductV2(id string) (apiProductV2 *gog_integration.Ap
 func (vr *ValueReader) StorePage(page string) (storePage *gog_integration.StorePage, err error) {
 	err = vr.readValue(page, &storePage)
 	return storePage, err
+}
+
+func (vr *ValueReader) CatalogPage(page string) (catalogPage *gog_integration.CatalogPage, err error) {
+	err = vr.readValue(page, &catalogPage)
+	return catalogPage, err
 }
 
 func (vr *ValueReader) AccountPage(page string) (accountPage *gog_integration.AccountPage, err error) {
@@ -180,6 +190,8 @@ func (vr *ValueReader) ReadValue(key string) (interface{}, error) {
 	switch vr.productType {
 	case StoreProducts:
 		return vr.StoreProduct(key)
+	case CatalogProducts:
+		return vr.CatalogProduct(key)
 	case AccountProducts:
 		return vr.AccountProduct(key)
 	case WishlistProducts:
@@ -194,6 +206,8 @@ func (vr *ValueReader) ReadValue(key string) (interface{}, error) {
 		return vr.Order(key)
 	case StorePage:
 		return vr.StorePage(key)
+	case CatalogPage:
+		return vr.CatalogPage(key)
 	case AccountPage:
 		return vr.AccountPage(key)
 	case WishlistPage:
@@ -221,6 +235,8 @@ func (vr *ValueReader) ProductsGetter(page string) (productsGetter gog_integrati
 	switch vr.productType {
 	case StorePage:
 		productsGetter, err = vr.StorePage(page)
+	case CatalogPage:
+		productsGetter, err = vr.CatalogPage(page)
 	case AccountPage:
 		productsGetter, err = vr.AccountPage(page)
 	case WishlistPage:

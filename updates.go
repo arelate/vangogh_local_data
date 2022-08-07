@@ -27,7 +27,8 @@ var filterUpdatedProductTypes = map[ProductType]bool{
 	//so in some cases we won't get a meaningful information like a title
 	LicenceProducts: true,
 	//most of the Updates are price changes for a sale, not that interesting for recurring sync
-	StoreProducts: true,
+	StoreProducts:   true,
+	CatalogProducts: true,
 	// wishlist-products are basically store-products, so see above
 	WishlistProducts: true,
 	//meaningful Updates for account products come from details, not account-products

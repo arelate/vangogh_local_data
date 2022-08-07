@@ -37,6 +37,7 @@ type DefaultProductUrl func(string, gog_integration.Media) *url.URL
 
 var defaultProductUrls = map[ProductType]DefaultProductUrl{
 	StorePage:     gog_integration.DefaultStorePageUrl,
+	CatalogPage:   gog_integration.DefaultCatalogPageUrl,
 	AccountPage:   gog_integration.DefaultAccountPageUrl,
 	WishlistPage:  gog_integration.DefaultWishlistPageUrl,
 	Details:       gog_integration.DetailsUrl,

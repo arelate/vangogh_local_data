@@ -12,7 +12,7 @@ const (
 	IdProperty                     = "id"
 	TitleProperty                  = "title"
 	DevelopersProperty             = "developers"
-	PublisherProperty              = "publisher"
+	PublishersProperty             = "publishers"
 	ImageProperty                  = "image"
 	ScreenshotsProperty            = "screenshots"
 	RatingProperty                 = "rating"
@@ -21,7 +21,7 @@ const (
 	RequiresGamesProperty          = "requires-games"
 	IsRequiredByGamesProperty      = "is-required-by-games"
 	GenresProperty                 = "genres"
-	PropertiesProperty             = "properties"
+	StoreTagsProperty              = "store-tags"
 	FeaturesProperty               = "features"
 	SeriesProperty                 = "series"
 	TagIdProperty                  = "tag"
@@ -99,7 +99,7 @@ func TextProperties() []string {
 	return []string{
 		TitleProperty,
 		DevelopersProperty,
-		PublisherProperty,
+		PublishersProperty,
 		DescriptionOverviewProperty,
 		DescriptionFeaturesProperty,
 	}
@@ -130,7 +130,7 @@ func AllTextProperties() []string {
 		RequiresGamesProperty,
 		IsRequiredByGamesProperty,
 		GenresProperty,
-		PropertiesProperty,
+		StoreTagsProperty,
 		FeaturesProperty,
 		SeriesProperty,
 		RatingProperty,
@@ -238,9 +238,9 @@ func ReduxProperties() []string {
 func DigestibleProperties() []string {
 	return []string{
 		DevelopersProperty,
-		PublisherProperty,
+		PublishersProperty,
 		GenresProperty,
-		PropertiesProperty,
+		StoreTagsProperty,
 		FeaturesProperty,
 		SeriesProperty,
 		TagIdProperty,
@@ -352,7 +352,7 @@ var supportedProperties = map[ProductType][]string{
 		IdProperty,
 		TitleProperty,
 		DevelopersProperty,
-		PublisherProperty,
+		PublishersProperty,
 		ImageProperty,
 		ScreenshotsProperty,
 		IncludesGamesProperty,
@@ -360,7 +360,7 @@ var supportedProperties = map[ProductType][]string{
 		RequiresGamesProperty,
 		IsRequiredByGamesProperty,
 		GenresProperty,
-		PropertiesProperty,
+		StoreTagsProperty,
 		FeaturesProperty,
 		SeriesProperty,
 		VideoIdProperty,
@@ -392,7 +392,7 @@ var supportedProperties = map[ProductType][]string{
 		IdProperty,
 		TitleProperty,
 		DevelopersProperty,
-		PublisherProperty,
+		PublishersProperty,
 		ImageProperty,
 		ScreenshotsProperty,
 		RatingProperty,
@@ -407,6 +407,27 @@ var supportedProperties = map[ProductType][]string{
 		SupportUrlProperty,
 		TBAProperty,
 		ComingSoonProperty,
+		BasePriceProperty,
+		PriceProperty,
+		IsFreeProperty,
+		IsDiscountedProperty,
+		DiscountPercentageProperty,
+	},
+	CatalogProducts: {
+		IdProperty,
+		TitleProperty,
+		DevelopersProperty,
+		PublishersProperty,
+		ImageProperty,
+		ScreenshotsProperty,
+		FeaturesProperty,
+		RatingProperty,
+		GenresProperty,
+		OperatingSystemsProperty,
+		SlugProperty,
+		GlobalReleaseDateProperty,
+		ProductTypeProperty,
+		StoreTagsProperty,
 		BasePriceProperty,
 		PriceProperty,
 		IsFreeProperty,
@@ -506,10 +527,10 @@ func getPropertyValues(value interface{}, property string) []string {
 		return getSlice(value.(gog_integration.PriceGetter).GetPrice)
 	case ProductTypeProperty:
 		return getSlice(value.(gog_integration.ProductTypeGetter).GetProductType)
-	case PropertiesProperty:
-		return value.(gog_integration.PropertiesGetter).GetProperties()
-	case PublisherProperty:
-		return getSlice(value.(gog_integration.PublisherGetter).GetPublisher)
+	case StoreTagsProperty:
+		return value.(gog_integration.StoreTagsGetter).GetStoreTags()
+	case PublishersProperty:
+		return value.(gog_integration.PublishersGetter).GetPublishers()
 	case RatingProperty:
 		return getSlice(value.(gog_integration.RatingGetter).GetRating)
 	case RequiresGamesProperty:

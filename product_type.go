@@ -12,6 +12,8 @@ const (
 	// GOG.com product types
 	StorePage
 	StoreProducts
+	CatalogPage
+	CatalogProducts
 	AccountPage
 	AccountProducts
 	WishlistPage
@@ -35,6 +37,8 @@ var productTypeStrings = map[ProductType]string{
 	// GOG.com product types
 	StorePage:        "store-page",
 	StoreProducts:    "store-products",
+	CatalogPage:      "catalog-page",
+	CatalogProducts:  "catalog-products",
 	AccountPage:      "account-page",
 	AccountProducts:  "account-products",
 	WishlistPage:     "wishlist-page",
@@ -57,6 +61,7 @@ var productTypeStrings = map[ProductType]string{
 //will be interesting to output in human-readable form
 var productTypeHumanReadableStrings = map[ProductType]string{
 	StoreProducts:    "store",
+	CatalogProducts:  "store",
 	WishlistProducts: "wishlist",
 	AccountProducts:  "account",
 	Details:          "account",
@@ -97,6 +102,7 @@ func IsValidProductType(pt ProductType) bool {
 func PagedProducts() []ProductType {
 	return []ProductType{
 		StorePage,
+		CatalogPage,
 		AccountPage,
 		WishlistPage,
 		OrderPage,
@@ -121,11 +127,13 @@ var gogDetailMainProductTypes = map[ProductType][]ProductType{
 	Details: {LicenceProducts, AccountProducts},
 	ApiProductsV1: {
 		StoreProducts,
+		CatalogProducts,
 		AccountProducts,
 		ApiProductsV2,
 	},
 	ApiProductsV2: {
 		StoreProducts,
+		CatalogProducts,
 		AccountProducts,
 		ApiProductsV2, // includes-games, is-included-in-games, requires-games, is-required-by-games
 	},
@@ -135,14 +143,17 @@ var steamDetailMainProductTypes = map[ProductType][]ProductType{
 	//Steam product types are updated on GOG.com store or account product changes
 	SteamAppNews: {
 		StoreProducts,
+		CatalogProducts,
 		AccountProducts,
 	},
 	SteamReviews: {
 		StoreProducts,
+		CatalogProducts,
 		AccountProducts,
 	},
 	SteamStorePage: {
 		StoreProducts,
+		CatalogProducts,
 		AccountProducts,
 	},
 }
@@ -195,6 +206,7 @@ func SteamRemoteProducts() []ProductType {
 func LocalProducts() []ProductType {
 	return []ProductType{
 		StoreProducts,
+		CatalogProducts,
 		AccountProducts,
 		WishlistProducts,
 		Details,
@@ -218,6 +230,7 @@ var requireAuth = []ProductType{
 
 var splitProductTypes = map[ProductType]ProductType{
 	StorePage:    StoreProducts,
+	CatalogPage:  CatalogProducts,
 	AccountPage:  AccountProducts,
 	WishlistPage: WishlistProducts,
 	Licences:     LicenceProducts,
@@ -260,6 +273,7 @@ var supportsCopyFromTo = map[ProductType]ProductType{
 
 var supportedImageTypes = map[ProductType][]ImageType{
 	StoreProducts:    {Image, Screenshots},
+	CatalogProducts:  {Image, Screenshots},
 	AccountProducts:  {Image},
 	WishlistProducts: {Image},
 	ApiProductsV1:    {Screenshots},

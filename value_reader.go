@@ -251,45 +251,6 @@ func (vr *ValueReader) ProductsGetter(page string) (productsGetter gog_integrati
 	return productsGetter, err
 }
 
-func (vr *ValueReader) CopyToType(id string, toPt ProductType, toMt gog_integration.Media) error {
-
-	if !IsCopySupported(vr.productType, toPt) {
-		return fmt.Errorf("vangogh_values: copy type from %s to %s is unsupported", vr.productType, toPt)
-	}
-	if vr.mediaType != toMt {
-		return fmt.Errorf("vangogh_values: copy media from %s to %s is unsupported", vr.mediaType, toMt)
-	}
-
-	toDir, err := AbsLocalProductTypeDir(toPt, toMt)
-	if err != nil {
-		return err
-	}
-
-	vsToType, err := kvas.ConnectLocal(toDir, kvas.JsonExt)
-	if err != nil {
-		return nil
-	}
-
-	//destination type already has item with that id,
-	//not going to overwrite
-	if vsToType.Has(id) {
-		return nil
-	}
-
-	rc, err := vr.valueSet.Get(id)
-	if err != nil {
-		return err
-	}
-
-	defer rc.Close()
-
-	if err := vsToType.Set(id, rc); err != nil {
-		return err
-	}
-
-	return nil
-}
-
 func (vr *ValueReader) IndexCurrentModTime() (int64, error) {
 	return vr.valueSet.IndexCurrentModTime()
 }

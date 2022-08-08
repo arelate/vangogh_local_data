@@ -267,10 +267,6 @@ var unsupportedMedia = map[ProductType][]gog_integration.Media{
 	SteamStorePage: {gog_integration.Movie},
 }
 
-var supportsCopyFromTo = map[ProductType]ProductType{
-	StoreProducts: WishlistProducts,
-}
-
 var supportedImageTypes = map[ProductType][]ImageType{
 	StoreProducts:    {Image, Screenshots},
 	CatalogProducts:  {Image, Screenshots},

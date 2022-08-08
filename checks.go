@@ -40,10 +40,6 @@ func IsImageRequiresAuth(it ImageType) bool {
 	return false
 }
 
-func IsCopySupported(from, to ProductType) bool {
-	return supportsCopyFromTo[from] == to
-}
-
 func IsGetItemsSupported(pt ProductType) bool {
 	return containsProductType(supportsGetItems, pt)
 }

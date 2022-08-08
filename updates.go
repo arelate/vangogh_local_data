@@ -6,6 +6,9 @@ import (
 )
 
 var filterNewProductTypes = map[ProductType]bool{
+	//starting to suppress store-products as we stand up catalog-products as replacement
+	StoreProducts: true,
+	//orders will be represented by new account-products, details
 	Orders: true,
 	//not all licence-products have associated api-products-v1/api-products-v2,
 	//so in some cases we won't get a meaningful information like a title
@@ -26,8 +29,9 @@ var filterUpdatedProductTypes = map[ProductType]bool{
 	//not all licence-products have associated api-products-v1/api-products-v2,
 	//so in some cases we won't get a meaningful information like a title
 	LicenceProducts: true,
+	//starting to suppress store-products as we stand up catalog-products as replacement
+	StoreProducts: true,
 	//most of the Updates are price changes for a sale, not that interesting for recurring sync
-	StoreProducts:   true,
 	CatalogProducts: true,
 	// wishlist-products are basically store-products, so see above
 	WishlistProducts: true,

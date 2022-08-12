@@ -256,6 +256,7 @@ var supportsGetItems = []ProductType{
 	ApiProductsV1,
 	ApiProductsV2,
 	Licences,
+	UserWishlist,
 	SteamAppList,
 	SteamAppNews,
 	SteamReviews,

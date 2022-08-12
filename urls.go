@@ -40,6 +40,7 @@ var defaultProductUrls = map[ProductType]DefaultProductUrl{
 	CatalogPage:   gog_integration.DefaultCatalogPageUrl,
 	AccountPage:   gog_integration.DefaultAccountPageUrl,
 	WishlistPage:  gog_integration.DefaultWishlistPageUrl,
+	UserWishlist:  gog_integration.DefaultUserWishlistUrl,
 	Details:       gog_integration.DetailsUrl,
 	ApiProductsV1: gog_integration.ApiProductV1Url,
 	ApiProductsV2: gog_integration.ApiProductV2Url,
@@ -65,7 +66,7 @@ func RemoteProductsUrl(pt ProductType) (ptUrl DefaultProductUrl, err error) {
 	return ptUrl, err
 }
 
-//DefaultSteamAppListUrl is a vangogh_local_data specific wrapper of steam_integration URL func
+// DefaultSteamAppListUrl is a vangogh_local_data specific wrapper of steam_integration URL func
 func DefaultSteamAppListUrl(_ string, _ gog_integration.Media) *url.URL {
 	return steam_integration.AppListUrl()
 }

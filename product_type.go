@@ -18,6 +18,7 @@ const (
 	AccountProducts
 	WishlistPage
 	WishlistProducts
+	UserWishlist
 	Details
 	ApiProductsV1
 	ApiProductsV2
@@ -43,6 +44,7 @@ var productTypeStrings = map[ProductType]string{
 	AccountProducts:  "account-products",
 	WishlistPage:     "wishlist-page",
 	WishlistProducts: "wishlist-products",
+	UserWishlist:     "user-wishlist",
 	Details:          "details",
 	ApiProductsV1:    "api-products-v1",
 	ApiProductsV2:    "api-products-v2",
@@ -57,8 +59,8 @@ var productTypeStrings = map[ProductType]string{
 	SteamStorePage: "steam-store-page",
 }
 
-//the list is intentionally scoped to very few types we anticipate
-//will be interesting to output in human-readable form
+// the list is intentionally scoped to very few types we anticipate
+// will be interesting to output in human-readable form
 var productTypeHumanReadableStrings = map[ProductType]string{
 	StoreProducts:    "store",
 	CatalogProducts:  "store",
@@ -112,6 +114,7 @@ func PagedProducts() []ProductType {
 func ArrayProducts() []ProductType {
 	return []ProductType{
 		Licences,
+		UserWishlist,
 		SteamAppList,
 	}
 }
@@ -209,6 +212,7 @@ func LocalProducts() []ProductType {
 		CatalogProducts,
 		AccountProducts,
 		WishlistProducts,
+		UserWishlist,
 		Details,
 		ApiProductsV1,
 		ApiProductsV2,
@@ -223,6 +227,7 @@ func LocalProducts() []ProductType {
 var requireAuth = []ProductType{
 	AccountPage,
 	WishlistPage,
+	UserWishlist,
 	Details,
 	Licences,
 	OrderPage,

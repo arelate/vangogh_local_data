@@ -138,8 +138,13 @@ func (vr *ValueReader) WishlistPage(page string) (wishlistPage *gog_integration.
 	return wishlistPage, err
 }
 
-func (vr *ValueReader) Licences(id string) (licences *gog_integration.Licences, err error) {
-	err = vr.readValue(id, &licences)
+func (vr *ValueReader) UserWishlist() (userWishlist *gog_integration.UserWishlist, err error) {
+	err = vr.readValue(UserWishlist.String(), &userWishlist)
+	return userWishlist, err
+}
+
+func (vr *ValueReader) Licences() (licences *gog_integration.Licences, err error) {
+	err = vr.readValue(Licences.String(), &licences)
 	return licences, err
 }
 
@@ -168,9 +173,9 @@ func (vr *ValueReader) SteamAppReviews(id string) (steamAppReviews *steam_integr
 	return steamAppReviews, err
 }
 
-//SteamStorePage reads HTML content of the locally downloaded Steam store page and
-//return an HTML document for traversal. This approach is different from other data
-//types that have defined schemas.
+// SteamStorePage reads HTML content of the locally downloaded Steam store page and
+// return an HTML document for traversal. This approach is different from other data
+// types that have defined schemas.
 func (vr *ValueReader) SteamStorePage(id string) (steamStorePage *html.Node, err error) {
 	spReadCloser, err := vr.valueSet.Get(id)
 	if err != nil {
@@ -212,10 +217,12 @@ func (vr *ValueReader) ReadValue(key string) (interface{}, error) {
 		return vr.AccountPage(key)
 	case WishlistPage:
 		return vr.WishlistPage(key)
+	case UserWishlist:
+		return vr.UserWishlist()
 	case OrderPage:
 		return vr.OrderPage(key)
 	case Licences:
-		return vr.Licences(key)
+		return vr.Licences()
 	case SteamAppNews:
 		return vr.SteamGetAppNewsResponse(key)
 	case SteamReviews:
@@ -241,8 +248,10 @@ func (vr *ValueReader) ProductsGetter(page string) (productsGetter gog_integrati
 		productsGetter, err = vr.AccountPage(page)
 	case WishlistPage:
 		productsGetter, err = vr.WishlistPage(page)
+	case UserWishlist:
+		productsGetter, err = vr.UserWishlist()
 	case Licences:
-		productsGetter, err = vr.Licences(page)
+		productsGetter, err = vr.Licences()
 	case OrderPage:
 		productsGetter, err = vr.OrderPage(page)
 	default:

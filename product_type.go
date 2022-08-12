@@ -19,6 +19,7 @@ const (
 	WishlistPage
 	WishlistProducts
 	UserWishlist
+	UserWishlistProducts
 	Details
 	ApiProductsV1
 	ApiProductsV2
@@ -36,22 +37,23 @@ const (
 var productTypeStrings = map[ProductType]string{
 	UnknownProductType: "unknown-product-type",
 	// GOG.com product types
-	StorePage:        "store-page",
-	StoreProducts:    "store-products",
-	CatalogPage:      "catalog-page",
-	CatalogProducts:  "catalog-products",
-	AccountPage:      "account-page",
-	AccountProducts:  "account-products",
-	WishlistPage:     "wishlist-page",
-	WishlistProducts: "wishlist-products",
-	UserWishlist:     "user-wishlist",
-	Details:          "details",
-	ApiProductsV1:    "api-products-v1",
-	ApiProductsV2:    "api-products-v2",
-	Licences:         "licences",
-	LicenceProducts:  "licence-products",
-	OrderPage:        "order-page",
-	Orders:           "orders",
+	StorePage:            "store-page",
+	StoreProducts:        "store-products",
+	CatalogPage:          "catalog-page",
+	CatalogProducts:      "catalog-products",
+	AccountPage:          "account-page",
+	AccountProducts:      "account-products",
+	WishlistPage:         "wishlist-page",
+	WishlistProducts:     "wishlist-products",
+	UserWishlist:         "user-wishlist",
+	UserWishlistProducts: "user-wishlist-products",
+	Details:              "details",
+	ApiProductsV1:        "api-products-v1",
+	ApiProductsV2:        "api-products-v2",
+	Licences:             "licences",
+	LicenceProducts:      "licence-products",
+	OrderPage:            "order-page",
+	Orders:               "orders",
 	// Steam product types
 	SteamAppList:   "steam-app-list",
 	SteamAppNews:   "steam-app-news",
@@ -62,12 +64,13 @@ var productTypeStrings = map[ProductType]string{
 // the list is intentionally scoped to very few types we anticipate
 // will be interesting to output in human-readable form
 var productTypeHumanReadableStrings = map[ProductType]string{
-	StoreProducts:    "store",
-	CatalogProducts:  "store",
-	WishlistProducts: "wishlist",
-	AccountProducts:  "account",
-	Details:          "account",
-	SteamAppNews:     "news",
+	StoreProducts:        "store",
+	CatalogProducts:      "store",
+	WishlistProducts:     "wishlist",
+	UserWishlistProducts: "wishlist",
+	AccountProducts:      "account",
+	Details:              "account",
+	SteamAppNews:         "news",
 }
 
 func (pt ProductType) String() string {
@@ -212,7 +215,7 @@ func LocalProducts() []ProductType {
 		CatalogProducts,
 		AccountProducts,
 		WishlistProducts,
-		UserWishlist,
+		UserWishlistProducts,
 		Details,
 		ApiProductsV1,
 		ApiProductsV2,
@@ -239,6 +242,7 @@ var splitProductTypes = map[ProductType]ProductType{
 	AccountPage:  AccountProducts,
 	WishlistPage: WishlistProducts,
 	Licences:     LicenceProducts,
+	UserWishlist: UserWishlistProducts,
 	OrderPage:    Orders,
 }
 

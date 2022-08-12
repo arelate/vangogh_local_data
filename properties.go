@@ -212,9 +212,10 @@ func MediaContentProperties() []string {
 	}
 }
 
-func SyncUpdatesProperties() []string {
+func SyncProperties() []string {
 	return []string{
 		LastSyncUpdatesProperty,
+		SyncEventsProperty,
 	}
 }
 
@@ -231,7 +232,7 @@ func ReduxProperties() []string {
 	all = append(all, PriceProperties()...)
 	all = append(all, ExternalDataSourcesProperties()...)
 	all = append(all, MediaContentProperties()...)
-	all = append(all, SyncUpdatesProperties()...)
+	all = append(all, SyncProperties()...)
 	return all
 }
 

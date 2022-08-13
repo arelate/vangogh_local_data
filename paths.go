@@ -82,7 +82,14 @@ func absLocalImagePath(imageId string, imageDirDelegate func(imageId string) str
 }
 
 func AbsLocalImagePath(imageId string) string {
-	return absLocalImagePath(imageId, AbsImagesDirByImageId, gog_integration.JpgExt)
+	exts := []string{gog_integration.JpgExt, gog_integration.PngExt}
+	for _, ext := range exts {
+		aip := absLocalImagePath(imageId, AbsImagesDirByImageId, ext)
+		if _, err := os.Stat(aip); err == nil {
+			return aip
+		}
+	}
+	return ""
 }
 
 func AbsTempPath(f string) string {

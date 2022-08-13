@@ -10,14 +10,10 @@ type ProductType int
 const (
 	UnknownProductType ProductType = iota
 	// GOG.com product types
-	StorePage
-	StoreProducts
 	CatalogPage
 	CatalogProducts
 	AccountPage
 	AccountProducts
-	WishlistPage
-	WishlistProducts
 	UserWishlist
 	UserWishlistProducts
 	Details
@@ -37,14 +33,10 @@ const (
 var productTypeStrings = map[ProductType]string{
 	UnknownProductType: "unknown-product-type",
 	// GOG.com product types
-	StorePage:            "store-page",
-	StoreProducts:        "store-products",
 	CatalogPage:          "catalog-page",
 	CatalogProducts:      "catalog-products",
 	AccountPage:          "account-page",
 	AccountProducts:      "account-products",
-	WishlistPage:         "wishlist-page",
-	WishlistProducts:     "wishlist-products",
 	UserWishlist:         "user-wishlist",
 	UserWishlistProducts: "user-wishlist-products",
 	Details:              "details",
@@ -64,9 +56,7 @@ var productTypeStrings = map[ProductType]string{
 // the list is intentionally scoped to very few types we anticipate
 // will be interesting to output in human-readable form
 var productTypeHumanReadableStrings = map[ProductType]string{
-	StoreProducts:        "store",
 	CatalogProducts:      "store",
-	WishlistProducts:     "wishlist",
 	UserWishlistProducts: "wishlist",
 	AccountProducts:      "account",
 	Details:              "account",
@@ -106,10 +96,8 @@ func IsValidProductType(pt ProductType) bool {
 
 func PagedProducts() []ProductType {
 	return []ProductType{
-		StorePage,
 		CatalogPage,
 		AccountPage,
-		WishlistPage,
 		OrderPage,
 	}
 }
@@ -125,20 +113,17 @@ func ArrayProducts() []ProductType {
 func FastPageFetchProducts() []ProductType {
 	return []ProductType{
 		OrderPage,
-		WishlistPage,
 	}
 }
 
 var gogDetailMainProductTypes = map[ProductType][]ProductType{
 	Details: {LicenceProducts, AccountProducts},
 	ApiProductsV1: {
-		StoreProducts,
 		CatalogProducts,
 		AccountProducts,
 		ApiProductsV2,
 	},
 	ApiProductsV2: {
-		StoreProducts,
 		CatalogProducts,
 		AccountProducts,
 		ApiProductsV2, // includes-games, is-included-in-games, requires-games, is-required-by-games
@@ -148,17 +133,14 @@ var gogDetailMainProductTypes = map[ProductType][]ProductType{
 var steamDetailMainProductTypes = map[ProductType][]ProductType{
 	//Steam product types are updated on GOG.com store or account product changes
 	SteamAppNews: {
-		StoreProducts,
 		CatalogProducts,
 		AccountProducts,
 	},
 	SteamReviews: {
-		StoreProducts,
 		CatalogProducts,
 		AccountProducts,
 	},
 	SteamStorePage: {
-		StoreProducts,
 		CatalogProducts,
 		AccountProducts,
 	},
@@ -211,10 +193,8 @@ func SteamRemoteProducts() []ProductType {
 
 func LocalProducts() []ProductType {
 	return []ProductType{
-		StoreProducts,
 		CatalogProducts,
 		AccountProducts,
-		WishlistProducts,
 		UserWishlistProducts,
 		Details,
 		ApiProductsV1,
@@ -229,7 +209,6 @@ func LocalProducts() []ProductType {
 
 var requireAuth = []ProductType{
 	AccountPage,
-	WishlistPage,
 	UserWishlist,
 	Details,
 	Licences,
@@ -237,10 +216,8 @@ var requireAuth = []ProductType{
 }
 
 var splitProductTypes = map[ProductType]ProductType{
-	StorePage:    StoreProducts,
 	CatalogPage:  CatalogProducts,
 	AccountPage:  AccountProducts,
-	WishlistPage: WishlistProducts,
 	Licences:     LicenceProducts,
 	UserWishlist: UserWishlistProducts,
 	OrderPage:    Orders,
@@ -278,12 +255,10 @@ var unsupportedMedia = map[ProductType][]gog_integration.Media{
 }
 
 var supportedImageTypes = map[ProductType][]ImageType{
-	StoreProducts:    {Image, Screenshots},
-	CatalogProducts:  {Image, Screenshots},
-	AccountProducts:  {Image},
-	WishlistProducts: {Image},
-	ApiProductsV1:    {Screenshots},
-	ApiProductsV2:    {Image, Screenshots},
+	CatalogProducts: {Image, Screenshots},
+	AccountProducts: {Image},
+	ApiProductsV1:   {Screenshots},
+	ApiProductsV2:   {Image, Screenshots},
 }
 
 func ProductTypesSupportingImageType(imageType ImageType) []ProductType {

@@ -83,11 +83,6 @@ func (vr *ValueReader) IsModifiedAfter(id string, timestamp int64) bool {
 	return vr.valueSet.IsModifiedAfter(id, timestamp)
 }
 
-func (vr *ValueReader) StoreProduct(id string) (storeProduct *gog_integration.StoreProduct, err error) {
-	err = vr.readValue(id, &storeProduct)
-	return storeProduct, err
-}
-
 func (vr *ValueReader) CatalogProduct(id string) (catalogProduct *gog_integration.CatalogProduct, err error) {
 	err = vr.readValue(id, &catalogProduct)
 	return catalogProduct, err
@@ -96,11 +91,6 @@ func (vr *ValueReader) CatalogProduct(id string) (catalogProduct *gog_integratio
 func (vr *ValueReader) AccountProduct(id string) (accountProduct *gog_integration.AccountProduct, err error) {
 	err = vr.readValue(id, &accountProduct)
 	return accountProduct, err
-}
-
-func (vr *ValueReader) WishlistProduct(id string) (wishlistProduct *gog_integration.StoreProduct, err error) {
-	err = vr.readValue(id, &wishlistProduct)
-	return wishlistProduct, err
 }
 
 func (vr *ValueReader) Details(id string) (details *gog_integration.Details, err error) {
@@ -118,11 +108,6 @@ func (vr *ValueReader) ApiProductV2(id string) (apiProductV2 *gog_integration.Ap
 	return apiProductV2, err
 }
 
-func (vr *ValueReader) StorePage(page string) (storePage *gog_integration.StorePage, err error) {
-	err = vr.readValue(page, &storePage)
-	return storePage, err
-}
-
 func (vr *ValueReader) CatalogPage(page string) (catalogPage *gog_integration.CatalogPage, err error) {
 	err = vr.readValue(page, &catalogPage)
 	return catalogPage, err
@@ -131,11 +116,6 @@ func (vr *ValueReader) CatalogPage(page string) (catalogPage *gog_integration.Ca
 func (vr *ValueReader) AccountPage(page string) (accountPage *gog_integration.AccountPage, err error) {
 	err = vr.readValue(page, &accountPage)
 	return accountPage, err
-}
-
-func (vr *ValueReader) WishlistPage(page string) (wishlistPage *gog_integration.WishlistPage, err error) {
-	err = vr.readValue(page, &wishlistPage)
-	return wishlistPage, err
 }
 
 func (vr *ValueReader) UserWishlist() (userWishlist *gog_integration.UserWishlist, err error) {
@@ -193,14 +173,10 @@ func (vr *ValueReader) SteamStorePage(id string) (steamStorePage *html.Node, err
 
 func (vr *ValueReader) ReadValue(key string) (interface{}, error) {
 	switch vr.productType {
-	case StoreProducts:
-		return vr.StoreProduct(key)
 	case CatalogProducts:
 		return vr.CatalogProduct(key)
 	case AccountProducts:
 		return vr.AccountProduct(key)
-	case WishlistProducts:
-		return vr.WishlistProduct(key)
 	case Details:
 		return vr.Details(key)
 	case ApiProductsV1:
@@ -209,14 +185,10 @@ func (vr *ValueReader) ReadValue(key string) (interface{}, error) {
 		return vr.ApiProductV2(key)
 	case Orders:
 		return vr.Order(key)
-	case StorePage:
-		return vr.StorePage(key)
 	case CatalogPage:
 		return vr.CatalogPage(key)
 	case AccountPage:
 		return vr.AccountPage(key)
-	case WishlistPage:
-		return vr.WishlistPage(key)
 	case UserWishlist:
 		return vr.UserWishlist()
 	case OrderPage:
@@ -240,14 +212,10 @@ func (vr *ValueReader) ProductType() ProductType {
 
 func (vr *ValueReader) ProductsGetter(page string) (productsGetter gog_integration.ProductsGetter, err error) {
 	switch vr.productType {
-	case StorePage:
-		productsGetter, err = vr.StorePage(page)
 	case CatalogPage:
 		productsGetter, err = vr.CatalogPage(page)
 	case AccountPage:
 		productsGetter, err = vr.AccountPage(page)
-	case WishlistPage:
-		productsGetter, err = vr.WishlistPage(page)
 	case UserWishlist:
 		productsGetter, err = vr.UserWishlist()
 	case Licences:

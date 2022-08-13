@@ -91,7 +91,7 @@ func RemoveFromLocalWishlist(
 		}
 	}
 
-	err = Cut(processedIds, WishlistProducts, mt)
+	err = Cut(processedIds, UserWishlistProducts, mt)
 
 	// don't check err because we're immediately returning it
 	return processedIds, err

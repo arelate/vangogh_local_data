@@ -491,9 +491,9 @@ func getPropertyValues(value interface{}, property string) []string {
 	case GenresProperty:
 		return value.(gog_integration.GenresGetter).GetGenres()
 	case GlobalReleaseDateProperty:
-		return dateSlice(value.(gog_integration.GlobalReleaseGetter).GetGlobalRelease)
+		return getSlice(value.(gog_integration.GlobalReleaseGetter).GetGlobalRelease)
 	case GOGReleaseDateProperty:
-		return dateSlice(value.(gog_integration.GOGReleaseGetter).GetGOGRelease)
+		return getSlice(value.(gog_integration.GOGReleaseGetter).GetGOGRelease)
 	case LanguageCodeProperty:
 		return value.(gog_integration.LanguageCodesGetter).GetLanguageCodes()
 	case OperatingSystemsProperty:

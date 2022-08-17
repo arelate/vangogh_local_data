@@ -3,7 +3,7 @@ module github.com/arelate/vangogh_local_data
 go 1.19
 
 require (
-	github.com/arelate/gog_integration v0.1.32
+	github.com/arelate/gog_integration v0.1.33
 	github.com/arelate/steam_integration v0.1.13
 	github.com/boggydigital/kvas v0.3.17
 	github.com/boggydigital/nod v0.1.20

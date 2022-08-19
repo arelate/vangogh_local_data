@@ -410,6 +410,10 @@ var supportedProperties = map[ProductType][]string{
 		IsFreeProperty,
 		IsDiscountedProperty,
 		DiscountPercentageProperty,
+		ComingSoonProperty,
+		PreOrderProperty,
+		InDevelopmentProperty,
+		TBAProperty,
 	},
 	SteamReviews: {
 		SteamReviewScoreDescProperty,

@@ -2,7 +2,6 @@ package vangogh_local_data
 
 import (
 	"fmt"
-	"github.com/arelate/gog_integration"
 )
 
 var filterNewProductTypes = map[ProductType]bool{
@@ -40,12 +39,12 @@ var filterUpdatedProductTypes = map[ProductType]bool{
 	SteamStorePage: true,
 }
 
-func Updates(mt gog_integration.Media, since int64) (map[string]map[string]bool, error) {
+func Updates(since int64) (map[string]map[string]bool, error) {
 	updates := make(map[string]map[string]bool, 0)
 
 	for _, pt := range LocalProducts() {
 
-		vr, err := NewReader(pt, mt)
+		vr, err := NewReader(pt)
 		if err != nil {
 			return updates, err
 		}

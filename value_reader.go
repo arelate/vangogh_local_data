@@ -12,12 +12,11 @@ import (
 
 type ValueReader struct {
 	productType ProductType
-	mediaType   gog_integration.Media
 	valueSet    kvas.KeyValues
 }
 
-func NewReader(pt ProductType, mt gog_integration.Media) (*ValueReader, error) {
-	dst, err := AbsLocalProductTypeDir(pt, mt)
+func NewReader(pt ProductType) (*ValueReader, error) {
+	dst, err := AbsLocalProductTypeDir(pt)
 	if err != nil {
 		return nil, err
 	}
@@ -29,7 +28,6 @@ func NewReader(pt ProductType, mt gog_integration.Media) (*ValueReader, error) {
 
 	vr := &ValueReader{
 		productType: pt,
-		mediaType:   mt,
 		valueSet:    vs,
 	}
 

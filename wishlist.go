@@ -1,13 +1,11 @@
 package vangogh_local_data
 
 import (
-	"github.com/arelate/gog_integration"
 	"github.com/boggydigital/nod"
 )
 
 func AddToLocalWishlist(
 	ids []string,
-	mt gog_integration.Media,
 	tpw nod.TotalProgressWriter) ([]string, error) {
 
 	processedIds := make([]string, 0, len(ids))
@@ -52,7 +50,6 @@ func AddToLocalWishlist(
 
 func RemoveFromLocalWishlist(
 	ids []string,
-	mt gog_integration.Media,
 	tpw nod.TotalProgressWriter) ([]string, error) {
 
 	processedIds := make([]string, 0, len(ids))
@@ -91,7 +88,7 @@ func RemoveFromLocalWishlist(
 		}
 	}
 
-	err = Cut(processedIds, UserWishlistProducts, mt)
+	err = Cut(processedIds, UserWishlistProducts)
 
 	// don't check err because we're immediately returning it
 	return processedIds, err

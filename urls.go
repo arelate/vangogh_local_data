@@ -10,7 +10,6 @@ import (
 func ImagePropertyUrls(imageIds []string, it ImageType) ([]*url.URL, error) {
 	urls := make([]*url.URL, 0, len(imageIds))
 
-	//	var getUrl func(string) (*url.URL, error)
 	var ext string
 	switch it {
 	case Image:
@@ -33,7 +32,7 @@ func ImagePropertyUrls(imageIds []string, it ImageType) ([]*url.URL, error) {
 	return urls, nil
 }
 
-type DefaultProductUrl func(string, gog_integration.Media) *url.URL
+type DefaultProductUrl func(key string) *url.URL
 
 var defaultProductUrls = map[ProductType]DefaultProductUrl{
 	CatalogPage:   gog_integration.DefaultCatalogPageUrl,
@@ -44,7 +43,7 @@ var defaultProductUrls = map[ProductType]DefaultProductUrl{
 	ApiProductsV2: gog_integration.ApiProductV2Url,
 	Licences:      gog_integration.DefaultLicencesUrl,
 	OrderPage:     gog_integration.DefaultOrdersPageUrl,
-	SteamAppList:  DefaultSteamAppListUrl,
+	SteamAppList:  steam_integration.DefaultSteamAppListUrl,
 	// steam data types typically require app level transformation of GOG.com id -> Steam AppID
 	SteamAppNews:   nil,
 	SteamReviews:   nil,
@@ -62,9 +61,4 @@ func RemoteProductsUrl(pt ProductType) (ptUrl DefaultProductUrl, err error) {
 	}
 
 	return ptUrl, err
-}
-
-// DefaultSteamAppListUrl is a vangogh_local_data specific wrapper of steam_integration URL func
-func DefaultSteamAppListUrl(_ string, _ gog_integration.Media) *url.URL {
-	return steam_integration.AppListUrl()
 }

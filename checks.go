@@ -1,7 +1,6 @@
 package vangogh_local_data
 
 import (
-	"github.com/arelate/gog_integration"
 	"github.com/boggydigital/kvas"
 	"os"
 	"path"
@@ -62,28 +61,6 @@ func IsImageTypeSupported(pt ProductType, it ImageType) bool {
 	}
 
 	return false
-}
-
-func IsMediaSupported(pt ProductType, mt gog_integration.Media) bool {
-	if !gog_integration.IsValidMedia(mt) {
-		return false
-	}
-	if !IsValidProductType(pt) {
-		return false
-	}
-
-	ums, ok := unsupportedMedia[pt]
-	if !ok {
-		return true
-	}
-
-	for _, um := range ums {
-		if um == mt {
-			return false
-		}
-	}
-
-	return true
 }
 
 func containsProductType(all []ProductType, pt ProductType) bool {

@@ -1,7 +1,6 @@
 package vangogh_local_data
 
 import (
-	"github.com/arelate/gog_integration"
 	"github.com/boggydigital/kvas"
 )
 
@@ -244,16 +243,6 @@ var supportsGetItems = []ProductType{
 	SteamStorePage,
 }
 
-// unsupported is used instead of supported in similar cases to
-// avoid all, but one repetitive data
-var unsupportedMedia = map[ProductType][]gog_integration.Media{
-	ApiProductsV2:  {gog_integration.Movie},
-	SteamAppList:   {gog_integration.Movie},
-	SteamAppNews:   {gog_integration.Movie},
-	SteamReviews:   {gog_integration.Movie},
-	SteamStorePage: {gog_integration.Movie},
-}
-
 var supportedImageTypes = map[ProductType][]ImageType{
 	CatalogProducts: {Image, Screenshots},
 	AccountProducts: {Image},
@@ -284,8 +273,8 @@ func SupportedPropertiesOnly(pt ProductType, properties []string) []string {
 	return supported
 }
 
-func Cut(ids []string, pt ProductType, mt gog_integration.Media) error {
-	ptDir, err := AbsLocalProductTypeDir(pt, mt)
+func Cut(ids []string, pt ProductType) error {
+	ptDir, err := AbsLocalProductTypeDir(pt)
 	if err != nil {
 		return err
 	}

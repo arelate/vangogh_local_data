@@ -102,15 +102,8 @@ func (dl *Download) DirSuffix() string {
 
 type DownloadsList []Download
 
-func FromDetails(det *gog_integration.Details, mt gog_integration.Media, rxa kvas.ReduxAssets) (DownloadsList, error) {
-	switch mt {
-	case gog_integration.Game:
-		return fromGameDetails(det, rxa)
-	case gog_integration.Movie:
-		return fromMovieDetails(det)
-	default:
-		return nil, fmt.Errorf("vangogh_downloads: unsupported media %s", mt)
-	}
+func FromDetails(det *gog_integration.Details, rxa kvas.ReduxAssets) (DownloadsList, error) {
+	return fromGameDetails(det, rxa)
 }
 
 func fromGameDetails(det *gog_integration.Details, rxa kvas.ReduxAssets) (DownloadsList, error) {
@@ -173,29 +166,6 @@ func convertGameDetails(det *gog_integration.Details, rxa kvas.ReduxAssets, dt D
 		for _, linDl := range dl.Linux {
 			dlList = append(dlList, convertManualDownload(det.Title, &linDl, dt, Linux, langCode))
 		}
-	}
-
-	for _, extraDl := range det.Extras {
-		dlList = append(dlList, convertManualDownload(det.Title, &extraDl, Extra, AnyOperatingSystem, ""))
-	}
-
-	return dlList, nil
-}
-
-func fromMovieDetails(det *gog_integration.Details) (DownloadsList, error) {
-	dlList := make(DownloadsList, 0)
-
-	if det == nil {
-		return dlList, fmt.Errorf("details are nil")
-	}
-
-	manualDownloads, err := det.GetMovieDownloads()
-	if err != nil {
-		return dlList, err
-	}
-
-	for _, dl := range manualDownloads {
-		dlList = append(dlList, convertManualDownload(det.Title, &dl, Movie, AnyOperatingSystem, ""))
 	}
 
 	for _, extraDl := range det.Extras {
@@ -274,7 +244,6 @@ type DownloadsListProcessor interface {
 
 func MapDownloads(
 	idSet map[string]bool,
-	mt gog_integration.Media,
 	rxa kvas.ReduxAssets,
 	operatingSystems []OperatingSystem,
 	downloadTypes []DownloadType,
@@ -292,7 +261,7 @@ func MapDownloads(
 		return err
 	}
 
-	vrDetails, err := NewReader(Details, mt)
+	vrDetails, err := NewReader(Details)
 	if err != nil {
 		return err
 	}
@@ -313,7 +282,7 @@ func MapDownloads(
 			return err
 		}
 
-		downloads, err := FromDetails(det, mt, rxa)
+		downloads, err := FromDetails(det, rxa)
 		if err != nil {
 			return err
 		}

@@ -76,10 +76,13 @@ const (
 	MissingDehydratedImageProperty  = "missing-dehydrated-image"
 	SyncEventsProperty              = "sync-events"
 	LastSyncUpdatesProperty         = "last-sync-updates"
+	ValidationResultProperty        = "validation-result"
+	ValidationCompletedProperty     = "validation-completed"
 
 	// property values
 	TrueValue  = "true"
 	FalseValue = "false"
+	OKValue    = "OK"
 )
 
 func AllProperties() []string {
@@ -220,6 +223,13 @@ func SyncProperties() []string {
 	}
 }
 
+func ValidationProperties() []string {
+	return []string{
+		ValidationResultProperty,
+		ValidationCompletedProperty,
+	}
+}
+
 func ReduxProperties() []string {
 	all := AllTextProperties()
 	all = append(all, VideoIdProperties()...)
@@ -234,6 +244,7 @@ func ReduxProperties() []string {
 	all = append(all, ExternalDataSourcesProperties()...)
 	all = append(all, MediaContentProperties()...)
 	all = append(all, SyncProperties()...)
+	all = append(all, ValidationProperties()...)
 	return all
 }
 

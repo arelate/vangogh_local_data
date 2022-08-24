@@ -136,7 +136,7 @@ func (vr *ValueReader) Order(id string) (order *gog_integration.Order, err error
 	return order, err
 }
 
-func (vr *ValueReader) SteamGetAppListResponse() (steamAppListResponse *steam_integration.GetAppListResponse, err error) {
+func (vr *ValueReader) SteamAppList() (steamAppListResponse *steam_integration.GetAppListResponse, err error) {
 	err = vr.readValue(SteamAppList.String(), &steamAppListResponse)
 	return steamAppListResponse, err
 }
@@ -149,6 +149,11 @@ func (vr *ValueReader) SteamGetAppNewsResponse(id string) (steamAppNewsResponse 
 func (vr *ValueReader) SteamAppReviews(id string) (steamAppReviews *steam_integration.AppReviews, err error) {
 	err = vr.readValue(id, &steamAppReviews)
 	return steamAppReviews, err
+}
+
+func (vr *ValueReader) UserWishlistProduct(id string) (userWishlistProduct string, err error) {
+	userWishlistProduct, err = id, nil
+	return userWishlistProduct, err
 }
 
 // SteamStorePage reads HTML content of the locally downloaded Steam store page and
@@ -189,6 +194,8 @@ func (vr *ValueReader) ReadValue(key string) (interface{}, error) {
 		return vr.AccountPage(key)
 	case UserWishlist:
 		return vr.UserWishlist()
+	case UserWishlistProducts:
+		return vr.UserWishlistProduct(key)
 	case OrderPage:
 		return vr.OrderPage(key)
 	case Licences:
@@ -199,6 +206,8 @@ func (vr *ValueReader) ReadValue(key string) (interface{}, error) {
 		return vr.SteamAppReviews(key)
 	case SteamStorePage:
 		return vr.SteamStorePage(key)
+	case SteamAppList:
+		return vr.SteamAppList()
 	default:
 		return nil, fmt.Errorf("vangogh_values: cannot create %s value", vr.productType)
 	}

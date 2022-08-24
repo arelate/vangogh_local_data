@@ -9,8 +9,12 @@ import (
 )
 
 var exclude = map[string]bool{
-	".DS_Store":   true, // https://en.wikipedia.org/wiki/.DS_Store
-	"desktop.ini": true, // https://en.wikipedia.org/wiki/INI_file#History
+	".DS_Store":                 true, // https://en.wikipedia.org/wiki/.DS_Store
+	"desktop.ini":               true, // https://en.wikipedia.org/wiki/INI_file#History
+	"@eaDir":                    true, // https://kb.synology.com/en-us/DSM/help/FileStation/connect?version=7
+	"@sharebin":                 true, // https://kb.synology.com/en-us/DSM/help/FileStation/connect?version=7
+	"@tmp":                      true, // https://kb.synology.com/en-us/DSM/help/FileStation/connect?version=7
+	".SynologyWorkingDirectory": true, // https://kb.synology.com/en-us/DSM/help/FileStation/connect?version=7
 }
 
 func filenameAsId(p string) (string, error) {

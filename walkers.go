@@ -49,6 +49,10 @@ func RecycleBinFiles() (map[string]bool, error) {
 	return walkFiles(AbsRecycleBinDir(), relRecycleBinPath)
 }
 
+func LocalDownloadDirs() (map[string]bool, error) {
+	return walkDirectories(AbsDownloadsDir())
+}
+
 func LocalSlugDownloads(slug string) (map[string]bool, error) {
 	pDir, err := AbsProductDownloadsDir(slug)
 	if err != nil {

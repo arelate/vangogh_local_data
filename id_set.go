@@ -13,66 +13,6 @@ const (
 	DefaultDesc = false
 )
 
-type idPropertyTitle struct {
-	id       string
-	property string
-	title    string
-}
-
-type sortableIdSet struct {
-	ipt []idPropertyTitle
-}
-
-func (is *sortableIdSet) Len() int {
-	return len(is.ipt)
-}
-
-func (is *sortableIdSet) Swap(i, j int) {
-	is.ipt[i], is.ipt[j] = is.ipt[j], is.ipt[i]
-}
-
-func (is *sortableIdSet) Less(i, j int) bool {
-	if is.ipt[i].property == is.ipt[j].property {
-		return is.ipt[i].title < is.ipt[j].title
-	} else {
-		return is.ipt[i].property < is.ipt[j].property
-	}
-}
-
-func SortIds(ids []string, rxa kvas.ReduxAssets, property string, desc bool) ([]string, error) {
-
-	if err := rxa.IsSupported(property, TitleProperty); err != nil {
-		return nil, err
-	}
-
-	sis := &sortableIdSet{
-		ipt: make([]idPropertyTitle, 0, len(ids)),
-	}
-
-	for _, id := range ids {
-		ipt := idPropertyTitle{id: id}
-		ipt.property, _ = rxa.GetFirstVal(property, id)
-		if property != TitleProperty {
-			ipt.title, _ = rxa.GetFirstVal(TitleProperty, id)
-		}
-		sis.ipt = append(sis.ipt, ipt)
-	}
-
-	var sortInterface sort.Interface = sis
-	if desc {
-		sortInterface = sort.Reverse(sortInterface)
-	}
-
-	sort.Sort(sortInterface)
-
-	sorted := make([]string, 0, len(sis.ipt))
-	for _, ipt := range sis.ipt {
-		sorted = append(sorted, ipt.id)
-	}
-
-	return sorted, nil
-}
-
 func idSetFromSlugs(slugs []string, rxa kvas.ReduxAssets) (map[string]bool, error) {
 
 	var err error

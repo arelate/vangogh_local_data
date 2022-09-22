@@ -9,7 +9,7 @@ import (
 
 type IdReduxAssets = map[string]map[string][]string
 
-var DataReduxAssetsReadOnlyError = errors.New("data redux assets is read-only")
+var IRAProxyReadOnlyError = errors.New("id redux assets proxy is read-only")
 
 type IRAProxy struct {
 	rdx     IdReduxAssets
@@ -70,19 +70,19 @@ func (irap *IRAProxy) HasVal(asset, key, val string) bool {
 }
 
 func (irap *IRAProxy) AddVal(asset, key, val string) error {
-	return DataReduxAssetsReadOnlyError
+	return IRAProxyReadOnlyError
 }
 
 func (irap *IRAProxy) ReplaceValues(asset, key string, values ...string) error {
-	return DataReduxAssetsReadOnlyError
+	return IRAProxyReadOnlyError
 }
 
 func (irap *IRAProxy) BatchReplaceValues(asset string, keyValues map[string][]string) error {
-	return DataReduxAssetsReadOnlyError
+	return IRAProxyReadOnlyError
 }
 
 func (irap *IRAProxy) CutVal(asset, key, val string) error {
-	return DataReduxAssetsReadOnlyError
+	return IRAProxyReadOnlyError
 }
 
 func (irap *IRAProxy) GetAllValues(asset, key string) ([]string, bool) {
@@ -131,5 +131,5 @@ func (irap *IRAProxy) ReduxAssetsModTime() (int64, error) {
 
 func (irap *IRAProxy) Sort(ids []string, desc bool, sortBy ...string) ([]string, error) {
 	//FIXME
-	return ids, DataReduxAssetsReadOnlyError
+	return ids, IRAProxyReadOnlyError
 }

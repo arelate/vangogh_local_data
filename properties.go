@@ -429,7 +429,6 @@ var supportedProperties = map[ProductType][]string{
 		ComingSoonProperty,
 		PreOrderProperty,
 		InDevelopmentProperty,
-		TBAProperty,
 	},
 	SteamReviews: {
 		SteamReviewScoreDescProperty,

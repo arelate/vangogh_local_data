@@ -6,12 +6,14 @@ const (
 	UnknownImageType ImageType = iota
 	Image
 	Screenshots
+	VerticalImage
 )
 
 var imageTypeStrings = map[ImageType]string{
 	UnknownImageType: "unknown-image-type",
 	Image:            "image",
 	Screenshots:      "screenshots",
+	VerticalImage:    "vertical-image",
 }
 
 func (it ImageType) String() string {
@@ -48,7 +50,7 @@ func AllImageTypes() []ImageType {
 	return imageTypes
 }
 
-//starting with empty collection and no image types require auth at the moment
+// starting with empty collection and no image types require auth at the moment
 var imageTypeRequiresAuth []ImageType
 
 func ImageTypeFromProperty(property string) ImageType {

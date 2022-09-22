@@ -14,6 +14,7 @@ const (
 	DevelopersProperty              = "developers"
 	PublishersProperty              = "publishers"
 	ImageProperty                   = "image"
+	VerticalImageProperty           = "vertical-image"
 	ScreenshotsProperty             = "screenshots"
 	RatingProperty                  = "rating"
 	IncludesGamesProperty           = "includes-games"
@@ -165,6 +166,7 @@ func ImageIdProperties() []string {
 	return []string{
 		ImageProperty,
 		ScreenshotsProperty,
+		VerticalImageProperty,
 	}
 }
 
@@ -325,8 +327,9 @@ func joinNotDesirable() []string {
 }
 
 var imageTypeProperties = map[ImageType]string{
-	Image:       ImageProperty,
-	Screenshots: ScreenshotsProperty,
+	Image:         ImageProperty,
+	Screenshots:   ScreenshotsProperty,
+	VerticalImage: VerticalImageProperty,
 }
 
 func PropertyFromImageType(it ImageType) string {
@@ -408,6 +411,7 @@ var supportedProperties = map[ProductType][]string{
 		DevelopersProperty,
 		PublishersProperty,
 		ImageProperty,
+		VerticalImageProperty,
 		ScreenshotsProperty,
 		FeaturesProperty,
 		RatingProperty,
@@ -488,6 +492,8 @@ func getPropertyValues(value interface{}, property string) []string {
 		return getSlice(value.(gog_integration.ForumUrlGetter).GetForumUrl)
 	case ImageProperty:
 		return getImageIdSlice(value.(gog_integration.ImageGetter).GetImage)
+	case VerticalImageProperty:
+		return getImageIdSlice(value.(gog_integration.VerticalImageGetter).GetVerticalImage)
 	case IncludesGamesProperty:
 		return value.(gog_integration.IncludesGamesGetter).GetIncludesGames()
 	case InDevelopmentProperty:

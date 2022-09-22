@@ -14,6 +14,8 @@ func ImagePropertyUrls(imageIds []string, it ImageType) ([]*url.URL, error) {
 	switch it {
 	case Image:
 		fallthrough
+	case VerticalImage:
+		fallthrough
 	case Screenshots:
 		ext = gog_integration.JpgExt
 	}

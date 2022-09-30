@@ -109,7 +109,7 @@ func (irap *IRAProxy) GetFirstVal(asset, key string) (string, bool) {
 
 func (irap *IRAProxy) IsSupported(assets ...string) error {
 	for _, a := range assets {
-		if !irap.Has(a) {
+		if len(irap.rdx) > 0 && !irap.Has(a) {
 			return errors.New("unsupported asset " + a)
 		}
 	}

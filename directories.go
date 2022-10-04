@@ -18,6 +18,7 @@ const (
 	relDLCDir             = "dlc"
 	relChecksumsDir       = "checksums"
 	relReduxDir           = "_redux"
+	relBackupDir          = "backup"
 )
 
 var (
@@ -167,4 +168,8 @@ func AbsProductDownloadsDir(slug string) (string, error) {
 
 func AbsDownloadDirFromRel(p string) string {
 	return filepath.Join(AbsDownloadsDir(), p)
+}
+
+func AbsBackupDir() string {
+	return filepath.Join(absRootDir, relBackupDir)
 }

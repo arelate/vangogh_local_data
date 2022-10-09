@@ -371,6 +371,7 @@ var supportedProperties = map[ProductType][]string{
 		DevelopersProperty,
 		PublishersProperty,
 		ImageProperty,
+		VerticalImageProperty,
 		ScreenshotsProperty,
 		IncludesGamesProperty,
 		IsIncludedByGamesProperty,

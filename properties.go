@@ -57,7 +57,6 @@ const (
 	ProductTypeProperty             = "product-type"
 	InDevelopmentProperty           = "in-development"
 	PreOrderProperty                = "pre-order"
-	TBAProperty                     = "tba"
 	ComingSoonProperty              = "coming-soon"
 	IsUsingDOSBoxProperty           = "is-using-dosbox"
 	IsUsingScummVMProperty          = "is-using-scummvm"
@@ -174,7 +173,6 @@ func AvailabilityProperties() []string {
 	return []string{
 		InDevelopmentProperty,
 		PreOrderProperty,
-		TBAProperty,
 		ComingSoonProperty,
 	}
 }
@@ -548,8 +546,6 @@ func getPropertyValues(value interface{}, property string) []string {
 		return getSlice(value.(gog_integration.SupportUrlGetter).GetSupportUrl)
 	case TagIdProperty:
 		return value.(gog_integration.TagIdsGetter).GetTagIds()
-	case TBAProperty:
-		return boolSlice(value.(gog_integration.TBAGetter).GetTBA)
 	case TitleProperty:
 		return getSlice(value.(gog_integration.TitleGetter).GetTitle)
 	case VideoIdProperty:

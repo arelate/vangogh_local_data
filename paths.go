@@ -13,6 +13,7 @@ const (
 	xmlExt           = ".xml"
 	skipListFilename = "skiplist.txt"
 	cookiesFilename  = "cookies.txt"
+	atomFeedFilename = "atom.xml"
 )
 
 var validatedExtensions = map[string]bool{
@@ -98,4 +99,8 @@ func AbsTempPath(f string) string {
 
 func AbsCookiePath() string {
 	return AbsTempPath(cookiesFilename)
+}
+
+func AbsAtomFeedPath() string {
+	return AbsTempPath(atomFeedFilename)
 }

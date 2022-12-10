@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/boggydigital/kvas"
 	"golang.org/x/exp/slices"
+	"io"
 	"time"
 )
 
@@ -132,4 +133,9 @@ func (irap *IRAProxy) ReduxAssetsModTime() (int64, error) {
 func (irap *IRAProxy) Sort(ids []string, desc bool, sortBy ...string) ([]string, error) {
 	//FIXME
 	return ids, IRAProxyReadOnlyError
+}
+
+func (irap *IRAProxy) Export(w io.Writer, ids ...string) error {
+	//FIXME
+	return nil
 }

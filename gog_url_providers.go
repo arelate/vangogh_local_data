@@ -20,6 +20,10 @@ type GOGUrlProvider struct {
 	pt ProductType
 }
 
+func NewGOGUrlProvider(pt ProductType) (*GOGUrlProvider, error) {
+	return &GOGUrlProvider{pt: pt}, nil
+}
+
 func (gup *GOGUrlProvider) Url(gogId string) *url.URL {
 	if ug, ok := gogProductTypeUrlGetters[gup.pt]; ok {
 		return ug(gogId)

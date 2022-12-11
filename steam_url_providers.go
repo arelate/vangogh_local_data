@@ -18,6 +18,17 @@ type SteamUrlProvider struct {
 	rxa kvas.ReduxAssets
 }
 
+func NewSteamUrlProvider(pt ProductType, rxa kvas.ReduxAssets) (*SteamUrlProvider, error) {
+	if err := rxa.IsSupported(SteamAppIdProperty); err != nil {
+		return nil, err
+	}
+
+	return &SteamUrlProvider{
+		pt:  pt,
+		rxa: rxa,
+	}, nil
+}
+
 func (sup *SteamUrlProvider) GOGIdToSteamAppId(gogId string) uint32 {
 	if appIdStr, ok := sup.rxa.GetFirstVal(SteamAppIdProperty, gogId); ok {
 		if appId, err := strconv.ParseUint(appIdStr, 10, 32); err == nil {

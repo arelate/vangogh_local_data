@@ -6,20 +6,30 @@ import (
 	"path"
 )
 
-func IsPagedProduct(pt ProductType) bool {
-	return containsProductType(PagedProducts(), pt)
+func IsGOGPagedProduct(pt ProductType) bool {
+	return containsProductType(GOGPagedProducts(), pt)
 }
 
-func IsArrayProduct(pt ProductType) bool {
-	return containsProductType(ArrayProducts(), pt)
+func IsGOGArrayProduct(pt ProductType) bool {
+	return containsProductType(GOGArrayProducts(), pt)
 }
 
 func IsGOGDetailProduct(pt ProductType) bool {
 	return containsProductType(GOGDetailProducts(), pt)
 }
 
+func IsGOGProduct(pt ProductType) bool {
+	return IsGOGPagedProduct(pt) ||
+		IsGOGArrayProduct(pt) ||
+		IsGOGDetailProduct(pt)
+}
+
 func IsSteamDetailProduct(pt ProductType) bool {
 	return containsProductType(SteamDetailProducts(), pt)
+}
+
+func IsSteamProduct(pt ProductType) bool {
+	return IsSteamDetailProduct(pt)
 }
 
 func IsFastPageFetchProduct(pt ProductType) bool {

@@ -93,7 +93,7 @@ func IsValidProductType(pt ProductType) bool {
 	return ok && pt != UnknownProductType
 }
 
-func PagedProducts() []ProductType {
+func GOGPagedProducts() []ProductType {
 	return []ProductType{
 		CatalogPage,
 		AccountPage,
@@ -101,7 +101,7 @@ func PagedProducts() []ProductType {
 	}
 }
 
-func ArrayProducts() []ProductType {
+func GOGArrayProducts() []ProductType {
 	return []ProductType{
 		Licences,
 		UserWishlist,
@@ -181,8 +181,8 @@ func steamMainProductTypes(pt ProductType) []ProductType {
 
 func GOGRemoteProducts() []ProductType {
 	remote := make([]ProductType, 0)
-	remote = append(remote, PagedProducts()...)
-	remote = append(remote, ArrayProducts()...)
+	remote = append(remote, GOGPagedProducts()...)
+	remote = append(remote, GOGArrayProducts()...)
 	return append(remote, GOGDetailProducts()...)
 }
 
@@ -273,6 +273,7 @@ func SupportedPropertiesOnly(pt ProductType, properties []string) []string {
 	return supported
 }
 
+// TODO: is this really required? Likely should move to LocalKeyValues
 func Cut(ids []string, pt ProductType) error {
 	ptDir, err := AbsLocalProductTypeDir(pt)
 	if err != nil {

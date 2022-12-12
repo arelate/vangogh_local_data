@@ -2,6 +2,7 @@ package vangogh_local_data
 
 import (
 	"github.com/arelate/gog_integration"
+	"github.com/arelate/pcgw_integration"
 	"github.com/arelate/steam_integration"
 	"github.com/boggydigital/kvas"
 	"strconv"
@@ -437,6 +438,10 @@ var supportedProperties = map[ProductType][]string{
 	SteamStorePage: {
 		SteamTagsProperty,
 	},
+	PCGWCargo: {
+		PCGWPageId,
+		SteamAppIdProperty,
+	},
 }
 
 func ConnectReduxAssets(properties ...string) (kvas.ReduxAssets, error) {
@@ -520,14 +525,14 @@ func getPropertyValues(value interface{}, property string) []string {
 		return value.(gog_integration.LanguageCodesGetter).GetLanguageCodes()
 	case OperatingSystemsProperty:
 		return value.(gog_integration.OperatingSystemsGetter).GetOperatingSystems()
+	case PCGWPageId:
+		return getSlice(value.(pcgw_integration.PageIdGetter).GetPageId)
 	case PreOrderProperty:
 		return boolSlice(value.(gog_integration.PreOrderGetter).GetPreOrder)
 	case PriceProperty:
 		return getSlice(value.(gog_integration.PriceGetter).GetPrice)
 	case ProductTypeProperty:
 		return getSlice(value.(gog_integration.ProductTypeGetter).GetProductType)
-	case StoreTagsProperty:
-		return value.(gog_integration.StoreTagsGetter).GetStoreTags()
 	case PublishersProperty:
 		return value.(gog_integration.PublishersGetter).GetPublishers()
 	case RatingProperty:
@@ -540,8 +545,12 @@ func getPropertyValues(value interface{}, property string) []string {
 		return getScreenshots(value)
 	case SlugProperty:
 		return getSlice(value.(gog_integration.SlugGetter).GetSlug)
+	case SteamAppIdProperty:
+		return value.(pcgw_integration.SteamAppIdsGetter).GetSteamAppIds()
 	case SteamReviewScoreDescProperty:
 		return getSlice(value.(steam_integration.ReviewScoreDescGetter).GetReviewScoreDesc)
+	case StoreTagsProperty:
+		return value.(gog_integration.StoreTagsGetter).GetStoreTags()
 	case StoreUrlProperty:
 		return getSlice(value.(gog_integration.StoreUrlGetter).GetStoreUrl)
 	case SupportUrlProperty:

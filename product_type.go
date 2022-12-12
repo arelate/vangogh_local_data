@@ -223,21 +223,22 @@ func PCGWRemoteProducts() []ProductType {
 }
 
 func LocalProducts() []ProductType {
-	return []ProductType{
-		CatalogProducts,
-		AccountProducts,
-		UserWishlistProducts,
-		Details,
-		ApiProductsV1,
-		ApiProductsV2,
-		LicenceProducts,
-		Orders,
-		SteamAppNews,
-		SteamReviews,
-		SteamStorePage,
-		PCGWCargo,
-		PCGWWikiText,
+	lps := make([]ProductType, len(splitProductTypes))
+	for _, spt := range splitProductTypes {
+		lps = append(lps, spt)
 	}
+	lps = append(lps, GOGDetailProducts()...)
+	lps = append(lps, SteamDetailProducts()...)
+	lps = append(lps, PCGWRemoteProducts()...)
+
+	return lps
+}
+
+func RemoteProducts() []ProductType {
+	rps := GOGRemoteProducts()
+	rps = append(rps, SteamRemoteProducts()...)
+	rps = append(rps, PCGWRemoteProducts()...)
+	return rps
 }
 
 var requireAuth = []ProductType{

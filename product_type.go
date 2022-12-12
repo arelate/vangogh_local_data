@@ -27,6 +27,9 @@ const (
 	SteamAppNews
 	SteamReviews
 	SteamStorePage
+	// PCGamingWiki product types
+	PCGWCargo
+	PCGWWikiText
 )
 
 var productTypeStrings = map[ProductType]string{
@@ -50,6 +53,9 @@ var productTypeStrings = map[ProductType]string{
 	SteamAppNews:   "steam-app-news",
 	SteamReviews:   "steam-reviews",
 	SteamStorePage: "steam-store-page",
+	// PCGamingWiki product types
+	PCGWCargo:    "pcgw-cargo",
+	PCGWWikiText: "pcgw-wikitext",
 }
 
 // the list is intentionally scoped to very few types we anticipate
@@ -145,6 +151,18 @@ var steamDetailMainProductTypes = map[ProductType][]ProductType{
 	},
 }
 
+var pcgwDetailMainProductTypes = map[ProductType][]ProductType{
+	//PCGamingWiki product types are updated on GOG.com store or account product changes
+	PCGWCargo: {
+		CatalogProducts,
+		AccountProducts,
+	},
+	PCGWWikiText: {
+		CatalogProducts,
+		AccountProducts,
+	},
+}
+
 func detailProducts(dmp map[ProductType][]ProductType) []ProductType {
 	pts := make([]ProductType, 0, len(dmp))
 	for pt := range dmp {
@@ -161,11 +179,17 @@ func SteamDetailProducts() []ProductType {
 	return detailProducts(steamDetailMainProductTypes)
 }
 
+func PCGWDetailProducts() []ProductType {
+	return detailProducts(pcgwDetailMainProductTypes)
+}
+
 func MainProductTypes(pt ProductType) []ProductType {
 	if IsGOGDetailProduct(pt) {
 		return gogMainProductTypes(pt)
 	} else if IsSteamDetailProduct(pt) {
 		return steamMainProductTypes(pt)
+	} else if IsPCGWDetailProduct(pt) {
+		return pcgwMainProductTypes(pt)
 	} else {
 		return nil
 	}
@@ -179,6 +203,10 @@ func steamMainProductTypes(pt ProductType) []ProductType {
 	return steamDetailMainProductTypes[pt]
 }
 
+func pcgwMainProductTypes(pt ProductType) []ProductType {
+	return pcgwDetailMainProductTypes[pt]
+}
+
 func GOGRemoteProducts() []ProductType {
 	remote := make([]ProductType, 0)
 	remote = append(remote, GOGPagedProducts()...)
@@ -188,6 +216,10 @@ func GOGRemoteProducts() []ProductType {
 
 func SteamRemoteProducts() []ProductType {
 	return SteamDetailProducts()
+}
+
+func PCGWRemoteProducts() []ProductType {
+	return PCGWDetailProducts()
 }
 
 func LocalProducts() []ProductType {
@@ -203,6 +235,8 @@ func LocalProducts() []ProductType {
 		SteamAppNews,
 		SteamReviews,
 		SteamStorePage,
+		PCGWCargo,
+		PCGWWikiText,
 	}
 }
 
@@ -241,6 +275,8 @@ var supportsGetItems = []ProductType{
 	SteamAppNews,
 	SteamReviews,
 	SteamStorePage,
+	PCGWCargo,
+	PCGWWikiText,
 }
 
 var supportedImageTypes = map[ProductType][]ImageType{

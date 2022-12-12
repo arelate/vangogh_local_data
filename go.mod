@@ -13,6 +13,7 @@ require (
 )
 
 require (
+	github.com/arelate/pcgw_integration v0.1.2 // indirect
 	github.com/boggydigital/match_node v0.1.9 // indirect
 	github.com/boggydigital/wits v0.2.3 // indirect
 )

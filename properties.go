@@ -78,6 +78,7 @@ const (
 	LastSyncUpdatesProperty         = "last-sync-updates"
 	ValidationResultProperty        = "validation-result"
 	ValidationCompletedProperty     = "validation-completed"
+	PCGWPageId                      = "pcgw-page-id"
 
 	// property values
 	TrueValue  = "true"
@@ -207,6 +208,7 @@ func ExternalDataSourcesProperties() []string {
 		SteamAppIdProperty,
 		SteamReviewScoreDescProperty,
 		SteamTagsProperty,
+		PCGWPageId,
 	}
 }
 

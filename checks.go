@@ -32,6 +32,14 @@ func IsSteamProduct(pt ProductType) bool {
 	return IsSteamDetailProduct(pt)
 }
 
+func IsPCGWDetailProduct(pt ProductType) bool {
+	return containsProductType(PCGWDetailProducts(), pt)
+}
+
+func IsPCGWProduct(pt ProductType) bool {
+	return IsPCGWDetailProduct(pt)
+}
+
 func IsFastPageFetchProduct(pt ProductType) bool {
 	return containsProductType(FastPageFetchProducts(), pt)
 }

@@ -16,6 +16,9 @@ func NewUrlProvider(pt ProductType, rxa kvas.ReduxAssets) (UrlProvider, error) {
 		return NewGOGUrlProvider(pt)
 	} else if IsSteamProduct(pt) {
 		return NewSteamUrlProvider(pt, rxa)
+	} else if IsPCGWProduct(pt) {
+		return NewPCGWUrlProvider(pt, rxa)
+	} else {
+		return nil, errors.New(fmt.Sprintf("product type %s is not a url provider", pt))
 	}
-	return nil, errors.New(fmt.Sprintf("product type %s is not a url provider", pt))
 }

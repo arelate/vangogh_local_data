@@ -440,7 +440,7 @@ var supportedProperties = map[ProductType][]string{
 	},
 	PCGWCargo: {
 		PCGWPageId,
-		SteamAppIdProperty,
+		//SteamAppIdProperty,
 	},
 }
 
@@ -545,8 +545,8 @@ func getPropertyValues(value interface{}, property string) []string {
 		return getScreenshots(value)
 	case SlugProperty:
 		return getSlice(value.(gog_integration.SlugGetter).GetSlug)
-	case SteamAppIdProperty:
-		return value.(pcgw_integration.SteamAppIdsGetter).GetSteamAppIds()
+	//case SteamAppIdProperty:
+	//	return value.(pcgw_integration.SteamAppIdsGetter).GetSteamAppIds()
 	case SteamReviewScoreDescProperty:
 		return getSlice(value.(steam_integration.ReviewScoreDescGetter).GetReviewScoreDesc)
 	case StoreTagsProperty:

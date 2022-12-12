@@ -79,7 +79,9 @@ const (
 	LastSyncUpdatesProperty         = "last-sync-updates"
 	ValidationResultProperty        = "validation-result"
 	ValidationCompletedProperty     = "validation-completed"
-	PCGWPageId                      = "pcgw-page-id"
+	PCGWPageIdProperty              = "pcgw-page-id"
+	HowLongToBeatIdProperty         = "hltb-id"
+	IGDBIdProperty                  = "igdb-id"
 
 	// property values
 	TrueValue  = "true"
@@ -209,7 +211,9 @@ func ExternalDataSourcesProperties() []string {
 		SteamAppIdProperty,
 		SteamReviewScoreDescProperty,
 		SteamTagsProperty,
-		PCGWPageId,
+		PCGWPageIdProperty,
+		HowLongToBeatIdProperty,
+		IGDBIdProperty,
 	}
 }
 
@@ -439,8 +443,12 @@ var supportedProperties = map[ProductType][]string{
 		SteamTagsProperty,
 	},
 	PCGWCargo: {
-		PCGWPageId,
+		PCGWPageIdProperty,
+	},
+	PCGWExternalLinks: {
 		SteamAppIdProperty,
+		HowLongToBeatIdProperty,
+		IGDBIdProperty,
 	},
 }
 
@@ -495,10 +503,10 @@ func getPropertyValues(value interface{}, property string) []string {
 		return value.(gog_integration.FeaturesGetter).GetFeatures()
 	case ForumUrlProperty:
 		return getSlice(value.(gog_integration.ForumUrlGetter).GetForumUrl)
+	case IGDBIdProperty:
+		return getSlice(value.(pcgw_integration.IGDBIdGetter).GetIGDBId)
 	case ImageProperty:
 		return getImageIdSlice(value.(gog_integration.ImageGetter).GetImage)
-	case VerticalImageProperty:
-		return getImageIdSlice(value.(gog_integration.VerticalImageGetter).GetVerticalImage)
 	case IncludesGamesProperty:
 		return value.(gog_integration.IncludesGamesGetter).GetIncludesGames()
 	case InDevelopmentProperty:
@@ -521,11 +529,13 @@ func getPropertyValues(value interface{}, property string) []string {
 		return getSlice(value.(gog_integration.GlobalReleaseGetter).GetGlobalRelease)
 	case GOGReleaseDateProperty:
 		return getSlice(value.(gog_integration.GOGReleaseGetter).GetGOGRelease)
+	case HowLongToBeatIdProperty:
+		return getSlice(value.(pcgw_integration.HowLongToBeatIdGetter).GetHowLongToBeatId)
 	case LanguageCodeProperty:
 		return value.(gog_integration.LanguageCodesGetter).GetLanguageCodes()
 	case OperatingSystemsProperty:
 		return value.(gog_integration.OperatingSystemsGetter).GetOperatingSystems()
-	case PCGWPageId:
+	case PCGWPageIdProperty:
 		return getSlice(value.(pcgw_integration.PageIdGetter).GetPageId)
 	case PreOrderProperty:
 		return boolSlice(value.(gog_integration.PreOrderGetter).GetPreOrder)
@@ -546,7 +556,7 @@ func getPropertyValues(value interface{}, property string) []string {
 	case SlugProperty:
 		return getSlice(value.(gog_integration.SlugGetter).GetSlug)
 	case SteamAppIdProperty:
-		return value.(pcgw_integration.SteamAppIdsGetter).GetSteamAppIds()
+		return uint32Slice(value.(pcgw_integration.SteamAppIdGetter).GetSteamAppId)
 	case SteamReviewScoreDescProperty:
 		return getSlice(value.(steam_integration.ReviewScoreDescGetter).GetReviewScoreDesc)
 	case StoreTagsProperty:
@@ -559,6 +569,8 @@ func getPropertyValues(value interface{}, property string) []string {
 		return value.(gog_integration.TagIdsGetter).GetTagIds()
 	case TitleProperty:
 		return getSlice(value.(gog_integration.TitleGetter).GetTitle)
+	case VerticalImageProperty:
+		return getImageIdSlice(value.(gog_integration.VerticalImageGetter).GetVerticalImage)
 	case VideoIdProperty:
 		return value.(gog_integration.VideoIdsGetter).GetVideoIds()
 	default:
@@ -593,7 +605,15 @@ func dateSlice(timestamper func() int64) []string {
 func intSlice(integer func() int) []string {
 	values := make([]string, 0)
 	if integer != nil {
-		values = append(values, strconv.Itoa(integer()))
+		values = append(values, strconv.FormatInt(int64(integer()), 10))
+	}
+	return values
+}
+
+func uint32Slice(integer func() uint32) []string {
+	values := make([]string, 0)
+	if integer != nil {
+		values = append(values, strconv.FormatUint(uint64(integer()), 10))
 	}
 	return values
 }

@@ -12,7 +12,7 @@ type PCGWUrlProvider struct {
 }
 
 func NewPCGWUrlProvider(pt ProductType, rxa kvas.ReduxAssets) (*PCGWUrlProvider, error) {
-	if err := rxa.IsSupported(PCGWPageId); err != nil {
+	if err := rxa.IsSupported(PCGWPageIdProperty); err != nil {
 		return nil, err
 	}
 
@@ -23,7 +23,7 @@ func NewPCGWUrlProvider(pt ProductType, rxa kvas.ReduxAssets) (*PCGWUrlProvider,
 }
 
 func (pcgwup *PCGWUrlProvider) GOGIdToPCGWPageId(gogId string) string {
-	if pageId, ok := pcgwup.rxa.GetFirstVal(PCGWPageId, gogId); ok {
+	if pageId, ok := pcgwup.rxa.GetFirstVal(PCGWPageIdProperty, gogId); ok {
 		return pageId
 	}
 	return ""
@@ -33,9 +33,9 @@ func (pcgwup *PCGWUrlProvider) Url(gogId string) *url.URL {
 	switch pcgwup.pt {
 	case PCGWCargo:
 		return pcgw_integration.CargoQueryUrl(gogId)
-	case PCGWWikiText:
+	case PCGWExternalLinks:
 		if pageId := pcgwup.GOGIdToPCGWPageId(gogId); pageId != "" {
-			return pcgw_integration.ParseUrl(pageId)
+			return pcgw_integration.ParseExternalLinksUrl(pageId)
 		}
 	}
 	return nil

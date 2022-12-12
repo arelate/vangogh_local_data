@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/arelate/gog_integration v0.2.8
-	github.com/arelate/pcgw_integration v0.1.3
+	github.com/arelate/pcgw_integration v0.1.4
 	github.com/arelate/steam_integration v0.1.18
 	github.com/boggydigital/kvas v0.3.26
 	github.com/boggydigital/nod v0.1.20

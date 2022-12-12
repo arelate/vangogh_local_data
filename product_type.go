@@ -29,7 +29,7 @@ const (
 	SteamStorePage
 	// PCGamingWiki product types
 	PCGWCargo
-	PCGWWikiText
+	PCGWExternalLinks
 )
 
 var productTypeStrings = map[ProductType]string{
@@ -54,8 +54,8 @@ var productTypeStrings = map[ProductType]string{
 	SteamReviews:   "steam-reviews",
 	SteamStorePage: "steam-store-page",
 	// PCGamingWiki product types
-	PCGWCargo:    "pcgw-cargo",
-	PCGWWikiText: "pcgw-wikitext",
+	PCGWCargo:         "pcgw-cargo",
+	PCGWExternalLinks: "pcgw-external-links",
 }
 
 // the list is intentionally scoped to very few types we anticipate
@@ -156,7 +156,7 @@ var pcgwDetailMainProductTypes = map[ProductType][]ProductType{
 		CatalogProducts,
 		AccountProducts,
 	},
-	PCGWWikiText: {
+	PCGWExternalLinks: {
 		CatalogProducts,
 		AccountProducts,
 	},
@@ -280,7 +280,7 @@ var supportsGetItems = []ProductType{
 	SteamReviews,
 	SteamStorePage,
 	PCGWCargo,
-	PCGWWikiText,
+	PCGWExternalLinks,
 }
 
 var supportedImageTypes = map[ProductType][]ImageType{

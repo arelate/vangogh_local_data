@@ -180,6 +180,11 @@ func (vr *ValueReader) PCGWCargo(id string) (cargo *pcgw_integration.Cargo, err 
 	return cargo, err
 }
 
+func (vr *ValueReader) PCGWExternalLinks(id string) (pel *pcgw_integration.ParseExternalLinks, err error) {
+	err = vr.readValue(id, &pel)
+	return pel, err
+}
+
 func (vr *ValueReader) ReadValue(key string) (interface{}, error) {
 	switch vr.productType {
 	case CatalogProducts:
@@ -216,6 +221,8 @@ func (vr *ValueReader) ReadValue(key string) (interface{}, error) {
 		return vr.SteamAppList()
 	case PCGWCargo:
 		return vr.PCGWCargo(key)
+	case PCGWExternalLinks:
+		return vr.PCGWExternalLinks(key)
 	default:
 		return nil, fmt.Errorf("vangogh_values: cannot create %s value", vr.productType)
 	}

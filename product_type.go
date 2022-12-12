@@ -223,7 +223,7 @@ func PCGWRemoteProducts() []ProductType {
 }
 
 func LocalProducts() []ProductType {
-	lps := make([]ProductType, len(splitProductTypes))
+	lps := make([]ProductType, 0, len(splitProductTypes))
 	for _, spt := range splitProductTypes {
 		lps = append(lps, spt)
 	}

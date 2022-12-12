@@ -111,7 +111,6 @@ func GOGArrayProducts() []ProductType {
 	return []ProductType{
 		Licences,
 		UserWishlist,
-		SteamAppList,
 	}
 }
 
@@ -175,6 +174,10 @@ func GOGDetailProducts() []ProductType {
 	return detailProducts(gogDetailMainProductTypes)
 }
 
+func SteamArrayProducts() []ProductType {
+	return []ProductType{SteamAppList}
+}
+
 func SteamDetailProducts() []ProductType {
 	return detailProducts(steamDetailMainProductTypes)
 }
@@ -208,14 +211,14 @@ func pcgwMainProductTypes(pt ProductType) []ProductType {
 }
 
 func GOGRemoteProducts() []ProductType {
-	remote := make([]ProductType, 0)
-	remote = append(remote, GOGPagedProducts()...)
+	remote := GOGPagedProducts()
 	remote = append(remote, GOGArrayProducts()...)
 	return append(remote, GOGDetailProducts()...)
 }
 
 func SteamRemoteProducts() []ProductType {
-	return SteamDetailProducts()
+	remote := SteamArrayProducts()
+	return append(remote, SteamDetailProducts()...)
 }
 
 func PCGWRemoteProducts() []ProductType {

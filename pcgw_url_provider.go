@@ -6,11 +6,6 @@ import (
 	"net/url"
 )
 
-var pcgwProductTypeUrlGetters = map[ProductType]func(string) *url.URL{
-	PCGWCargo:    pcgw_integration.CargoQueryUrl,
-	PCGWWikiText: pcgw_integration.ParseUrl,
-}
-
 type PCGWUrlProvider struct {
 	pt  ProductType
 	rxa kvas.ReduxAssets
@@ -35,12 +30,13 @@ func (pcgwup *PCGWUrlProvider) GOGIdToPCGWPageId(gogId string) string {
 }
 
 func (pcgwup *PCGWUrlProvider) Url(gogId string) *url.URL {
-
-	if pageId := pcgwup.GOGIdToPCGWPageId(gogId); pageId != "" {
-		if pcgwug, ok := pcgwProductTypeUrlGetters[pcgwup.pt]; ok {
-			return pcgwug(pageId)
+	switch pcgwup.pt {
+	case PCGWCargo:
+		return pcgw_integration.CargoQueryUrl(gogId)
+	case PCGWWikiText:
+		if pageId := pcgwup.GOGIdToPCGWPageId(gogId); pageId != "" {
+			return pcgw_integration.ParseUrl(pageId)
 		}
 	}
-
 	return nil
 }

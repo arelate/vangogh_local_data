@@ -14,6 +14,10 @@ func IsGOGArrayProduct(pt ProductType) bool {
 	return containsProductType(GOGArrayProducts(), pt)
 }
 
+func IsSteamArrayProduct(pt ProductType) bool {
+	return containsProductType(SteamArrayProducts(), pt)
+}
+
 func IsGOGDetailProduct(pt ProductType) bool {
 	return containsProductType(GOGDetailProducts(), pt)
 }
@@ -29,7 +33,8 @@ func IsSteamDetailProduct(pt ProductType) bool {
 }
 
 func IsSteamProduct(pt ProductType) bool {
-	return IsSteamDetailProduct(pt)
+	return IsSteamArrayProduct(pt) ||
+		IsSteamDetailProduct(pt)
 }
 
 func IsPCGWDetailProduct(pt ProductType) bool {

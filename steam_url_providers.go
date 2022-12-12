@@ -39,12 +39,15 @@ func (sup *SteamUrlProvider) GOGIdToSteamAppId(gogId string) uint32 {
 }
 
 func (sup *SteamUrlProvider) Url(gogId string) *url.URL {
-
-	if appId := sup.GOGIdToSteamAppId(gogId); appId > 0 {
-		if sug, ok := steamProductTypeUrlGetters[sup.pt]; ok {
-			return sug(appId)
+	switch sup.pt {
+	case SteamAppList:
+		return steam_integration.AppListUrl()
+	default:
+		if appId := sup.GOGIdToSteamAppId(gogId); appId > 0 {
+			if sug, ok := steamProductTypeUrlGetters[sup.pt]; ok {
+				return sug(appId)
+			}
 		}
 	}
-
 	return nil
 }

@@ -82,6 +82,10 @@ const (
 	PCGWPageIdProperty              = "pcgw-page-id"
 	HowLongToBeatIdProperty         = "hltb-id"
 	IGDBIdProperty                  = "igdb-id"
+	StrategyWikiIdProperty          = "strategy-wiki-id"
+	MobyGamesIdProperty             = "moby-games-id"
+	WikipediaIdProperty             = "wikipedia-id"
+	WineHQIdProperty                = "winehq-id"
 
 	// property values
 	TrueValue  = "true"
@@ -214,6 +218,10 @@ func ExternalDataSourcesProperties() []string {
 		PCGWPageIdProperty,
 		HowLongToBeatIdProperty,
 		IGDBIdProperty,
+		StrategyWikiIdProperty,
+		MobyGamesIdProperty,
+		WikipediaIdProperty,
+		WineHQIdProperty,
 	}
 }
 
@@ -449,6 +457,10 @@ var supportedProperties = map[ProductType][]string{
 		SteamAppIdProperty,
 		HowLongToBeatIdProperty,
 		IGDBIdProperty,
+		StrategyWikiIdProperty,
+		MobyGamesIdProperty,
+		WikipediaIdProperty,
+		WineHQIdProperty,
 	},
 }
 
@@ -533,6 +545,8 @@ func getPropertyValues(value interface{}, property string) []string {
 		return getSlice(value.(pcgw_integration.HowLongToBeatIdGetter).GetHowLongToBeatId)
 	case LanguageCodeProperty:
 		return value.(gog_integration.LanguageCodesGetter).GetLanguageCodes()
+	case MobyGamesIdProperty:
+		return getSlice(value.(pcgw_integration.MobyGamesIdGetter).GetMobyGamesId)
 	case OperatingSystemsProperty:
 		return value.(gog_integration.OperatingSystemsGetter).GetOperatingSystems()
 	case PCGWPageIdProperty:
@@ -563,6 +577,8 @@ func getPropertyValues(value interface{}, property string) []string {
 		return value.(gog_integration.StoreTagsGetter).GetStoreTags()
 	case StoreUrlProperty:
 		return getSlice(value.(gog_integration.StoreUrlGetter).GetStoreUrl)
+	case StrategyWikiIdProperty:
+		return getSlice(value.(pcgw_integration.StrategyWikiIdGetter).GetStrategyWikiId)
 	case SupportUrlProperty:
 		return getSlice(value.(gog_integration.SupportUrlGetter).GetSupportUrl)
 	case TagIdProperty:
@@ -573,6 +589,10 @@ func getPropertyValues(value interface{}, property string) []string {
 		return getImageIdSlice(value.(gog_integration.VerticalImageGetter).GetVerticalImage)
 	case VideoIdProperty:
 		return value.(gog_integration.VideoIdsGetter).GetVideoIds()
+	case WikipediaIdProperty:
+		return getSlice(value.(pcgw_integration.WikipediaIdGetter).GetWikipediaId)
+	case WineHQIdProperty:
+		return getSlice(value.(pcgw_integration.WineHQIdGetter).GetWineHQId)
 	default:
 		return []string{}
 	}

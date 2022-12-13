@@ -3,9 +3,9 @@ package vangogh_local_data
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/arelate/gog_integration"
-	"github.com/arelate/pcgw_integration"
-	"github.com/arelate/steam_integration"
+	"github.com/arelate/southern_light/gog_integration"
+	"github.com/arelate/southern_light/pcgw_integration"
+	"github.com/arelate/southern_light/steam_integration"
 	"github.com/boggydigital/kvas"
 	"golang.org/x/net/html"
 	"io"

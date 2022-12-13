@@ -2,7 +2,7 @@ package vangogh_local_data
 
 import (
 	"fmt"
-	"github.com/arelate/gog_integration"
+	"github.com/arelate/southern_light/gog_integration"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
 	"log"

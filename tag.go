@@ -3,7 +3,7 @@ package vangogh_local_data
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/arelate/gog_integration"
+	"github.com/arelate/southern_light/gog_integration"
 	"github.com/boggydigital/nod"
 	"golang.org/x/exp/slices"
 	"net/http"

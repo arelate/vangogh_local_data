@@ -1,7 +1,7 @@
 package vangogh_local_data
 
 import (
-	"github.com/arelate/steam_integration"
+	"github.com/arelate/southern_light/steam_integration"
 	"github.com/boggydigital/kvas"
 	"net/url"
 	"strconv"

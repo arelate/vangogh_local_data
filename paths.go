@@ -1,7 +1,7 @@
 package vangogh_local_data
 
 import (
-	"github.com/arelate/gog_integration"
+	"github.com/arelate/southern_light/gog_integration"
 	"github.com/boggydigital/yt_urls"
 	"os"
 	"path"

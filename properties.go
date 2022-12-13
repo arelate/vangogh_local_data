@@ -86,6 +86,7 @@ const (
 	MobyGamesIdProperty             = "moby-games-id"
 	WikipediaIdProperty             = "wikipedia-id"
 	WineHQIdProperty                = "winehq-id"
+	VNDBIdProperty                  = "vndb-id"
 
 	// property values
 	TrueValue  = "true"
@@ -222,6 +223,7 @@ func ExternalDataSourcesProperties() []string {
 		MobyGamesIdProperty,
 		WikipediaIdProperty,
 		WineHQIdProperty,
+		VNDBIdProperty,
 	}
 }
 
@@ -461,6 +463,7 @@ var supportedProperties = map[ProductType][]string{
 		MobyGamesIdProperty,
 		WikipediaIdProperty,
 		WineHQIdProperty,
+		VNDBIdProperty,
 	},
 }
 
@@ -589,6 +592,8 @@ func getPropertyValues(value interface{}, property string) []string {
 		return getImageIdSlice(value.(gog_integration.VerticalImageGetter).GetVerticalImage)
 	case VideoIdProperty:
 		return value.(gog_integration.VideoIdsGetter).GetVideoIds()
+	case VNDBIdProperty:
+		return getSlice(value.(pcgw_integration.VNDBIdGetter).GetVNDBId)
 	case WikipediaIdProperty:
 		return getSlice(value.(pcgw_integration.WikipediaIdGetter).GetWikipediaId)
 	case WineHQIdProperty:

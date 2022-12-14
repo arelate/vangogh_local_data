@@ -10,12 +10,22 @@ func IsGOGPagedProduct(pt ProductType) bool {
 	return containsProductType(GOGPagedProducts(), pt)
 }
 
+func IsArrayProduct(pt ProductType) bool {
+	return IsGOGArrayProduct(pt) ||
+		IsSteamArrayProduct(pt) ||
+		IsHLTBArrayProduct(pt)
+}
+
 func IsGOGArrayProduct(pt ProductType) bool {
 	return containsProductType(GOGArrayProducts(), pt)
 }
 
 func IsSteamArrayProduct(pt ProductType) bool {
 	return containsProductType(SteamArrayProducts(), pt)
+}
+
+func IsHLTBArrayProduct(pt ProductType) bool {
+	return containsProductType(HLTBArrayProducts(), pt)
 }
 
 func IsGOGDetailProduct(pt ProductType) bool {

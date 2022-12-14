@@ -2,6 +2,7 @@ package vangogh_local_data
 
 import (
 	"github.com/arelate/southern_light/gog_integration"
+	"github.com/arelate/southern_light/hltb_integration"
 	"github.com/arelate/southern_light/pcgw_integration"
 	"github.com/arelate/southern_light/steam_integration"
 	"github.com/boggydigital/kvas"
@@ -81,6 +82,7 @@ const (
 	ValidationCompletedProperty     = "validation-completed"
 	PCGWPageIdProperty              = "pcgw-page-id"
 	HowLongToBeatIdProperty         = "hltb-id"
+	HowLongToBeatNextBuildProperty  = "hltb-next-build"
 	IGDBIdProperty                  = "igdb-id"
 	StrategyWikiIdProperty          = "strategy-wiki-id"
 	MobyGamesIdProperty             = "moby-games-id"
@@ -218,6 +220,7 @@ func ExternalDataSourcesProperties() []string {
 		SteamTagsProperty,
 		PCGWPageIdProperty,
 		HowLongToBeatIdProperty,
+		HowLongToBeatNextBuildProperty,
 		IGDBIdProperty,
 		StrategyWikiIdProperty,
 		MobyGamesIdProperty,
@@ -465,6 +468,9 @@ var supportedProperties = map[ProductType][]string{
 		WineHQIdProperty,
 		VNDBIdProperty,
 	},
+	HLTBRootPage: {
+		HowLongToBeatNextBuildProperty,
+	},
 }
 
 func ConnectReduxAssets(properties ...string) (kvas.ReduxAssets, error) {
@@ -546,6 +552,8 @@ func getPropertyValues(value interface{}, property string) []string {
 		return getSlice(value.(gog_integration.GOGReleaseGetter).GetGOGRelease)
 	case HowLongToBeatIdProperty:
 		return getSlice(value.(pcgw_integration.HowLongToBeatIdGetter).GetHowLongToBeatId)
+	case HowLongToBeatNextBuildProperty:
+		return getSlice(value.(hltb_integration.NextBuildGetter).GetNextBuild)
 	case LanguageCodeProperty:
 		return value.(gog_integration.LanguageCodesGetter).GetLanguageCodes()
 	case MobyGamesIdProperty:

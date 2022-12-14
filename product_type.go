@@ -30,6 +30,7 @@ const (
 	// PCGamingWiki product types
 	PCGWCargo
 	PCGWExternalLinks
+	HLTBRootPage
 )
 
 var productTypeStrings = map[ProductType]string{
@@ -56,6 +57,7 @@ var productTypeStrings = map[ProductType]string{
 	// PCGamingWiki product types
 	PCGWCargo:         "pcgw-cargo",
 	PCGWExternalLinks: "pcgw-external-links",
+	HLTBRootPage:      "hltb-root-page",
 }
 
 // the list is intentionally scoped to very few types we anticipate
@@ -111,6 +113,12 @@ func GOGArrayProducts() []ProductType {
 	return []ProductType{
 		Licences,
 		UserWishlist,
+	}
+}
+
+func HLTBArrayProducts() []ProductType {
+	return []ProductType{
+		HLTBRootPage,
 	}
 }
 
@@ -225,6 +233,10 @@ func PCGWRemoteProducts() []ProductType {
 	return PCGWDetailProducts()
 }
 
+func HLTBRemoteProducts() []ProductType {
+	return HLTBArrayProducts()
+}
+
 func LocalProducts() []ProductType {
 	lps := make([]ProductType, 0, len(splitProductTypes))
 	for _, spt := range splitProductTypes {
@@ -233,6 +245,7 @@ func LocalProducts() []ProductType {
 	lps = append(lps, GOGDetailProducts()...)
 	lps = append(lps, SteamDetailProducts()...)
 	lps = append(lps, PCGWRemoteProducts()...)
+	lps = append(lps, HLTBRemoteProducts()...)
 
 	return lps
 }
@@ -241,6 +254,8 @@ func RemoteProducts() []ProductType {
 	rps := GOGRemoteProducts()
 	rps = append(rps, SteamRemoteProducts()...)
 	rps = append(rps, PCGWRemoteProducts()...)
+	rps = append(rps, HLTBRemoteProducts()...)
+
 	return rps
 }
 
@@ -281,6 +296,7 @@ var supportsGetItems = []ProductType{
 	SteamStorePage,
 	PCGWCargo,
 	PCGWExternalLinks,
+	HLTBRootPage,
 }
 
 var supportedImageTypes = map[ProductType][]ImageType{

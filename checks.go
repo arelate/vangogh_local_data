@@ -55,6 +55,10 @@ func IsPCGWProduct(pt ProductType) bool {
 	return IsPCGWDetailProduct(pt)
 }
 
+func IsHLTBProduct(pt ProductType) bool {
+	return IsHLTBArrayProduct(pt)
+}
+
 func IsFastPageFetchProduct(pt ProductType) bool {
 	return containsProductType(FastPageFetchProducts(), pt)
 }

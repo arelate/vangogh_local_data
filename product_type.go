@@ -31,6 +31,7 @@ const (
 	PCGWCargo
 	PCGWExternalLinks
 	HLTBRootPage
+	HLTBData
 )
 
 var productTypeStrings = map[ProductType]string{
@@ -57,7 +58,9 @@ var productTypeStrings = map[ProductType]string{
 	// PCGamingWiki product types
 	PCGWCargo:         "pcgw-cargo",
 	PCGWExternalLinks: "pcgw-external-links",
-	HLTBRootPage:      "hltb-root-page",
+	// HowLongToBeat product types
+	HLTBRootPage: "hltb-root-page",
+	HLTBData:     "hltb-data",
 }
 
 // the list is intentionally scoped to very few types we anticipate
@@ -170,6 +173,13 @@ var pcgwDetailMainProductTypes = map[ProductType][]ProductType{
 	},
 }
 
+var hltbDetailMainProductTypes = map[ProductType][]ProductType{
+	HLTBData: {
+		CatalogProducts,
+		AccountProducts,
+	},
+}
+
 func detailProducts(dmp map[ProductType][]ProductType) []ProductType {
 	pts := make([]ProductType, 0, len(dmp))
 	for pt := range dmp {
@@ -194,6 +204,10 @@ func PCGWDetailProducts() []ProductType {
 	return detailProducts(pcgwDetailMainProductTypes)
 }
 
+func HLTBDetailProducts() []ProductType {
+	return detailProducts(hltbDetailMainProductTypes)
+}
+
 func MainProductTypes(pt ProductType) []ProductType {
 	if IsGOGDetailProduct(pt) {
 		return gogMainProductTypes(pt)
@@ -201,6 +215,8 @@ func MainProductTypes(pt ProductType) []ProductType {
 		return steamMainProductTypes(pt)
 	} else if IsPCGWDetailProduct(pt) {
 		return pcgwMainProductTypes(pt)
+	} else if IsHLTBDetailProduct(pt) {
+		return hltbMainProductTypes(pt)
 	} else {
 		return nil
 	}
@@ -216,6 +232,10 @@ func steamMainProductTypes(pt ProductType) []ProductType {
 
 func pcgwMainProductTypes(pt ProductType) []ProductType {
 	return pcgwDetailMainProductTypes[pt]
+}
+
+func hltbMainProductTypes(pt ProductType) []ProductType {
+	return hltbDetailMainProductTypes[pt]
 }
 
 func GOGRemoteProducts() []ProductType {
@@ -234,7 +254,8 @@ func PCGWRemoteProducts() []ProductType {
 }
 
 func HLTBRemoteProducts() []ProductType {
-	return HLTBArrayProducts()
+	remote := HLTBArrayProducts()
+	return append(remote, HLTBDetailProducts()...)
 }
 
 func LocalProducts() []ProductType {
@@ -297,6 +318,7 @@ var supportsGetItems = []ProductType{
 	PCGWCargo,
 	PCGWExternalLinks,
 	HLTBRootPage,
+	HLTBData,
 }
 
 var supportedImageTypes = map[ProductType][]ImageType{

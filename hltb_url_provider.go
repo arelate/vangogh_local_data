@@ -12,7 +12,7 @@ type HLTBUrlProvider struct {
 }
 
 func NewHLTBUrlProvider(pt ProductType, rxa kvas.ReduxAssets) (*HLTBUrlProvider, error) {
-	if err := rxa.IsSupported(HowLongToBeatIdProperty); err != nil {
+	if err := rxa.IsSupported(HowLongToBeatNextBuildProperty, HowLongToBeatIdProperty); err != nil {
 		return nil, err
 	}
 
@@ -33,12 +33,12 @@ func (hup *HLTBUrlProvider) Url(gogId string) *url.URL {
 	switch hup.pt {
 	case HLTBRootPage:
 		return hltb_integration.RootUrl()
-		//default:
-		//	if appId := sup.GOGIdToSteamAppId(gogId); appId > 0 {
-		//		if sug, ok := steamProductTypeUrlGetters[sup.pt]; ok {
-		//			return sug(appId)
-		//		}
-		//	}
+	case HLTBData:
+		if buildId, ok := hup.rxa.GetFirstVal(HowLongToBeatNextBuildProperty, HLTBRootPage.String()); ok {
+			if hltbId := hup.GOGIdToHLTBId(gogId); hltbId != "" {
+				return hltb_integration.DataUrl(buildId, hltbId)
+			}
+		}
 	}
 	return nil
 }

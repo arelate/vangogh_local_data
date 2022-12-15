@@ -58,7 +58,7 @@ var productTypeStrings = map[ProductType]string{
 	// PCGamingWiki product types
 	PCGWCargo:         "pcgw-cargo",
 	PCGWExternalLinks: "pcgw-external-links",
-	// HowLongToBeat product types
+	// HLTB product types
 	HLTBRootPage: "hltb-root-page",
 	HLTBData:     "hltb-data",
 }

@@ -11,87 +11,87 @@ import (
 )
 
 const (
-	IdProperty                       = "id"
-	TitleProperty                    = "title"
-	DevelopersProperty               = "developers"
-	PublishersProperty               = "publishers"
-	ImageProperty                    = "image"
-	VerticalImageProperty            = "vertical-image"
-	ScreenshotsProperty              = "screenshots"
-	RatingProperty                   = "rating"
-	IncludesGamesProperty            = "includes-games"
-	IsIncludedByGamesProperty        = "is-included-by-games"
-	RequiresGamesProperty            = "requires-games"
-	IsRequiredByGamesProperty        = "is-required-by-games"
-	GenresProperty                   = "genres"
-	StoreTagsProperty                = "store-tags"
-	FeaturesProperty                 = "features"
-	SeriesProperty                   = "series"
-	TagIdProperty                    = "tag"
-	TagNameProperty                  = "tag-name"
-	VideoIdProperty                  = "video-id"
-	MissingVideoUrlProperty          = "missing-video-url"
-	MissingVideoThumbnailProperty    = "missing-video-thumbnail"
-	OperatingSystemsProperty         = "os"
-	LanguageCodeProperty             = "lang-code"
-	LanguageNameProperty             = "lang-name"
-	NativeLanguageNameProperty       = "native-lang-name"
-	SlugProperty                     = "slug"
-	GOGReleaseDateProperty           = "gog-release-date"
-	GOGOrderDateProperty             = "gog-order-date"
-	GlobalReleaseDateProperty        = "global-release-date"
-	TextProperty                     = "text"
-	AllTextProperty                  = "all-text"
-	ImageIdProperty                  = "image-id"
-	TypesProperty                    = "types"
-	LocalManualUrlProperty           = "local-manual-url"
-	DownloadStatusErrorProperty      = "download-status-error"
-	StoreUrlProperty                 = "store-url"
-	ForumUrlProperty                 = "forum-url"
-	SupportUrlProperty               = "support-url"
-	ChangelogProperty                = "changelog"
-	DescriptionOverviewProperty      = "description-overview"
-	DescriptionFeaturesProperty      = "description-features"
-	AdditionalRequirementsProperty   = "additional-requirements"
-	CopyrightsProperty               = "copyrights"
-	WishlistedProperty               = "wishlisted"
-	OwnedProperty                    = "owned"
-	ProductTypeProperty              = "product-type"
-	InDevelopmentProperty            = "in-development"
-	PreOrderProperty                 = "pre-order"
-	ComingSoonProperty               = "coming-soon"
-	IsUsingDOSBoxProperty            = "is-using-dosbox"
-	IsUsingScummVMProperty           = "is-using-scummvm"
-	BasePriceProperty                = "base-price"
-	PriceProperty                    = "price"
-	IsFreeProperty                   = "is-free"
-	IsDiscountedProperty             = "is-discounted"
-	DiscountPercentageProperty       = "discount-percentage"
-	SteamAppIdProperty               = "steam-app-id"
-	LocalTagsProperty                = "local-tags"
-	SortProperty                     = "sort"
-	DescendingProperty               = "desc"
-	SteamReviewScoreDescProperty     = "steam-review-score-desc"
-	SteamTagsProperty                = "steam-tags"
-	DehydratedImageProperty          = "dehydrated-image"
-	DehydratedImageModifiedProperty  = "dehydrated-image-modified"
-	MissingDehydratedImageProperty   = "missing-dehydrated-image"
-	SyncEventsProperty               = "sync-events"
-	LastSyncUpdatesProperty          = "last-sync-updates"
-	ValidationResultProperty         = "validation-result"
-	ValidationCompletedProperty      = "validation-completed"
-	PCGWPageIdProperty               = "pcgw-page-id"
-	HowLongToBeatIdProperty          = "hltb-id"
-	HowLongToBeatNextBuildProperty   = "hltb-next-build"
-	HowLongToBeatHoursToCompleteMain = "hltb-comp-main"
-	HowLongToBeatHoursToCompletePlus = "hltb-comp-plus"
-	HowLongToBeatHoursToComplete100  = "hltb-comp-100"
-	IGDBIdProperty                   = "igdb-id"
-	StrategyWikiIdProperty           = "strategy-wiki-id"
-	MobyGamesIdProperty              = "moby-games-id"
-	WikipediaIdProperty              = "wikipedia-id"
-	WineHQIdProperty                 = "winehq-id"
-	VNDBIdProperty                   = "vndb-id"
+	IdProperty                      = "id"
+	TitleProperty                   = "title"
+	DevelopersProperty              = "developers"
+	PublishersProperty              = "publishers"
+	ImageProperty                   = "image"
+	VerticalImageProperty           = "vertical-image"
+	ScreenshotsProperty             = "screenshots"
+	RatingProperty                  = "rating"
+	IncludesGamesProperty           = "includes-games"
+	IsIncludedByGamesProperty       = "is-included-by-games"
+	RequiresGamesProperty           = "requires-games"
+	IsRequiredByGamesProperty       = "is-required-by-games"
+	GenresProperty                  = "genres"
+	StoreTagsProperty               = "store-tags"
+	FeaturesProperty                = "features"
+	SeriesProperty                  = "series"
+	TagIdProperty                   = "tag"
+	TagNameProperty                 = "tag-name"
+	VideoIdProperty                 = "video-id"
+	MissingVideoUrlProperty         = "missing-video-url"
+	MissingVideoThumbnailProperty   = "missing-video-thumbnail"
+	OperatingSystemsProperty        = "os"
+	LanguageCodeProperty            = "lang-code"
+	LanguageNameProperty            = "lang-name"
+	NativeLanguageNameProperty      = "native-lang-name"
+	SlugProperty                    = "slug"
+	GOGReleaseDateProperty          = "gog-release-date"
+	GOGOrderDateProperty            = "gog-order-date"
+	GlobalReleaseDateProperty       = "global-release-date"
+	TextProperty                    = "text"
+	AllTextProperty                 = "all-text"
+	ImageIdProperty                 = "image-id"
+	TypesProperty                   = "types"
+	LocalManualUrlProperty          = "local-manual-url"
+	DownloadStatusErrorProperty     = "download-status-error"
+	StoreUrlProperty                = "store-url"
+	ForumUrlProperty                = "forum-url"
+	SupportUrlProperty              = "support-url"
+	ChangelogProperty               = "changelog"
+	DescriptionOverviewProperty     = "description-overview"
+	DescriptionFeaturesProperty     = "description-features"
+	AdditionalRequirementsProperty  = "additional-requirements"
+	CopyrightsProperty              = "copyrights"
+	WishlistedProperty              = "wishlisted"
+	OwnedProperty                   = "owned"
+	ProductTypeProperty             = "product-type"
+	InDevelopmentProperty           = "in-development"
+	PreOrderProperty                = "pre-order"
+	ComingSoonProperty              = "coming-soon"
+	IsUsingDOSBoxProperty           = "is-using-dosbox"
+	IsUsingScummVMProperty          = "is-using-scummvm"
+	BasePriceProperty               = "base-price"
+	PriceProperty                   = "price"
+	IsFreeProperty                  = "is-free"
+	IsDiscountedProperty            = "is-discounted"
+	DiscountPercentageProperty      = "discount-percentage"
+	SteamAppIdProperty              = "steam-app-id"
+	LocalTagsProperty               = "local-tags"
+	SortProperty                    = "sort"
+	DescendingProperty              = "desc"
+	SteamReviewScoreDescProperty    = "steam-review-score-desc"
+	SteamTagsProperty               = "steam-tags"
+	DehydratedImageProperty         = "dehydrated-image"
+	DehydratedImageModifiedProperty = "dehydrated-image-modified"
+	MissingDehydratedImageProperty  = "missing-dehydrated-image"
+	SyncEventsProperty              = "sync-events"
+	LastSyncUpdatesProperty         = "last-sync-updates"
+	ValidationResultProperty        = "validation-result"
+	ValidationCompletedProperty     = "validation-completed"
+	PCGWPageIdProperty              = "pcgw-page-id"
+	HLTBIdProperty                  = "hltb-id"
+	HLTBBuildIdProperty             = "hltb-next-build"
+	HLTBHoursToCompleteMain         = "hltb-comp-main"
+	HLTBHoursToCompletePlus         = "hltb-comp-plus"
+	HLTBHoursToComplete100          = "hltb-comp-100"
+	IGDBIdProperty                  = "igdb-id"
+	StrategyWikiIdProperty          = "strategy-wiki-id"
+	MobyGamesIdProperty             = "moby-games-id"
+	WikipediaIdProperty             = "wikipedia-id"
+	WineHQIdProperty                = "winehq-id"
+	VNDBIdProperty                  = "vndb-id"
 
 	// property values
 	TrueValue  = "true"
@@ -203,9 +203,9 @@ func AdvancedProductProperties() []string {
 		ProductTypeProperty,
 		IsUsingDOSBoxProperty,
 		IsUsingScummVMProperty,
-		HowLongToBeatHoursToCompleteMain,
-		HowLongToBeatHoursToCompletePlus,
-		HowLongToBeatHoursToComplete100,
+		HLTBHoursToCompleteMain,
+		HLTBHoursToCompletePlus,
+		HLTBHoursToComplete100,
 	}
 }
 
@@ -225,8 +225,8 @@ func ExternalDataSourcesProperties() []string {
 		SteamReviewScoreDescProperty,
 		SteamTagsProperty,
 		PCGWPageIdProperty,
-		HowLongToBeatIdProperty,
-		HowLongToBeatNextBuildProperty,
+		HLTBIdProperty,
+		HLTBBuildIdProperty,
 		IGDBIdProperty,
 		StrategyWikiIdProperty,
 		MobyGamesIdProperty,
@@ -466,7 +466,7 @@ var supportedProperties = map[ProductType][]string{
 	},
 	PCGWExternalLinks: {
 		SteamAppIdProperty,
-		HowLongToBeatIdProperty,
+		HLTBIdProperty,
 		IGDBIdProperty,
 		StrategyWikiIdProperty,
 		MobyGamesIdProperty,
@@ -475,12 +475,12 @@ var supportedProperties = map[ProductType][]string{
 		VNDBIdProperty,
 	},
 	HLTBRootPage: {
-		HowLongToBeatNextBuildProperty,
+		HLTBBuildIdProperty,
 	},
 	HLTBData: {
-		HowLongToBeatHoursToCompleteMain,
-		HowLongToBeatHoursToCompletePlus,
-		HowLongToBeatHoursToComplete100,
+		HLTBHoursToCompleteMain,
+		HLTBHoursToCompletePlus,
+		HLTBHoursToComplete100,
 	},
 }
 
@@ -561,15 +561,15 @@ func getPropertyValues(value interface{}, property string) []string {
 		return getSlice(value.(gog_integration.GlobalReleaseGetter).GetGlobalRelease)
 	case GOGReleaseDateProperty:
 		return getSlice(value.(gog_integration.GOGReleaseGetter).GetGOGRelease)
-	case HowLongToBeatIdProperty:
-		return getSlice(value.(pcgw_integration.HowLongToBeatIdGetter).GetHowLongToBeatId)
-	case HowLongToBeatNextBuildProperty:
-		return getSlice(value.(hltb_integration.NextBuildGetter).GetNextBuild)
-	case HowLongToBeatHoursToCompleteMain:
+	case HLTBIdProperty:
+		return getSlice(value.(pcgw_integration.HLTBIdGetter).GetHLTBId)
+	case HLTBBuildIdProperty:
+		return getSlice(value.(hltb_integration.BuildIdGetter).GetBuildId)
+	case HLTBHoursToCompleteMain:
 		return getSlice(value.(hltb_integration.HoursToCompleteMainGetter).GetHoursToCompleteMain)
-	case HowLongToBeatHoursToCompletePlus:
+	case HLTBHoursToCompletePlus:
 		return getSlice(value.(hltb_integration.HoursToCompletePlusGetter).GetHoursToCompletePlus)
-	case HowLongToBeatHoursToComplete100:
+	case HLTBHoursToComplete100:
 		return getSlice(value.(hltb_integration.HoursToComplete100Getter).GetHoursToComplete100)
 	case LanguageCodeProperty:
 		return value.(gog_integration.LanguageCodesGetter).GetLanguageCodes()

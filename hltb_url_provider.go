@@ -12,7 +12,7 @@ type HLTBUrlProvider struct {
 }
 
 func NewHLTBUrlProvider(pt ProductType, rxa kvas.ReduxAssets) (*HLTBUrlProvider, error) {
-	if err := rxa.IsSupported(HowLongToBeatNextBuildProperty, HowLongToBeatIdProperty); err != nil {
+	if err := rxa.IsSupported(HLTBBuildIdProperty, HLTBIdProperty); err != nil {
 		return nil, err
 	}
 
@@ -23,7 +23,7 @@ func NewHLTBUrlProvider(pt ProductType, rxa kvas.ReduxAssets) (*HLTBUrlProvider,
 }
 
 func (hup *HLTBUrlProvider) GOGIdToHLTBId(gogId string) string {
-	if hltbId, ok := hup.rxa.GetFirstVal(HowLongToBeatIdProperty, gogId); ok {
+	if hltbId, ok := hup.rxa.GetFirstVal(HLTBIdProperty, gogId); ok {
 		return hltbId
 	}
 	return ""
@@ -34,7 +34,7 @@ func (hup *HLTBUrlProvider) Url(gogId string) *url.URL {
 	case HLTBRootPage:
 		return hltb_integration.RootUrl()
 	case HLTBData:
-		if buildId, ok := hup.rxa.GetFirstVal(HowLongToBeatNextBuildProperty, HLTBRootPage.String()); ok {
+		if buildId, ok := hup.rxa.GetFirstVal(HLTBBuildIdProperty, HLTBRootPage.String()); ok {
 			if hltbId := hup.GOGIdToHLTBId(gogId); hltbId != "" {
 				return hltb_integration.DataUrl(buildId, hltbId)
 			}

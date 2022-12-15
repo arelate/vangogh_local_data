@@ -192,6 +192,11 @@ func (vr *ValueReader) HLTBRootPage() (*hltb_integration.RootPage, error) {
 	return &hltb_integration.RootPage{Doc: doc}, err
 }
 
+func (vr *ValueReader) HLTBData(id string) (data *hltb_integration.Data, err error) {
+	err = vr.readValue(id, &data)
+	return data, err
+}
+
 func (vr *ValueReader) PCGWCargo(id string) (cargo *pcgw_integration.Cargo, err error) {
 	err = vr.readValue(id, &cargo)
 	return cargo, err
@@ -242,6 +247,8 @@ func (vr *ValueReader) ReadValue(key string) (interface{}, error) {
 		return vr.PCGWExternalLinks(key)
 	case HLTBRootPage:
 		return vr.HLTBRootPage()
+	case HLTBData:
+		return vr.HLTBData(key)
 	default:
 		return nil, fmt.Errorf("vangogh_values: cannot create %s value", vr.productType)
 	}

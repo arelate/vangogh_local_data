@@ -83,9 +83,12 @@ const (
 	PCGWPageIdProperty              = "pcgw-page-id"
 	HLTBIdProperty                  = "hltb-id"
 	HLTBBuildIdProperty             = "hltb-next-build"
-	HLTBHoursToCompleteMain         = "hltb-comp-main"
-	HLTBHoursToCompletePlus         = "hltb-comp-plus"
-	HLTBHoursToComplete100          = "hltb-comp-100"
+	HLTBHoursToCompleteMainProperty = "hltb-comp-main"
+	HLTBHoursToCompletePlusProperty = "hltb-comp-plus"
+	HLTBHoursToComplete100Property  = "hltb-comp-100"
+	HLTBReviewScoreProperty         = "hltb-review-score"
+	HLTBGenresProperty              = "hltb-genres"
+	HLTBPlatformsProperty           = "hltb-platforms"
 	IGDBIdProperty                  = "igdb-id"
 	StrategyWikiIdProperty          = "strategy-wiki-id"
 	MobyGamesIdProperty             = "moby-games-id"
@@ -148,6 +151,7 @@ func AllTextProperties() []string {
 		RequiresGamesProperty,
 		IsRequiredByGamesProperty,
 		GenresProperty,
+		HLTBGenresProperty,
 		StoreTagsProperty,
 		FeaturesProperty,
 		SeriesProperty,
@@ -203,9 +207,11 @@ func AdvancedProductProperties() []string {
 		ProductTypeProperty,
 		IsUsingDOSBoxProperty,
 		IsUsingScummVMProperty,
-		HLTBHoursToCompleteMain,
-		HLTBHoursToCompletePlus,
-		HLTBHoursToComplete100,
+		HLTBHoursToCompleteMainProperty,
+		HLTBHoursToCompletePlusProperty,
+		HLTBHoursToComplete100Property,
+		HLTBPlatformsProperty,
+		HLTBReviewScoreProperty,
 	}
 }
 
@@ -478,9 +484,14 @@ var supportedProperties = map[ProductType][]string{
 		HLTBBuildIdProperty,
 	},
 	HLTBData: {
-		HLTBHoursToCompleteMain,
-		HLTBHoursToCompletePlus,
-		HLTBHoursToComplete100,
+		HLTBHoursToCompleteMainProperty,
+		HLTBHoursToCompletePlusProperty,
+		HLTBHoursToComplete100Property,
+		SteamAppIdProperty,
+		GlobalReleaseDateProperty,
+		HLTBGenresProperty,
+		HLTBPlatformsProperty,
+		HLTBReviewScoreProperty,
 	},
 }
 
@@ -565,12 +576,18 @@ func getPropertyValues(value interface{}, property string) []string {
 		return getSlice(value.(pcgw_integration.HLTBIdGetter).GetHLTBId)
 	case HLTBBuildIdProperty:
 		return getSlice(value.(hltb_integration.BuildIdGetter).GetBuildId)
-	case HLTBHoursToCompleteMain:
+	case HLTBHoursToCompleteMainProperty:
 		return getSlice(value.(hltb_integration.HoursToCompleteMainGetter).GetHoursToCompleteMain)
-	case HLTBHoursToCompletePlus:
+	case HLTBHoursToCompletePlusProperty:
 		return getSlice(value.(hltb_integration.HoursToCompletePlusGetter).GetHoursToCompletePlus)
-	case HLTBHoursToComplete100:
+	case HLTBHoursToComplete100Property:
 		return getSlice(value.(hltb_integration.HoursToComplete100Getter).GetHoursToComplete100)
+	case HLTBReviewScoreProperty:
+		return intSlice(value.(hltb_integration.ReviewScoreGetter).GetReviewScore)
+	case HLTBGenresProperty:
+		return value.(gog_integration.GenresGetter).GetGenres()
+	case HLTBPlatformsProperty:
+		return value.(hltb_integration.PlatformsGetter).GetPlatforms()
 	case LanguageCodeProperty:
 		return value.(gog_integration.LanguageCodesGetter).GetLanguageCodes()
 	case MobyGamesIdProperty:
@@ -598,7 +615,7 @@ func getPropertyValues(value interface{}, property string) []string {
 	case SlugProperty:
 		return getSlice(value.(gog_integration.SlugGetter).GetSlug)
 	case SteamAppIdProperty:
-		return uint32Slice(value.(pcgw_integration.SteamAppIdGetter).GetSteamAppId)
+		return uint32Slice(value.(steam_integration.SteamAppIdGetter).GetSteamAppId)
 	case SteamReviewScoreDescProperty:
 		return getSlice(value.(steam_integration.ReviewScoreDescGetter).GetReviewScoreDesc)
 	case StoreTagsProperty:

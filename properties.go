@@ -369,7 +369,6 @@ func PropertyFromImageType(it ImageType) string {
 	return imageTypeProperties[it]
 }
 
-// TODO: This list and property getter could be generated using list of types and property to interface map
 var supportedProperties = map[ProductType][]string{
 	AccountProducts: {
 		IdProperty,

@@ -1,6 +1,7 @@
 package vangogh_local_data
 
 import (
+	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
 )
 
@@ -88,7 +89,20 @@ func RemoveFromLocalWishlist(
 		}
 	}
 
-	err = Cut(processedIds, UserWishlistProducts)
+	ptDir, err := AbsLocalProductTypeDir(UserWishlistProducts)
+	if err != nil {
+		return processedIds, err
+	}
+	kvPt, err := kvas.ConnectLocal(ptDir, kvas.JsonExt)
+	if err != nil {
+		return processedIds, err
+	}
+
+	for _, id := range processedIds {
+		if _, err := kvPt.Cut(id); err != nil {
+			return processedIds, err
+		}
+	}
 
 	// don't check err because we're immediately returning it
 	return processedIds, err

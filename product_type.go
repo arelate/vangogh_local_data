@@ -1,9 +1,5 @@
 package vangogh_local_data
 
-import (
-	"github.com/boggydigital/kvas"
-)
-
 type ProductType int
 
 const (
@@ -349,24 +345,4 @@ func SupportedPropertiesOnly(pt ProductType, properties []string) []string {
 		}
 	}
 	return supported
-}
-
-// TODO: is this really required? Likely should move to LocalKeyValues
-func Cut(ids []string, pt ProductType) error {
-	ptDir, err := AbsLocalProductTypeDir(pt)
-	if err != nil {
-		return err
-	}
-	kvPt, err := kvas.ConnectLocal(ptDir, kvas.JsonExt)
-	if err != nil {
-		return err
-	}
-
-	for _, id := range ids {
-		if _, err := kvPt.Cut(id); err != nil {
-			return err
-		}
-	}
-
-	return nil
 }

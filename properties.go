@@ -3,6 +3,7 @@ package vangogh_local_data
 import (
 	"github.com/arelate/southern_light/gog_integration"
 	"github.com/arelate/southern_light/hltb_integration"
+	"github.com/arelate/southern_light/ign_integration"
 	"github.com/arelate/southern_light/pcgw_integration"
 	"github.com/arelate/southern_light/steam_integration"
 	"github.com/boggydigital/kvas"
@@ -95,6 +96,7 @@ const (
 	WikipediaIdProperty             = "wikipedia-id"
 	WineHQIdProperty                = "winehq-id"
 	VNDBIdProperty                  = "vndb-id"
+	IGNWikiSlugProperty             = "ign-wiki-slug"
 
 	// property values
 	TrueValue  = "true"
@@ -239,6 +241,7 @@ func ExternalDataSourcesProperties() []string {
 		WikipediaIdProperty,
 		WineHQIdProperty,
 		VNDBIdProperty,
+		IGNWikiSlugProperty,
 	}
 }
 
@@ -492,6 +495,7 @@ var supportedProperties = map[ProductType][]string{
 		HLTBGenresProperty,
 		HLTBPlatformsProperty,
 		HLTBReviewScoreProperty,
+		IGNWikiSlugProperty,
 	},
 }
 
@@ -548,6 +552,8 @@ func getPropertyValues(value interface{}, property string) []string {
 		return getSlice(value.(gog_integration.ForumUrlGetter).GetForumUrl)
 	case IGDBIdProperty:
 		return getSlice(value.(pcgw_integration.IGDBIdGetter).GetIGDBId)
+	case IGNWikiSlugProperty:
+		return getSlice(value.(ign_integration.IGNWikiSlugGetter).GetIGNWikiSlug)
 	case ImageProperty:
 		return getImageIdSlice(value.(gog_integration.ImageGetter).GetImage)
 	case IncludesGamesProperty:

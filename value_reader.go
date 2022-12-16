@@ -158,6 +158,7 @@ func (vr *ValueReader) UserWishlistProduct(id string) (userWishlistProduct strin
 	return userWishlistProduct, err
 }
 
+// TODO: redo this similarly to HLTBRootPage (also an HTML doc)
 // SteamStorePage reads HTML content of the locally downloaded Steam store page and
 // return an HTML document for traversal. This approach is different from other data
 // types that have defined schemas.

@@ -158,11 +158,7 @@ func (vr *ValueReader) UserWishlistProduct(id string) (userWishlistProduct strin
 	return userWishlistProduct, err
 }
 
-// TODO: redo this similarly to HLTBRootPage (also an HTML doc)
-// SteamStorePage reads HTML content of the locally downloaded Steam store page and
-// return an HTML document for traversal. This approach is different from other data
-// types that have defined schemas.
-func (vr *ValueReader) SteamStorePage(id string) (steamStorePage *html.Node, err error) {
+func (vr *ValueReader) SteamStorePage(id string) (*steam_integration.StorePage, error) {
 	spReadCloser, err := vr.valueSet.Get(id)
 	if err != nil {
 		return nil, err
@@ -174,7 +170,8 @@ func (vr *ValueReader) SteamStorePage(id string) (steamStorePage *html.Node, err
 
 	defer spReadCloser.Close()
 
-	return html.Parse(spReadCloser)
+	doc, err := html.Parse(spReadCloser)
+	return &steam_integration.StorePage{Doc: doc}, err
 }
 
 func (vr *ValueReader) HLTBRootPage() (*hltb_integration.RootPage, error) {
@@ -189,7 +186,6 @@ func (vr *ValueReader) HLTBRootPage() (*hltb_integration.RootPage, error) {
 	defer spReadCloser.Close()
 
 	doc, err := html.Parse(spReadCloser)
-
 	return &hltb_integration.RootPage{Doc: doc}, err
 }
 

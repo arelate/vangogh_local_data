@@ -624,6 +624,8 @@ func getPropertyValues(value interface{}, property string) []string {
 		return uint32Slice(value.(steam_integration.SteamAppIdGetter).GetSteamAppId)
 	case SteamReviewScoreDescProperty:
 		return getSlice(value.(steam_integration.ReviewScoreDescGetter).GetReviewScoreDesc)
+	case SteamTagsProperty:
+		return value.(steam_integration.SteamTagsGetter).GetSteamTags()
 	case StoreTagsProperty:
 		return value.(gog_integration.StoreTagsGetter).GetStoreTags()
 	case StoreUrlProperty:

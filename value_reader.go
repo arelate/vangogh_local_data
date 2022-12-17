@@ -194,7 +194,7 @@ func (vr *ValueReader) HLTBData(id string) (data *hltb_integration.Data, err err
 	return data, err
 }
 
-func (vr *ValueReader) PCGWPageIdSteamAppId(id string) (ps *pcgw_integration.PageIdSteamAppId, err error) {
+func (vr *ValueReader) PCGWPageId(id string) (ps *pcgw_integration.PageId, err error) {
 	err = vr.readValue(id, &ps)
 	return ps, err
 }
@@ -243,8 +243,8 @@ func (vr *ValueReader) ReadValue(key string) (interface{}, error) {
 		return vr.SteamStorePage(key)
 	case SteamAppList:
 		return vr.SteamAppList()
-	case PCGWPageIdSteamAppId:
-		return vr.PCGWPageIdSteamAppId(key)
+	case PCGWPageId:
+		return vr.PCGWPageId(key)
 	case PCGWEngine:
 		return vr.PCGWEngine(key)
 	case PCGWExternalLinks:

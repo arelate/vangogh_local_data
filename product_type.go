@@ -24,7 +24,7 @@ const (
 	SteamReviews
 	SteamStorePage
 	// PCGamingWiki product types
-	PCGWPageIdSteamAppId
+	PCGWPageId
 	PCGWEngine
 	PCGWExternalLinks
 	HLTBRootPage
@@ -53,9 +53,9 @@ var productTypeStrings = map[ProductType]string{
 	SteamReviews:   "steam-reviews",
 	SteamStorePage: "steam-store-page",
 	// PCGamingWiki product types
-	PCGWPageIdSteamAppId: "pcgw-pageid-steam-appid",
-	PCGWEngine:           "pcgw-engine",
-	PCGWExternalLinks:    "pcgw-external-links",
+	PCGWPageId:        "pcgw-pageid",
+	PCGWEngine:        "pcgw-engine",
+	PCGWExternalLinks: "pcgw-external-links",
 	// HLTB product types
 	HLTBRootPage: "hltb-root-page",
 	HLTBData:     "hltb-data",
@@ -161,7 +161,7 @@ var steamDetailMainProductTypes = map[ProductType][]ProductType{
 
 var pcgwDetailMainProductTypes = map[ProductType][]ProductType{
 	//PCGamingWiki product types are updated on GOG.com store or account product changes
-	PCGWPageIdSteamAppId: {
+	PCGWPageId: {
 		CatalogProducts,
 		AccountProducts,
 	},
@@ -317,7 +317,7 @@ var supportsGetItems = []ProductType{
 	SteamAppNews,
 	SteamReviews,
 	SteamStorePage,
-	PCGWPageIdSteamAppId,
+	PCGWPageId,
 	PCGWEngine,
 	PCGWExternalLinks,
 	HLTBRootPage,

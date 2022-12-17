@@ -194,9 +194,14 @@ func (vr *ValueReader) HLTBData(id string) (data *hltb_integration.Data, err err
 	return data, err
 }
 
-func (vr *ValueReader) PCGWCargo(id string) (cargo *pcgw_integration.Cargo, err error) {
-	err = vr.readValue(id, &cargo)
-	return cargo, err
+func (vr *ValueReader) PCGWPageIdSteamAppId(id string) (ps *pcgw_integration.PageIdSteamAppId, err error) {
+	err = vr.readValue(id, &ps)
+	return ps, err
+}
+
+func (vr *ValueReader) PCGWEngine(id string) (e *pcgw_integration.Engine, err error) {
+	err = vr.readValue(id, &e)
+	return e, err
 }
 
 func (vr *ValueReader) PCGWExternalLinks(id string) (pel *pcgw_integration.ParseExternalLinks, err error) {
@@ -238,8 +243,10 @@ func (vr *ValueReader) ReadValue(key string) (interface{}, error) {
 		return vr.SteamStorePage(key)
 	case SteamAppList:
 		return vr.SteamAppList()
-	case PCGWCargo:
-		return vr.PCGWCargo(key)
+	case PCGWPageIdSteamAppId:
+		return vr.PCGWPageIdSteamAppId(key)
+	case PCGWEngine:
+		return vr.PCGWEngine(key)
 	case PCGWExternalLinks:
 		return vr.PCGWExternalLinks(key)
 	case HLTBRootPage:

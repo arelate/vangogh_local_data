@@ -465,8 +465,13 @@ var supportedProperties = map[ProductType][]string{
 	SteamStorePage: {
 		SteamTagsProperty,
 	},
-	PCGWCargo: {
+	PCGWPageIdSteamAppId: {
 		PCGWPageIdProperty,
+		SteamAppIdProperty,
+	},
+	PCGWEngine: {
+		EngineProperty,
+		EngineBuildProperty,
 	},
 	PCGWExternalLinks: {
 		SteamAppIdProperty,

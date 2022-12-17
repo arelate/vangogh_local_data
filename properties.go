@@ -95,8 +95,8 @@ const (
 	WineHQIdProperty                = "winehq-id"
 	VNDBIdProperty                  = "vndb-id"
 	IGNWikiSlugProperty             = "ign-wiki-slug"
-	EngineProperty                  = "engine"
-	EngineBuildProperty             = "engine-build"
+	EnginesProperty                 = "engines"
+	EnginesBuildsProperty           = "engines-builds"
 
 	// property values
 	TrueValue  = "true"
@@ -215,6 +215,13 @@ func AdvancedProductProperties() []string {
 	}
 }
 
+func EnginesProperties() []string {
+	return []string{
+		EnginesProperty,
+		EnginesBuildsProperty,
+	}
+}
+
 func PriceProperties() []string {
 	return []string{
 		BasePriceProperty,
@@ -278,6 +285,7 @@ func ReduxProperties() []string {
 	all = append(all, MediaContentProperties()...)
 	all = append(all, SyncProperties()...)
 	all = append(all, ValidationProperties()...)
+	all = append(all, EnginesProperties()...)
 	return all
 }
 
@@ -295,6 +303,9 @@ func DigestibleProperties() []string {
 		MissingVideoUrlProperty,
 		SteamReviewScoreDescProperty,
 		SteamTagsProperty,
+		HLTBPlatformsProperty,
+		HLTBGenresProperty,
+		EnginesProperty,
 	}
 }
 
@@ -469,8 +480,8 @@ var supportedProperties = map[ProductType][]string{
 		PCGWPageIdProperty,
 	},
 	PCGWEngine: {
-		EngineProperty,
-		EngineBuildProperty,
+		EnginesProperty,
+		EnginesBuildsProperty,
 	},
 	PCGWExternalLinks: {
 		SteamAppIdProperty,
@@ -545,6 +556,10 @@ func getPropertyValues(value interface{}, property string) []string {
 		return value.(gog_integration.DevelopersGetter).GetDevelopers()
 	case DiscountPercentageProperty:
 		return intSlice(value.(gog_integration.DiscountPercentageGetter).GetDiscountPercentage)
+	case EnginesProperty:
+		return value.(pcgw_integration.EnginesGetter).GetEngines()
+	case EnginesBuildsProperty:
+		return value.(pcgw_integration.EnginesBuildsGetter).GetEnginesBuilds()
 	case FeaturesProperty:
 		return value.(gog_integration.FeaturesGetter).GetFeatures()
 	case ForumUrlProperty:

@@ -61,8 +61,6 @@ const (
 	InDevelopmentProperty           = "in-development"
 	PreOrderProperty                = "pre-order"
 	ComingSoonProperty              = "coming-soon"
-	IsUsingDOSBoxProperty           = "is-using-dosbox"
-	IsUsingScummVMProperty          = "is-using-scummvm"
 	BasePriceProperty               = "base-price"
 	PriceProperty                   = "price"
 	IsFreeProperty                  = "is-free"
@@ -97,6 +95,8 @@ const (
 	WineHQIdProperty                = "winehq-id"
 	VNDBIdProperty                  = "vndb-id"
 	IGNWikiSlugProperty             = "ign-wiki-slug"
+	EngineProperty                  = "engine"
+	EngineBuildProperty             = "engine-build"
 
 	// property values
 	TrueValue  = "true"
@@ -207,8 +207,6 @@ func AccountStatusProperties() []string {
 func AdvancedProductProperties() []string {
 	return []string{
 		ProductTypeProperty,
-		IsUsingDOSBoxProperty,
-		IsUsingScummVMProperty,
 		HLTBHoursToCompleteMainProperty,
 		HLTBHoursToCompletePlusProperty,
 		HLTBHoursToComplete100Property,
@@ -427,8 +425,6 @@ var supportedProperties = map[ProductType][]string{
 		ProductTypeProperty,
 		InDevelopmentProperty,
 		PreOrderProperty,
-		IsUsingDOSBoxProperty,
-		IsUsingScummVMProperty,
 	},
 	Details: {
 		TitleProperty,
@@ -567,10 +563,6 @@ func getPropertyValues(value interface{}, property string) []string {
 		return value.(gog_integration.IsIncludedInGamesGetter).GetIsIncludedInGames()
 	case IsRequiredByGamesProperty:
 		return value.(gog_integration.IsRequiredByGamesGetter).GetIsRequiredByGames()
-	case IsUsingDOSBoxProperty:
-		return boolSlice(value.(gog_integration.IsUsingDOSBoxGetter).IsUsingDOSBox)
-	case IsUsingScummVMProperty:
-		return boolSlice(value.(gog_integration.IsUsingScummVMGetter).IsUsingScummVM)
 	case GenresProperty:
 		return value.(gog_integration.GenresGetter).GetGenres()
 	case GlobalReleaseDateProperty:

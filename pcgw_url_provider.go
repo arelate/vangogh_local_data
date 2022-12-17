@@ -31,8 +31,12 @@ func (pcgwup *PCGWUrlProvider) GOGIdToPCGWPageId(gogId string) string {
 
 func (pcgwup *PCGWUrlProvider) Url(gogId string) *url.URL {
 	switch pcgwup.pt {
-	case PCGWCargo:
-		return pcgw_integration.CargoQueryUrl(gogId)
+	case PCGWSteamAppId:
+		return pcgw_integration.SteamAppIdCargoQueryUrl(gogId)
+	case PCGWEngine:
+		if pageId := pcgwup.GOGIdToPCGWPageId(gogId); pageId != "" {
+			return pcgw_integration.EngineCargoQueryUrl(pageId)
+		}
 	case PCGWExternalLinks:
 		if pageId := pcgwup.GOGIdToPCGWPageId(gogId); pageId != "" {
 			return pcgw_integration.ParseExternalLinksUrl(pageId)

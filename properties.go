@@ -166,6 +166,7 @@ func AllTextProperties() []string {
 		GlobalReleaseDateProperty,
 		GOGOrderDateProperty,
 		GOGReleaseDateProperty,
+		CopyrightsProperty,
 	)
 }
 

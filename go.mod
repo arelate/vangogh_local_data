@@ -8,7 +8,7 @@ require (
 	github.com/boggydigital/nod v0.1.20
 	github.com/boggydigital/yt_urls v0.1.19
 	golang.org/x/exp v0.0.0-20221208152030-732eee02a75a
-	golang.org/x/net v0.4.0
+	golang.org/x/net v0.7.0
 )
 
 require (

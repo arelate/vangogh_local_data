@@ -61,3 +61,12 @@ func ImageTypeFromProperty(property string) ImageType {
 	}
 	return UnknownImageType
 }
+
+var imageTypesSupportingDehydration = map[ImageType]bool{
+	VerticalImage: true,
+}
+
+func IsImageTypeDehydrationSupported(it ImageType) bool {
+	_, ok := imageTypesSupportingDehydration[it]
+	return ok
+}

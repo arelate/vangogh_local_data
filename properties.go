@@ -540,23 +540,39 @@ func fillProperties(value interface{}, properties []string) map[string][]string 
 func getPropertyValues(value interface{}, property string) []string {
 	switch property {
 	case AdditionalRequirementsProperty:
-		return getSlice(value.(gog_integration.AdditionalRequirementsGetter).GetAdditionalRequirements)
+		if gar, ok := value.(gog_integration.AdditionalRequirementsGetter); ok {
+			return getSlice(gar.GetAdditionalRequirements)
+		}
 	case BasePriceProperty:
-		return getSlice(value.(gog_integration.BasePriceGetter).GetBasePrice)
+		if gbp, ok := value.(gog_integration.BasePriceGetter); ok {
+			return getSlice(gbp.GetBasePrice)
+		}
 	case ChangelogProperty:
-		return getSlice(value.(gog_integration.ChangelogGetter).GetChangelog)
+		if gcl, ok := value.(gog_integration.ChangelogGetter); ok {
+			return getSlice(gcl.GetChangelog)
+		}
 	case ComingSoonProperty:
-		return boolSlice(value.(gog_integration.ComingSoonGetter).GetComingSoon)
+		if gcc, ok := value.(gog_integration.ComingSoonGetter); ok {
+			return boolSlice(gcc.GetComingSoon)
+		}
 	case CopyrightsProperty:
-		return getSlice(value.(gog_integration.CopyrightsGetter).GetCopyrights)
+		if gc, ok := value.(gog_integration.CopyrightsGetter); ok {
+			return getSlice(gc.GetCopyrights)
+		}
 	case DescriptionFeaturesProperty:
-		return getSlice(value.(gog_integration.DescriptionFeaturesGetter).GetDescriptionFeatures)
+		if gdf, ok := value.(gog_integration.DescriptionFeaturesGetter); ok {
+			return getSlice(gdf.GetDescriptionFeatures)
+		}
 	case DescriptionOverviewProperty:
-		return getSlice(value.(gog_integration.DescriptionOverviewGetter).GetDescriptionOverview)
+		if gdo, ok := value.(gog_integration.DescriptionOverviewGetter); ok {
+			return getSlice(gdo.GetDescriptionOverview)
+		}
 	case DevelopersProperty:
 		return value.(gog_integration.DevelopersGetter).GetDevelopers()
 	case DiscountPercentageProperty:
-		return intSlice(value.(gog_integration.DiscountPercentageGetter).GetDiscountPercentage)
+		if gdp, ok := value.(gog_integration.DiscountPercentageGetter); ok {
+			return intSlice(gdp.GetDiscountPercentage)
+		}
 	case EnginesProperty:
 		return value.(pcgw_integration.EnginesGetter).GetEngines()
 	case EnginesBuildsProperty:
@@ -564,21 +580,35 @@ func getPropertyValues(value interface{}, property string) []string {
 	case FeaturesProperty:
 		return value.(gog_integration.FeaturesGetter).GetFeatures()
 	case ForumUrlProperty:
-		return getSlice(value.(gog_integration.ForumUrlGetter).GetForumUrl)
+		if gfu, ok := value.(gog_integration.ForumUrlGetter); ok {
+			return getSlice(gfu.GetForumUrl)
+		}
 	case IGDBIdProperty:
-		return getSlice(value.(pcgw_integration.IGDBIdGetter).GetIGDBId)
+		if gii, ok := value.(pcgw_integration.IGDBIdGetter); ok {
+			return getSlice(gii.GetIGDBId)
+		}
 	case IGNWikiSlugProperty:
-		return getSlice(value.(ign_integration.IGNWikiSlugGetter).GetIGNWikiSlug)
+		if gis, ok := value.(ign_integration.IGNWikiSlugGetter); ok {
+			return getSlice(gis.GetIGNWikiSlug)
+		}
 	case ImageProperty:
-		return getImageIdSlice(value.(gog_integration.ImageGetter).GetImage)
+		if gi, ok := value.(gog_integration.ImageGetter); ok {
+			return getImageIdSlice(gi.GetImage)
+		}
 	case IncludesGamesProperty:
 		return value.(gog_integration.IncludesGamesGetter).GetIncludesGames()
 	case InDevelopmentProperty:
-		return boolSlice(value.(gog_integration.InDevelopmentGetter).GetInDevelopment)
+		if gid, ok := value.(gog_integration.InDevelopmentGetter); ok {
+			return boolSlice(gid.GetInDevelopment)
+		}
 	case IsDiscountedProperty:
-		return boolSlice(value.(gog_integration.IsDiscountedGetter).IsDiscounted)
+		if id, ok := value.(gog_integration.IsDiscountedGetter); ok {
+			return boolSlice(id.IsDiscounted)
+		}
 	case IsFreeProperty:
-		return boolSlice(value.(gog_integration.IsFreeGetter).IsFree)
+		if iff, ok := value.(gog_integration.IsFreeGetter); ok {
+			return boolSlice(iff.IsFree)
+		}
 	case IsIncludedByGamesProperty:
 		return value.(gog_integration.IsIncludedInGamesGetter).GetIsIncludedInGames()
 	case IsRequiredByGamesProperty:
@@ -586,21 +616,37 @@ func getPropertyValues(value interface{}, property string) []string {
 	case GenresProperty:
 		return value.(gog_integration.GenresGetter).GetGenres()
 	case GlobalReleaseDateProperty:
-		return getSlice(value.(gog_integration.GlobalReleaseGetter).GetGlobalRelease)
+		if gdr, ok := value.(gog_integration.GlobalReleaseGetter); ok {
+			return getSlice(gdr.GetGlobalRelease)
+		}
 	case GOGReleaseDateProperty:
-		return getSlice(value.(gog_integration.GOGReleaseGetter).GetGOGRelease)
+		if ggr, ok := value.(gog_integration.GOGReleaseGetter); ok {
+			return getSlice(ggr.GetGOGRelease)
+		}
 	case HLTBIdProperty:
-		return getSlice(value.(pcgw_integration.HLTBIdGetter).GetHLTBId)
+		if ghi, ok := value.(pcgw_integration.HLTBIdGetter); ok {
+			return getSlice(ghi.GetHLTBId)
+		}
 	case HLTBBuildIdProperty:
-		return getSlice(value.(hltb_integration.BuildIdGetter).GetBuildId)
+		if gbi, ok := value.(hltb_integration.BuildIdGetter); ok {
+			return getSlice(gbi.GetBuildId)
+		}
 	case HLTBHoursToCompleteMainProperty:
-		return getSlice(value.(hltb_integration.HoursToCompleteMainGetter).GetHoursToCompleteMain)
+		if ghcm, ok := value.(hltb_integration.HoursToCompleteMainGetter); ok {
+			return getSlice(ghcm.GetHoursToCompleteMain)
+		}
 	case HLTBHoursToCompletePlusProperty:
-		return getSlice(value.(hltb_integration.HoursToCompletePlusGetter).GetHoursToCompletePlus)
+		if ghcp, ok := value.(hltb_integration.HoursToCompletePlusGetter); ok {
+			return getSlice(ghcp.GetHoursToCompletePlus)
+		}
 	case HLTBHoursToComplete100Property:
-		return getSlice(value.(hltb_integration.HoursToComplete100Getter).GetHoursToComplete100)
+		if ghc100, ok := value.(hltb_integration.HoursToComplete100Getter); ok {
+			return getSlice(ghc100.GetHoursToComplete100)
+		}
 	case HLTBReviewScoreProperty:
-		return intSlice(value.(hltb_integration.ReviewScoreGetter).GetReviewScore)
+		if grs, ok := value.(hltb_integration.ReviewScoreGetter); ok {
+			return intSlice(grs.GetReviewScore)
+		}
 	case HLTBGenresProperty:
 		return value.(gog_integration.GenresGetter).GetGenres()
 	case HLTBPlatformsProperty:
@@ -608,60 +654,95 @@ func getPropertyValues(value interface{}, property string) []string {
 	case LanguageCodeProperty:
 		return value.(gog_integration.LanguageCodesGetter).GetLanguageCodes()
 	case MobyGamesIdProperty:
-		return getSlice(value.(pcgw_integration.MobyGamesIdGetter).GetMobyGamesId)
+		if gmi, ok := value.(pcgw_integration.MobyGamesIdGetter); ok {
+			return getSlice(gmi.GetMobyGamesId)
+		}
 	case OperatingSystemsProperty:
 		return value.(gog_integration.OperatingSystemsGetter).GetOperatingSystems()
 	case PCGWPageIdProperty:
-		return getSlice(value.(pcgw_integration.PageIdGetter).GetPageId)
+		if gpi, ok := value.(pcgw_integration.PageIdGetter); ok {
+			return getSlice(gpi.GetPageId)
+		}
 	case PreOrderProperty:
-		return boolSlice(value.(gog_integration.PreOrderGetter).GetPreOrder)
+		if gpo, ok := value.(gog_integration.PreOrderGetter); ok {
+			return boolSlice(gpo.GetPreOrder)
+		}
 	case PriceProperty:
-		return getSlice(value.(gog_integration.PriceGetter).GetPrice)
+		if gp, ok := value.(gog_integration.PriceGetter); ok {
+			return getSlice(gp.GetPrice)
+		}
 	case ProductTypeProperty:
-		return getSlice(value.(gog_integration.ProductTypeGetter).GetProductType)
+		if gpt, ok := value.(gog_integration.ProductTypeGetter); ok {
+			return getSlice(gpt.GetProductType)
+		}
 	case PublishersProperty:
 		return value.(gog_integration.PublishersGetter).GetPublishers()
 	case RatingProperty:
-		return getSlice(value.(gog_integration.RatingGetter).GetRating)
+		if gr, ok := value.(gog_integration.RatingGetter); ok {
+			return getSlice(gr.GetRating)
+		}
 	case RequiresGamesProperty:
 		return value.(gog_integration.RequiresGamesGetter).GetRequiresGames()
 	case SeriesProperty:
-		return getSlice(value.(gog_integration.SeriesGetter).GetSeries)
+		if gs, ok := value.(gog_integration.SeriesGetter); ok {
+			return getSlice(gs.GetSeries)
+		}
 	case ScreenshotsProperty:
 		return getScreenshots(value)
 	case SlugProperty:
-		return getSlice(value.(gog_integration.SlugGetter).GetSlug)
+		if gs, ok := value.(gog_integration.SlugGetter); ok {
+			return getSlice(gs.GetSlug)
+		}
 	case SteamAppIdProperty:
-		return uint32Slice(value.(steam_integration.SteamAppIdGetter).GetSteamAppId)
+		if gsai, ok := value.(steam_integration.SteamAppIdGetter); ok {
+			return uint32Slice(gsai.GetSteamAppId)
+		}
 	case SteamReviewScoreDescProperty:
-		return getSlice(value.(steam_integration.ReviewScoreDescGetter).GetReviewScoreDesc)
+		if grsd, ok := value.(steam_integration.ReviewScoreDescGetter); ok {
+			return getSlice(grsd.GetReviewScoreDesc)
+		}
 	case SteamTagsProperty:
 		return value.(steam_integration.SteamTagsGetter).GetSteamTags()
 	case StoreTagsProperty:
 		return value.(gog_integration.StoreTagsGetter).GetStoreTags()
 	case StoreUrlProperty:
-		return getSlice(value.(gog_integration.StoreUrlGetter).GetStoreUrl)
+		if gsu, ok := value.(gog_integration.StoreUrlGetter); ok {
+			return getSlice(gsu.GetStoreUrl)
+		}
 	case StrategyWikiIdProperty:
-		return getSlice(value.(pcgw_integration.StrategyWikiIdGetter).GetStrategyWikiId)
+		if gswi, ok := value.(pcgw_integration.StrategyWikiIdGetter); ok {
+			return getSlice(gswi.GetStrategyWikiId)
+		}
 	case SupportUrlProperty:
-		return getSlice(value.(gog_integration.SupportUrlGetter).GetSupportUrl)
+		if gsu, ok := value.(gog_integration.SupportUrlGetter); ok {
+			return getSlice(gsu.GetSupportUrl)
+		}
 	case TagIdProperty:
 		return value.(gog_integration.TagIdsGetter).GetTagIds()
 	case TitleProperty:
-		return getSlice(value.(gog_integration.TitleGetter).GetTitle)
+		if gt, ok := value.(gog_integration.TitleGetter); ok {
+			return getSlice(gt.GetTitle)
+		}
 	case VerticalImageProperty:
-		return getImageIdSlice(value.(gog_integration.VerticalImageGetter).GetVerticalImage)
+		if gvi, ok := value.(gog_integration.VerticalImageGetter); ok {
+			return getImageIdSlice(gvi.GetVerticalImage)
+		}
 	case VideoIdProperty:
 		return value.(gog_integration.VideoIdsGetter).GetVideoIds()
 	case VNDBIdProperty:
-		return getSlice(value.(pcgw_integration.VNDBIdGetter).GetVNDBId)
+		if gvi, ok := value.(pcgw_integration.VNDBIdGetter); ok {
+			return getSlice(gvi.GetVNDBId)
+		}
 	case WikipediaIdProperty:
-		return getSlice(value.(pcgw_integration.WikipediaIdGetter).GetWikipediaId)
+		if gwi, ok := value.(pcgw_integration.WikipediaIdGetter); ok {
+			return getSlice(gwi.GetWikipediaId)
+		}
 	case WineHQIdProperty:
-		return getSlice(value.(pcgw_integration.WineHQIdGetter).GetWineHQId)
-	default:
-		return []string{}
+		if gwi, ok := value.(pcgw_integration.WineHQIdGetter); ok {
+			return getSlice(gwi.GetWineHQId)
+		}
 	}
+	return []string{}
 }
 
 func boolSlice(confirmer func() bool) []string {

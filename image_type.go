@@ -71,6 +71,8 @@ func IsImageTypeDehydrationSupported(it ImageType) bool {
 	return ok
 }
 
+// values are result of running issa dehydration on an image set and finding
+// sampling rate that produces most compact representation (min sum of string lengths)
 var imageTypeDehydrationSamples = map[ImageType]int{
 	VerticalImage: 16,
 }

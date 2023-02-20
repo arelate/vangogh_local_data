@@ -70,3 +70,14 @@ func IsImageTypeDehydrationSupported(it ImageType) bool {
 	_, ok := imageTypesSupportingDehydration[it]
 	return ok
 }
+
+var imageTypeDehydrationSamples = map[ImageType]int{
+	VerticalImage: 16,
+}
+
+func ImageTypeDehydrationSamples(it ImageType) int {
+	if s, ok := imageTypeDehydrationSamples[it]; ok {
+		return s
+	}
+	return -1
+}

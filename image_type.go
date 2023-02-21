@@ -1,5 +1,7 @@
 package vangogh_local_data
 
+import "golang.org/x/exp/maps"
+
 type ImageType int
 
 const (
@@ -65,6 +67,10 @@ func ImageTypeFromProperty(property string) ImageType {
 var imageTypesSupportingDehydration = map[ImageType]bool{
 	Image:         true,
 	VerticalImage: true,
+}
+
+func ImageTypesDehydration() []ImageType {
+	return maps.Keys(imageTypesSupportingDehydration)
 }
 
 func IsImageTypeDehydrationSupported(it ImageType) bool {

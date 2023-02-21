@@ -252,9 +252,10 @@ func ExternalDataSourcesProperties() []string {
 	}
 }
 
-func MediaContentProperties() []string {
+func DehydratedImagesProperties() []string {
 	return []string{
 		DehydratedImageProperty,
+		DehydratedVerticalImageProperty,
 	}
 }
 
@@ -277,6 +278,7 @@ func ReduxProperties() []string {
 	all = append(all, VideoIdProperties()...)
 	all = append(all, ComputedProperties()...)
 	all = append(all, ImageIdProperties()...)
+	all = append(all, DehydratedImagesProperties()...)
 	all = append(all, UrlProperties()...)
 	all = append(all, LongTextProperties()...)
 	all = append(all, AvailabilityProperties()...)
@@ -284,7 +286,6 @@ func ReduxProperties() []string {
 	all = append(all, AdvancedProductProperties()...)
 	all = append(all, PriceProperties()...)
 	all = append(all, ExternalDataSourcesProperties()...)
-	all = append(all, MediaContentProperties()...)
 	all = append(all, SyncProperties()...)
 	all = append(all, ValidationProperties()...)
 	all = append(all, EnginesProperties()...)

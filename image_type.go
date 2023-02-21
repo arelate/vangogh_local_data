@@ -64,17 +64,36 @@ func ImageTypeFromProperty(property string) ImageType {
 	return UnknownImageType
 }
 
-var imageTypesSupportingDehydration = map[ImageType]bool{
-	Image:         true,
-	VerticalImage: true,
+var dehydratedImageProperties = map[ImageType]string{
+	Image:         DehydratedImageProperty,
+	VerticalImage: DehydratedVerticalImageProperty,
+}
+
+var dehydratedImageModifiedProperties = map[ImageType]string{
+	Image:         DehydratedImageModifiedProperty,
+	VerticalImage: DehydratedVerticalImageModifiedProperty,
+}
+
+func ImageTypeDehydratedProperty(it ImageType) string {
+	if dip, ok := dehydratedImageProperties[it]; ok {
+		return dip
+	}
+	return ""
+}
+
+func ImageTypeDehydratedModifiedProperty(it ImageType) string {
+	if dip, ok := dehydratedImageModifiedProperties[it]; ok {
+		return dip
+	}
+	return ""
 }
 
 func ImageTypesDehydration() []ImageType {
-	return maps.Keys(imageTypesSupportingDehydration)
+	return maps.Keys(dehydratedImageProperties)
 }
 
 func IsImageTypeDehydrationSupported(it ImageType) bool {
-	_, ok := imageTypesSupportingDehydration[it]
+	_, ok := dehydratedImageProperties[it]
 	return ok
 }
 

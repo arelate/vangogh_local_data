@@ -63,6 +63,7 @@ func ImageTypeFromProperty(property string) ImageType {
 }
 
 var imageTypesSupportingDehydration = map[ImageType]bool{
+	Image:         true,
 	VerticalImage: true,
 }
 
@@ -75,6 +76,7 @@ func IsImageTypeDehydrationSupported(it ImageType) bool {
 // sampling rate that produces most compact representation (min sum of string lengths)
 var imageTypeDehydrationSamples = map[ImageType]int{
 	VerticalImage: 16,
+	Image:         20,
 }
 
 func ImageTypeDehydrationSamples(it ImageType) int {

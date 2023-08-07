@@ -32,7 +32,7 @@ func idSetFromSlugs(slugs []string, rxa kvas.ReduxAssets) (map[string]bool, erro
 	idSet := make(map[string]bool)
 	for _, slug := range slugs {
 		if slug != "" && rxa != nil {
-			for id := range rxa.Match(map[string][]string{SlugProperty: {slug}}, true) {
+			for id := range rxa.Match(map[string][]string{SlugProperty: {slug}}, true, false) {
 				idSet[id] = true
 			}
 		}
@@ -108,14 +108,14 @@ func propertyListFromId(
 		}
 		filterValues := propertyFilter[prop]
 
-		if len(values) > 1 && IsPropertiesJoinPreferred(prop) {
-			joinedValue := strings.Join(values, ",")
-			if isPropertyValueFiltered(joinedValue, filterValues) {
-				continue
-			}
-			itp[idTitle] = append(itp[idTitle], fmt.Sprintf("%s:%s", prop, joinedValue))
-			continue
-		}
+		//if len(values) > 1 && IsPropertiesJoinPreferred(prop) {
+		//	joinedValue := strings.Join(values, ",")
+		//	if isPropertyValueFiltered(joinedValue, filterValues) {
+		//		continue
+		//	}
+		//	itp[idTitle] = append(itp[idTitle], fmt.Sprintf("%s:%s", prop, joinedValue))
+		//	continue
+		//}
 
 		for _, val := range values {
 			if isPropertyValueFiltered(val, filterValues) {

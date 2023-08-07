@@ -95,10 +95,6 @@ func (irap *IRAProxy) GetAllValues(asset, key string) ([]string, bool) {
 	return nil, false
 }
 
-func (irap *IRAProxy) GetAllUnchangedValues(asset, key string) ([]string, bool) {
-	return irap.GetAllValues(asset, key)
-}
-
 func (irap *IRAProxy) GetFirstVal(asset, key string) (string, bool) {
 	if vals, ok := irap.GetAllValues(asset, key); ok {
 		if len(vals) > 0 {
@@ -117,7 +113,7 @@ func (irap *IRAProxy) IsSupported(assets ...string) error {
 	return nil
 }
 
-func (irap *IRAProxy) Match(query map[string][]string, anyCase bool) map[string]bool {
+func (irap *IRAProxy) Match(query map[string][]string, anyCase, contains bool) map[string]bool {
 	//FIXME
 	return nil
 }
@@ -138,4 +134,15 @@ func (irap *IRAProxy) Sort(ids []string, desc bool, sortBy ...string) ([]string,
 func (irap *IRAProxy) Export(w io.Writer, ids ...string) error {
 	//FIXME
 	return nil
+}
+
+func (irap *IRAProxy) Merge(idPropertyValues map[string]map[string][]string) {
+	for id, pv := range idPropertyValues {
+		if irap.rdx[id] == nil {
+			irap.rdx[id] = make(map[string][]string)
+		}
+		for p, v := range pv {
+			irap.rdx[id][p] = append(irap.rdx[id][p], v...)
+		}
+	}
 }

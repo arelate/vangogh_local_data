@@ -31,7 +31,7 @@ func TagIdByName(tagName string) (string, error) {
 		return "", err
 	}
 
-	tagIds := rxa.Match(map[string][]string{TagNameProperty: {tagName}}, true)
+	tagIds := rxa.Match(map[string][]string{TagNameProperty: {tagName}}, true, true)
 	if len(tagIds) == 0 {
 		return "", fmt.Errorf("unknown tag-name %s", tagName)
 	}
@@ -199,7 +199,7 @@ func diffTagProperty(
 	}
 
 	//we need empty slice to detect new values
-	currentVals, _ := rxa.GetAllUnchangedValues(tagProperty, id)
+	currentVals, _ := rxa.GetAllValues(tagProperty, id)
 
 	for _, tag := range newTags {
 		if !slices.Contains(currentVals, tag) {

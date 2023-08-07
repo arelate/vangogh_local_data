@@ -147,7 +147,8 @@ func convertGameDetails(det *gog_integration.Details, rxa kvas.ReduxAssets, dt D
 
 		langCodes := rxa.Match(
 			map[string][]string{NativeLanguageNameProperty: {dl.Language}},
-			true)
+			true,
+			false)
 		if len(langCodes) != 1 {
 			return dlList, fmt.Errorf("invalid native language %s", dl.Language)
 		}

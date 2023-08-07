@@ -160,6 +160,7 @@ func AllTextProperties() []string {
 		SeriesProperty,
 		RatingProperty,
 		TagIdProperty,
+		TagNameProperty,
 		LocalTagsProperty,
 		OperatingSystemsProperty,
 		LanguageCodeProperty,
@@ -174,6 +175,7 @@ func AllTextProperties() []string {
 func VideoIdProperties() []string {
 	return []string{
 		VideoIdProperty,
+		MissingVideoUrlProperty,
 	}
 }
 
@@ -319,58 +321,6 @@ func SearchableProperties() []string {
 	return searchable
 }
 
-var atomicProperties = kvas.ReduxAtomics{
-	LanguageCodeProperty:       true,
-	NativeLanguageNameProperty: true,
-	SlugProperty:               true,
-}
-
-func IsPropertyAtomic(property string) bool {
-	return atomicProperties.IsAtomic(property)
-}
-
-var transitiveProperties = kvas.ReduxTransitives{
-	IncludesGamesProperty:     TitleProperty,
-	IsIncludedByGamesProperty: TitleProperty,
-	RequiresGamesProperty:     TitleProperty,
-	IsRequiredByGamesProperty: TitleProperty,
-	TagIdProperty:             TagNameProperty,
-	LanguageCodeProperty:      NativeLanguageNameProperty,
-	VideoIdProperty:           MissingVideoUrlProperty,
-}
-
-func IsPropertyTransitive(property string) bool {
-	return transitiveProperties.IsTransitive(property)
-}
-
-var aggregateProperties = kvas.ReduxAggregates{
-	TextProperty:    TextProperties(),
-	AllTextProperty: AllTextProperties(),
-	ImageIdProperty: ImageIdProperties(),
-}
-
-func IsPropertyAggregate(property string) bool {
-	return aggregateProperties.IsAggregate(property)
-}
-
-func DetailAggregateProperty(property string) []string {
-	return aggregateProperties.Detail(property)
-}
-
-func DetailAllAggregateProperties(properties ...string) map[string]bool {
-	return aggregateProperties.DetailAll(properties...)
-}
-
-func joinNotDesirable() []string {
-	return append(
-		ImageIdProperties(),
-		IncludesGamesProperty,
-		IsIncludedByGamesProperty,
-		RequiresGamesProperty,
-		IsRequiredByGamesProperty,
-	)
-}
-
 var imageTypeProperties = map[ImageType]string{
 	Image:         ImageProperty,
 	Screenshots:   ScreenshotsProperty,
@@ -513,13 +463,7 @@ var supportedProperties = map[ProductType][]string{
 }
 
 func ConnectReduxAssets(properties ...string) (kvas.ReduxAssets, error) {
-	return kvas.ConnectReduxAssets(AbsReduxDir(),
-		&kvas.ReduxFabric{
-			Aggregates:  aggregateProperties,
-			Transitives: transitiveProperties,
-			Atomics:     atomicProperties,
-		},
-		properties...)
+	return kvas.ConnectReduxAssets(AbsReduxDir(), properties...)
 }
 
 func GetProperties(

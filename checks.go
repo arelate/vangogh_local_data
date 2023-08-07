@@ -150,11 +150,11 @@ func IsProductDownloaded(id string, rxa kvas.ReduxAssets) (bool, error) {
 	return true, nil
 }
 
-func IsPropertiesJoinPreferred(property string) bool {
-	for _, nd := range joinNotDesirable() {
-		if property == nd {
-			return false
-		}
-	}
-	return true
-}
+//func IsPropertiesJoinPreferred(property string) bool {
+//	for _, nd := range joinNotDesirable() {
+//		if property == nd {
+//			return false
+//		}
+//	}
+//	return true
+//}

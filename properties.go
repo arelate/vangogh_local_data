@@ -41,9 +41,6 @@ const (
 	GOGReleaseDateProperty                  = "gog-release-date"
 	GOGOrderDateProperty                    = "gog-order-date"
 	GlobalReleaseDateProperty               = "global-release-date"
-	TextProperty                            = "text"
-	AllTextProperty                         = "all-text"
-	ImageIdProperty                         = "image-id"
 	TypesProperty                           = "types"
 	LocalManualUrlProperty                  = "local-manual-url"
 	DownloadStatusErrorProperty             = "download-status-error"
@@ -312,13 +309,6 @@ func DigestibleProperties() []string {
 		HLTBGenresProperty,
 		EnginesProperty,
 	}
-}
-
-func SearchableProperties() []string {
-	searchable := make([]string, 0, len(ReduxProperties())+3)
-	searchable = append(searchable, TextProperty, AllTextProperty, ImageIdProperty)
-	searchable = append(searchable, ReduxProperties()...)
-	return searchable
 }
 
 var imageTypeProperties = map[ImageType]string{

@@ -273,7 +273,8 @@ func ValidationProperties() []string {
 }
 
 func ReduxProperties() []string {
-	all := AllTextProperties()
+	all := TextProperties()
+	all = append(all, AllTextProperties()...)
 	all = append(all, VideoIdProperties()...)
 	all = append(all, ComputedProperties()...)
 	all = append(all, ImageIdProperties()...)

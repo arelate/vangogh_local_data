@@ -7,9 +7,6 @@ import (
 )
 
 const (
-	relMetadataDir        = "metadata"
-	relItemsDir           = "items"
-	relImagesDir          = "images"
 	relVideosDir          = "videos"
 	relVideoThumbnailsDir = "video_thumbnails"
 	relRecycleBinDir      = "recycle_bin"
@@ -22,8 +19,11 @@ const (
 )
 
 var (
-	absRootDir = ""
-	absTempDir = ""
+	absRootDir     = ""
+	absMetadataDir = ""
+	absItemsDir    = ""
+	absImagesDir   = ""
+	absTempDir     = ""
 )
 
 func ChRoot(rd string) {
@@ -38,6 +38,18 @@ func SetTempDir(d string) {
 	absTempDir = d
 }
 
+func SetImagesDir(d string) {
+	absImagesDir = d
+}
+
+func SetItemsDir(d string) {
+	absItemsDir = d
+}
+
+func SetMetadataDir(d string) {
+	absMetadataDir = d
+}
+
 func AbsTempDir() string {
 	return absTempDir
 }
@@ -50,16 +62,16 @@ func absVideoThumbnailsDir() string {
 	return filepath.Join(absRootDir, relVideoThumbnailsDir)
 }
 
-func absImagesDir() string {
-	return filepath.Join(absRootDir, relImagesDir)
+func AbsImagesDir() string {
+	return absImagesDir
 }
 
-func absItemsDir() string {
-	return filepath.Join(absRootDir, relItemsDir)
+func AbsItemsDir() string {
+	return absItemsDir
 }
 
 func AbsMetadataDir() string {
-	return filepath.Join(absRootDir, relMetadataDir)
+	return absMetadataDir
 }
 
 func AbsReduxDir() string {
@@ -117,7 +129,7 @@ func absDirByImageId(imageId string, absDirDelegate func() string) string {
 }
 
 func AbsImagesDirByImageId(imageId string) string {
-	return absDirByImageId(imageId, absImagesDir)
+	return absDirByImageId(imageId, AbsImagesDir)
 }
 
 func AbsItemPath(path string) string {
@@ -136,7 +148,7 @@ func AbsItemPath(path string) string {
 		return ""
 	}
 
-	return filepath.Join(absItemsDir(), path[0:1], path)
+	return filepath.Join(AbsItemsDir(), path[0:1], path)
 }
 
 func AbsLocalProductTypeDir(pt ProductType) (string, error) {

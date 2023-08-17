@@ -30,7 +30,7 @@ func filenameAsId(p string) (string, error) {
 }
 
 func LocalImageIds() (map[string]bool, error) {
-	return walkFiles(absImagesDir(), filenameAsId)
+	return walkFiles(AbsImagesDir(), filenameAsId)
 }
 
 func LocalVideoIds() (map[string]bool, error) {

@@ -265,6 +265,12 @@ func SyncProperties() []string {
 	}
 }
 
+func DownloadProperties() []string {
+	return []string{
+		LocalManualUrlProperty,
+	}
+}
+
 func ValidationProperties() []string {
 	return []string{
 		ValidationResultProperty,
@@ -287,6 +293,7 @@ func ReduxProperties() []string {
 	all = append(all, PriceProperties()...)
 	all = append(all, ExternalDataSourcesProperties()...)
 	all = append(all, SyncProperties()...)
+	all = append(all, DownloadProperties()...)
 	all = append(all, ValidationProperties()...)
 	all = append(all, EnginesProperties()...)
 	return all

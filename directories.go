@@ -70,9 +70,11 @@ func GetRelDir(rd RelDir) (string, error) {
 func SetAbsDirs(kv map[string]string) error {
 	for adk, ads := range absDirsStrings {
 		if d, ok := kv[ads]; ok && d != "" {
-			// make sure directory exists
-			if _, err := os.Stat(d); err != nil {
-				return err
+			if d != DefaultDirs[ads] {
+				// make sure directory exists
+				if _, err := os.Stat(d); err != nil {
+					return err
+				}
 			}
 			absDirsPaths[adk] = d
 		} else {

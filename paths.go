@@ -66,7 +66,7 @@ func absLocalVideoPath(videoId string, videoDir string, ext string) (string, err
 }
 
 func AbsLocalVideoPath(videoId string) (string, error) {
-	vdp, err := GetAbsDir(Videos)
+	vdp, err := AbsVideoDirByVideoId(videoId)
 	if err != nil {
 		return "", err
 	}
@@ -74,7 +74,7 @@ func AbsLocalVideoPath(videoId string) (string, error) {
 }
 
 func AbsLocalVideoThumbnailPath(videoId string) (string, error) {
-	vtdp, err := GetAbsRelDir(VideoThumbnails)
+	vtdp, err := AbsVideoThumbnailsDirByVideoId(videoId)
 	if err != nil {
 		return "", err
 	}
@@ -94,24 +94,14 @@ func AbsSkipListPath() (string, error) {
 	return filepath.Join(ifdp, skipListFilename), err
 }
 
-func absLocalImagePath(imageId string, imageDir string, ext string) string {
-	imagePath := filepath.Join(imageDir, imageId+ext)
-
-	if _, err := os.Stat(imagePath); err == nil {
-		return imagePath
-	} else {
-		return ""
-	}
-}
-
 func AbsLocalImagePath(imageId string) (string, error) {
 	exts := []string{gog_integration.JpgExt, gog_integration.PngExt}
-	idp, err := GetAbsDir(Images)
+	idp, err := AbsImagesDirByImageId(imageId)
 	if err != nil {
 		return "", err
 	}
 	for _, ext := range exts {
-		aip := absLocalImagePath(imageId, idp, ext)
+		aip := filepath.Join(idp, imageId+ext)
 		if _, err := os.Stat(aip); err == nil {
 			return aip, nil
 		} else {

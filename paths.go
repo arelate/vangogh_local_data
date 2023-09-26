@@ -32,48 +32,70 @@ func RemoteChecksumPath(p string) string {
 	return ""
 }
 
-func AbsLocalChecksumPath(p string) string {
+func AbsLocalChecksumPath(p string) (string, error) {
 	ext := path.Ext(p)
 	if !validatedExtensions[ext] {
-		return ""
+		return "", nil
 	}
 	dir, filename := path.Split(p)
-	if strings.HasPrefix(dir, AbsDownloadsDir()) {
-		dir = strings.Replace(dir, AbsDownloadsDir(), AbsChecksumsDir(), 1)
-	} else {
-		dir = filepath.Join(AbsChecksumsDir(), dir)
+	adp, err := GetAbsDir(Downloads)
+	if err != nil {
+		return "", err
 	}
-	return filepath.Join(dir, filename+xmlExt)
+	cdp, err := GetAbsRelDir(Checksums)
+	if err != nil {
+		return "", err
+	}
+
+	if strings.HasPrefix(dir, adp) {
+		dir = strings.Replace(dir, adp, cdp, 1)
+	} else {
+		dir = filepath.Join(cdp, dir)
+	}
+	return filepath.Join(dir, filename+xmlExt), nil
 }
 
-func absLocalVideoPath(videoId string, videoDirDelegate func(videoId string) string, ext string) string {
-	videoPath := filepath.Join(videoDirDelegate(videoId), videoId+ext)
+func absLocalVideoPath(videoId string, videoDir string, ext string) (string, error) {
+	videoPath := filepath.Join(videoDir, videoId+ext)
 
 	if _, err := os.Stat(videoPath); err == nil {
-		return videoPath
+		return videoPath, nil
+	} else {
+		return "", err
 	}
-
-	return ""
 }
 
-func AbsLocalVideoPath(videoId string) string {
-	return absLocalVideoPath(videoId, AbsVideoDirByVideoId, yt_urls.DefaultVideoExt)
+func AbsLocalVideoPath(videoId string) (string, error) {
+	vdp, err := GetAbsDir(Videos)
+	if err != nil {
+		return "", err
+	}
+	return absLocalVideoPath(videoId, vdp, yt_urls.DefaultVideoExt)
 }
 
-func AbsLocalVideoThumbnailPath(videoId string) string {
-	return absLocalVideoPath(videoId, AbsVideoThumbnailsDirByVideoId, yt_urls.DefaultThumbnailExt)
+func AbsLocalVideoThumbnailPath(videoId string) (string, error) {
+	vtdp, err := GetAbsRelDir(VideoThumbnails)
+	if err != nil {
+		return "", err
+	}
+	return absLocalVideoPath(videoId, vtdp, yt_urls.DefaultThumbnailExt)
 }
 
 func relRecycleBinPath(p string) (string, error) {
-	return filepath.Rel(AbsRecycleBinDir(), p)
+	rbdp, err := GetAbsDir(RecycleBin)
+	if err != nil {
+		return "", err
+	}
+	return filepath.Rel(rbdp, p)
 }
 
-func AbsSkipListPath() string {
-	return filepath.Join(absInputFilesDir, skipListFilename)
+func AbsSkipListPath() (string, error) {
+	ifdp, err := GetAbsDir(InputFiles)
+	return filepath.Join(ifdp, skipListFilename), err
 }
 
-func absLocalImagePath(imageId string, imageDirDelegate func(imageId string) string, ext string) string {
-	imagePath := filepath.Join(imageDirDelegate(imageId), imageId+ext)
+func absLocalImagePath(imageId string, imageDir string, ext string) string {
+	imagePath := filepath.Join(imageDir, imageId+ext)
 
 	if _, err := os.Stat(imagePath); err == nil {
 		return imagePath
@@ -82,21 +104,29 @@ func absLocalImagePath(imageId string, imageDirDelegate func(imageId string) str
 	}
 }
 
-func AbsLocalImagePath(imageId string) string {
+func AbsLocalImagePath(imageId string) (string, error) {
 	exts := []string{gog_integration.JpgExt, gog_integration.PngExt}
+	idp, err := GetAbsDir(Images)
+	if err != nil {
+		return "", err
+	}
 	for _, ext := range exts {
-		aip := absLocalImagePath(imageId, AbsImagesDirByImageId, ext)
+		aip := absLocalImagePath(imageId, idp, ext)
 		if _, err := os.Stat(aip); err == nil {
-			return aip
+			return aip, nil
+		} else {
+			return "", err
 		}
 	}
-	return ""
+	return "", err
 }
 
-func AbsCookiePath() string {
-	return filepath.Join(absInputFilesDir, cookiesFilename)
+func AbsCookiePath() (string, error) {
+	ifdp, err := GetAbsDir(InputFiles)
+	return filepath.Join(ifdp, cookiesFilename), err
 }
 
-func AbsAtomFeedPath() string {
-	return filepath.Join(absOutputFilesDir, atomFeedFilename)
+func AbsAtomFeedPath() (string, error) {
+	ofdp, err := GetAbsDir(OutputFiles)
+	return filepath.Join(ofdp, atomFeedFilename), err
 }

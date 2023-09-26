@@ -2,148 +2,149 @@ package vangogh_local_data
 
 import (
 	"fmt"
+	"os"
 	"path/filepath"
 	"strings"
 )
 
+type AbsDir int
+
 const (
-	relVideoThumbnailsDir = "_thumbnails"
-	relExtrasDir          = "extras"
-	relDLCDir             = "dlc"
-	relChecksumsDir       = "_checksums"
-	relReduxDir           = "_redux"
+	Backups AbsDir = iota
+	Downloads
+	Images
+	InputFiles
+	Items
+	Metadata
+	OutputFiles
+	RecycleBin
+	Videos
 )
 
-var (
-	absBackupsDir     = ""
-	absDownloadsDir   = ""
-	absImagesDir      = ""
-	absInputFilesDir  = ""
-	absRecycleBinDir  = ""
-	absMetadataDir    = ""
-	absOutputFilesDir = ""
-	absItemsDir       = ""
-	absVideosDir      = ""
-	absTempDir        = ""
+var absDirsStrings = map[AbsDir]string{
+	Backups:     "backups",
+	Downloads:   "downloads",
+	Images:      "images",
+	InputFiles:  "input_files",
+	Items:       "items",
+	Metadata:    "metadata",
+	OutputFiles: "output_files",
+	RecycleBin:  "recycle_bin",
+	Videos:      "videos",
+}
+
+var absDirsPaths = map[AbsDir]string{}
+
+type RelDir int
+
+const (
+	Checksums RelDir = iota
+	DLCs
+	Extras
+	Redux
+	VideoThumbnails
 )
 
-func SetBackupsDir(d string) {
-	absBackupsDir = d
+var relDirsStrings = map[RelDir]string{
+	Checksums:       "_checksums",
+	DLCs:            "dlc",
+	Extras:          "extras",
+	Redux:           "_redux",
+	VideoThumbnails: "_thumbnails",
 }
 
-func SetDownloadsDir(d string) {
-	absDownloadsDir = d
+var relToAbsDir = map[RelDir]AbsDir{
+	Checksums:       Downloads,
+	Redux:           Metadata,
+	VideoThumbnails: Videos,
 }
 
-func SetImagesDir(d string) {
-	absImagesDir = d
+func GetRelDir(rd RelDir) (string, error) {
+	if rds, ok := relDirsStrings[rd]; ok && rds != "" {
+		return rds, nil
+	} else {
+		return "", fmt.Errorf("unknown rel dir")
+	}
 }
 
-func SetInputFilesDir(d string) {
-	absInputFilesDir = d
+func SetAbsDirs(kv map[string]string) error {
+	for adk, ads := range absDirsStrings {
+		if d, ok := kv[ads]; ok && d != "" {
+			// make sure directory exists
+			if _, err := os.Stat(d); err != nil {
+				return err
+			}
+			absDirsPaths[adk] = d
+		} else {
+			return fmt.Errorf("missing required abs dir %s", ads)
+		}
+	}
+	return nil
 }
 
-func SetItemsDir(d string) {
-	absItemsDir = d
-}
-
-func SetMetadataDir(d string) {
-	absMetadataDir = d
-}
-
-func SetOutputDir(d string) {
-	absOutputFilesDir = d
-}
-
-func SetRecycleBinDir(d string) {
-	absRecycleBinDir = d
-}
-
-func SetVideosDir(d string) {
-	absVideosDir = d
-}
-
-func AbsVideosDir() string {
-	return absVideosDir
-}
-
-func AbsVideoThumbnailsDir() string {
-	return filepath.Join(absVideosDir, relVideoThumbnailsDir)
-}
-
-func AbsImagesDir() string {
-	return absImagesDir
-}
-
-func AbsItemsDir() string {
-	return absItemsDir
-}
-
-func AbsMetadataDir() string {
-	return absMetadataDir
-}
-
-func AbsReduxDir() string {
-	return filepath.Join(AbsMetadataDir(), relReduxDir)
-}
-
-func AbsRecycleBinDir() string {
-	return absRecycleBinDir
-}
-
-func AbsDownloadsDir() string {
-	return absDownloadsDir
-}
-
-func RelExtrasDir() string {
-	return relExtrasDir
-}
-
-func RelDLCDir() string {
-	return relDLCDir
-}
-
-func AbsChecksumsDir() string {
-	return filepath.Join(absDownloadsDir, relChecksumsDir)
-}
-
-func absDirByVideoId(videoId string, absDirDelegate func() string) string {
-	if videoId == "" || len(videoId) < 1 {
-		return ""
+func GetAbsDir(ad AbsDir) (string, error) {
+	if _, ok := absDirsStrings[ad]; !ok {
+		return "", fmt.Errorf("unknown abs dir")
 	}
 
-	return filepath.Join(absDirDelegate(), strings.ToLower(videoId[0:1]))
+	if adp, ok := absDirsPaths[ad]; ok && adp != "" {
+		return adp, nil
+	}
+	return "", fmt.Errorf("abs dir %s not set", absDirsStrings[ad])
 }
 
-func AbsVideoDirByVideoId(videoId string) string {
-	return absDirByVideoId(videoId, AbsVideosDir)
+func GetAbsRelDir(rd RelDir) (string, error) {
+	if _, ok := relDirsStrings[rd]; ok {
+		return "", fmt.Errorf("unknown rel dir")
+	}
+
+	if ad, ok := relToAbsDir[rd]; ok {
+
+		adp, err := GetAbsDir(ad)
+		if err != nil {
+			return "", err
+		}
+
+		return filepath.Join(adp, relDirsStrings[rd]), nil
+	} else {
+		return "", fmt.Errorf("%s dir relativity not set", relDirsStrings[rd])
+	}
 }
 
-func AbsVideoThumbnailsDirByVideoId(videoId string) string {
-	return absDirByVideoId(videoId, AbsVideoThumbnailsDir)
+func AbsVideoDirByVideoId(videoId string) (string, error) {
+	if videoId == "" || len(videoId) < 1 {
+		return "", fmt.Errorf("videoId cannot be empty")
+	}
+	vdp, err := GetAbsDir(Videos)
+	return filepath.Join(vdp, strings.ToLower(videoId[0:1])), err
 }
 
-func absDirByImageId(imageId string, absDirDelegate func() string) string {
+func AbsVideoThumbnailsDirByVideoId(videoId string) (string, error) {
+	if videoId == "" || len(videoId) < 1 {
+		return "", fmt.Errorf("videoId cannot be empty")
+	}
+	vdp, err := GetAbsRelDir(VideoThumbnails)
+	return filepath.Join(vdp, strings.ToLower(videoId[0:1])), err
+}
+
+func AbsImagesDirByImageId(imageId string) (string, error) {
 	if imageId == "" {
-		return ""
+		return "", fmt.Errorf("imageId cannot be empty")
 	}
 
 	imageId = strings.TrimPrefix(imageId, "/")
 
 	if len(imageId) < 2 {
-		return ""
+		return "", fmt.Errorf("imageId is too short")
 	}
 
-	return filepath.Join(absDirDelegate(), imageId[0:2])
+	idp, err := GetAbsDir(Images)
+	return filepath.Join(idp, imageId[0:2]), err
 }
 
-func AbsImagesDirByImageId(imageId string) string {
-	return absDirByImageId(imageId, AbsImagesDir)
-}
-
-func AbsItemPath(path string) string {
+func AbsItemPath(path string) (string, error) {
 	if path == "" {
-		return ""
+		return "", fmt.Errorf("item path cannot be empty")
 	}
 
 	//GOG.com quirk - some item URLs path has multiple slashes
@@ -152,20 +153,27 @@ func AbsItemPath(path string) string {
 	for strings.HasPrefix(path, "/") {
 		path = strings.TrimPrefix(path, "/")
 	}
-
 	if len(path) < 1 {
-		return ""
+		return "", fmt.Errorf("sanitized item path cannot be empty")
 	}
 
-	return filepath.Join(AbsItemsDir(), path[0:1], path)
+	idp, err := GetAbsDir(Items)
+	if err != nil {
+		return "", err
+	}
+
+	return filepath.Join(idp, path[0:1], path), nil
 }
 
 func AbsLocalProductTypeDir(pt ProductType) (string, error) {
 	if !IsValidProductType(pt) {
 		return "", fmt.Errorf("no local destination for product type %s", pt)
 	}
-
-	return filepath.Join(AbsMetadataDir(), pt.String()), nil
+	amd, err := GetAbsDir(Metadata)
+	if err != nil {
+		return "", err
+	}
+	return filepath.Join(amd, pt.String()), nil
 }
 
 func RelProductDownloadsDir(slug string) (string, error) {
@@ -175,7 +183,6 @@ func RelProductDownloadsDir(slug string) (string, error) {
 	if len(slug) < 1 {
 		return "", fmt.Errorf("vangogh_urls: slug is too short")
 	}
-
 	return filepath.Join(strings.ToLower(slug[0:1]), slug), nil
 }
 
@@ -184,21 +191,13 @@ func AbsProductDownloadsDir(slug string) (string, error) {
 	if err != nil {
 		return rDir, err
 	}
-	return AbsDownloadDirFromRel(rDir), nil
+	return AbsDownloadDirFromRel(rDir)
 }
 
-func AbsDownloadDirFromRel(p string) string {
-	return filepath.Join(AbsDownloadsDir(), p)
-}
-
-func AbsBackupsDir() string {
-	return absBackupsDir
-}
-
-func AbsInputFilesDir() string {
-	return absInputFilesDir
-}
-
-func AbsOutputFilesDir() string {
-	return absOutputFilesDir
+func AbsDownloadDirFromRel(p string) (string, error) {
+	adp, err := GetAbsDir(Downloads)
+	if err != nil {
+		return "", err
+	}
+	return filepath.Join(adp, p), nil
 }

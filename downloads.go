@@ -89,17 +89,6 @@ func (dl *Download) String() string {
 	}
 }
 
-func (dl *Download) DirSuffix() string {
-	switch dl.Type {
-	case Extra:
-		return RelExtrasDir()
-	case DLC:
-		return RelDLCDir()
-	default:
-		return ""
-	}
-}
-
 type DownloadsList []Download
 
 func FromDetails(det *gog_integration.Details, rxa kvas.ReduxAssets) (DownloadsList, error) {

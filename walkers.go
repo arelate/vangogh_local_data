@@ -30,27 +30,51 @@ func filenameAsId(p string) (string, error) {
 }
 
 func LocalImageIds() (map[string]bool, error) {
-	return walkFiles(AbsImagesDir(), filenameAsId)
+	idp, err := GetAbsDir(Images)
+	if err != nil {
+		return nil, err
+	}
+	return walkFiles(idp, filenameAsId)
 }
 
 func LocalVideoIds() (map[string]bool, error) {
-	return walkFiles(AbsVideosDir(), filenameAsId)
+	vdp, err := GetAbsDir(Videos)
+	if err != nil {
+		return nil, err
+	}
+	return walkFiles(vdp, filenameAsId)
 }
 
 func LocalVideoThumbnailIds() (map[string]bool, error) {
-	return walkFiles(AbsVideoThumbnailsDir(), filenameAsId)
+	vtdp, err := GetAbsRelDir(VideoThumbnails)
+	if err != nil {
+		return nil, err
+	}
+	return walkFiles(vtdp, filenameAsId)
 }
 
 func RecycleBinDirs() (map[string]bool, error) {
-	return walkDirectories(AbsRecycleBinDir())
+	rbdp, err := GetAbsDir(RecycleBin)
+	if err != nil {
+		return nil, err
+	}
+	return walkDirectories(rbdp)
 }
 
 func RecycleBinFiles() (map[string]bool, error) {
-	return walkFiles(AbsRecycleBinDir(), relRecycleBinPath)
+	rbdp, err := GetAbsDir(RecycleBin)
+	if err != nil {
+		return nil, err
+	}
+	return walkFiles(rbdp, relRecycleBinPath)
 }
 
 func LocalDownloadDirs() (map[string]bool, error) {
-	return walkDirectories(AbsDownloadsDir())
+	ddp, err := GetAbsDir(Downloads)
+	if err != nil {
+		return nil, err
+	}
+	return walkDirectories(ddp)
 }
 
 func LocalSlugDownloads(slug string) (map[string]bool, error) {
@@ -98,15 +122,18 @@ func walkFiles(dir string, transformDelegate func(string) (string, error)) (map[
 }
 
 func walkDirectories(rootDir string) (map[string]bool, error) {
-	rbd := AbsRecycleBinDir()
+	rbdp, err := GetAbsDir(RecycleBin)
+	if err != nil {
+		return nil, err
+	}
 	dirSet := make(map[string]bool)
-	err := filepath.WalkDir(
+	err = filepath.WalkDir(
 		rootDir,
 		func(p string, de fs.DirEntry, err error) error {
 			if de != nil && !de.IsDir() {
 				return nil
 			}
-			if p == "" || p == rbd {
+			if p == "" || p == rbdp {
 				return nil
 			}
 			dirSet[p] = true

@@ -25,7 +25,12 @@ func MoveToRecycleBin(typeRootDir, absPath string) error {
 		return err
 	}
 
-	rbFilepath := filepath.Join(AbsRecycleBinDir(), relPath)
+	rbdp, err := GetAbsDir(RecycleBin)
+	if err != nil {
+		return err
+	}
+
+	rbFilepath := filepath.Join(rbdp, relPath)
 	rbDir, _ := filepath.Split(rbFilepath)
 	if _, err := os.Stat(rbDir); os.IsNotExist(err) {
 		if err := os.MkdirAll(rbDir, 0755); err != nil {

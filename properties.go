@@ -461,7 +461,11 @@ var supportedProperties = map[ProductType][]string{
 }
 
 func ConnectReduxAssets(properties ...string) (kvas.ReduxAssets, error) {
-	return kvas.ConnectReduxAssets(AbsReduxDir(), properties...)
+	rdp, err := GetAbsRelDir(Redux)
+	if err != nil {
+		return nil, err
+	}
+	return kvas.ConnectReduxAssets(rdp, properties...)
 }
 
 func GetProperties(

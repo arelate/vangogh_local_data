@@ -94,7 +94,7 @@ func GetAbsDir(ad AbsDir) (string, error) {
 }
 
 func GetAbsRelDir(rd RelDir) (string, error) {
-	if _, ok := relDirsStrings[rd]; ok {
+	if _, ok := relDirsStrings[rd]; !ok {
 		return "", fmt.Errorf("unknown rel dir")
 	}
 

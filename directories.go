@@ -15,8 +15,6 @@ const (
 )
 
 var (
-	//absRootDir       = ""
-
 	absBackupsDir     = ""
 	absDownloadsDir   = ""
 	absImagesDir      = ""
@@ -28,14 +26,6 @@ var (
 	absVideosDir      = ""
 	absTempDir        = ""
 )
-
-//func ChRoot(rd string) {
-//	absRootDir = rd
-//}
-//
-//func Pwd() string {
-//	return absRootDir
-//}
 
 func SetBackupsDir(d string) {
 	absBackupsDir = d
@@ -57,10 +47,6 @@ func SetItemsDir(d string) {
 	absItemsDir = d
 }
 
-//func SetTempDir(d string) {
-//	absTempDir = d
-//}
-
 func SetMetadataDir(d string) {
 	absMetadataDir = d
 }
@@ -76,10 +62,6 @@ func SetRecycleBinDir(d string) {
 func SetVideosDir(d string) {
 	absVideosDir = d
 }
-
-//func AbsTempDir() string {
-//	return absTempDir
-//}
 
 func AbsVideosDir() string {
 	return absVideosDir

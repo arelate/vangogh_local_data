@@ -93,14 +93,10 @@ func AbsLocalImagePath(imageId string) string {
 	return ""
 }
 
-func AbsTempPath(f string) string {
-	return filepath.Join(absTempDir, f)
-}
-
 func AbsCookiePath() string {
-	return AbsTempPath(cookiesFilename)
+	return filepath.Join(absInputFilesDir, cookiesFilename)
 }
 
 func AbsAtomFeedPath() string {
-	return AbsTempPath(atomFeedFilename)
+	return filepath.Join(absOutputFilesDir, atomFeedFilename)
 }

@@ -17,16 +17,16 @@ const (
 var (
 	//absRootDir       = ""
 
-	absBackupsDir    = ""
-	absDownloadsDir  = ""
-	absImagesDir     = ""
-	absInputFilesDir = ""
-	absRecycleBinDir = ""
-	absMetadataDir   = ""
-	absOutputDir     = ""
-	absItemsDir      = ""
-	absVideosDir     = ""
-	absTempDir       = ""
+	absBackupsDir     = ""
+	absDownloadsDir   = ""
+	absImagesDir      = ""
+	absInputFilesDir  = ""
+	absRecycleBinDir  = ""
+	absMetadataDir    = ""
+	absOutputFilesDir = ""
+	absItemsDir       = ""
+	absVideosDir      = ""
+	absTempDir        = ""
 )
 
 //func ChRoot(rd string) {
@@ -66,7 +66,7 @@ func SetMetadataDir(d string) {
 }
 
 func SetOutputDir(d string) {
-	absOutputDir = d
+	absOutputFilesDir = d
 }
 
 func SetRecycleBinDir(d string) {
@@ -213,6 +213,10 @@ func AbsBackupsDir() string {
 	return absBackupsDir
 }
 
-func AbsOutputDir() string {
-	return absOutputDir
+func AbsInputFilesDir() string {
+	return absInputFilesDir
+}
+
+func AbsOutputFilesDir() string {
+	return absOutputFilesDir
 }

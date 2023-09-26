@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 )
 
-func MoveToRecycleBin(absPath string) error {
+func MoveToRecycleBin(typeRootDir, absPath string) error {
 	if absPath == "" {
 		nod.Log("move to recycle bin: empty filename")
 		return nil
@@ -17,9 +17,11 @@ func MoveToRecycleBin(absPath string) error {
 		return nil
 	}
 
-	relPath, err := filepath.Rel(Pwd(), absPath)
+	root, _ := filepath.Split(typeRootDir)
+
+	relPath, err := filepath.Rel(root, absPath)
 	if err != nil {
-		nod.Log("move to recycle bin: relPath error: base=%s target=%s", Pwd(), absPath)
+		nod.Log("move to recycle bin: relPath error: root=%s target=%s", root, absPath)
 		return err
 	}
 

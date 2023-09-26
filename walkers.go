@@ -34,11 +34,11 @@ func LocalImageIds() (map[string]bool, error) {
 }
 
 func LocalVideoIds() (map[string]bool, error) {
-	return walkFiles(absVideosDir(), filenameAsId)
+	return walkFiles(AbsVideosDir(), filenameAsId)
 }
 
 func LocalVideoThumbnailIds() (map[string]bool, error) {
-	return walkFiles(absVideoThumbnailsDir(), filenameAsId)
+	return walkFiles(AbsVideoThumbnailsDir(), filenameAsId)
 }
 
 func RecycleBinDirs() (map[string]bool, error) {

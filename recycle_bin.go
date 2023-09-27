@@ -2,8 +2,10 @@ package vangogh_local_data
 
 import (
 	"github.com/boggydigital/nod"
+	"io"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 func MoveToRecycleBin(typeRootDir, absPath string) error {
@@ -37,5 +39,38 @@ func MoveToRecycleBin(typeRootDir, absPath string) error {
 			return err
 		}
 	}
-	return os.Rename(absPath, rbFilepath)
+
+	if err := os.Rename(absPath, rbFilepath); err != nil {
+		// inspired by https://github.com/golang/go/issues/41487
+		if strings.Contains(err.Error(), "invalid cross-device link") {
+			if err := copyDelete(absPath, rbFilepath); err != nil {
+				return err
+			}
+		} else {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func copyDelete(src, dst string) error {
+	srcf, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer srcf.Close()
+
+	dstf, err := os.Create(dst)
+	if err != nil {
+		return err
+	}
+	defer dstf.Close()
+
+	_, err = io.Copy(dstf, srcf)
+	if err != nil {
+		return err
+	}
+
+	return os.Remove(src)
 }

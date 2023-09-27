@@ -105,7 +105,7 @@ func AbsLocalImagePath(imageId string) (string, error) {
 		if _, err := os.Stat(aip); err == nil {
 			return aip, nil
 		} else {
-			return "", err
+			continue
 		}
 	}
 	return "", err

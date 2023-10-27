@@ -13,24 +13,24 @@ const (
 	Backups AbsDir = iota
 	Downloads
 	Images
-	InputFiles
+	Input
 	Items
 	Metadata
-	OutputFiles
+	Output
 	RecycleBin
 	Videos
 )
 
 var absDirsStrings = map[AbsDir]string{
-	Backups:     "backups",
-	Downloads:   "downloads",
-	Images:      "images",
-	InputFiles:  "input_files",
-	Items:       "items",
-	Metadata:    "metadata",
-	OutputFiles: "output_files",
-	RecycleBin:  "recycle_bin",
-	Videos:      "videos",
+	Backups:    "backups",
+	Downloads:  "downloads",
+	Images:     "images",
+	Input:      "input",
+	Items:      "items",
+	Metadata:   "metadata",
+	Output:     "output",
+	RecycleBin: "recycle_bin",
+	Videos:     "videos",
 }
 
 var absDirsPaths = map[AbsDir]string{}

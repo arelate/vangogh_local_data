@@ -8,11 +8,11 @@ var DefaultDirs = map[string]string{
 	"backups":      defaultRootDir + "/backups",
 	"downloads":    defaultRootDir + "/downloads",
 	"images":       defaultRootDir + "/images",
-	"input_files":  defaultRootDir,
+	"input_files":  defaultRootDir + "/input",
 	"items":        defaultRootDir + "/items",
 	"logs":         "/var/log/vangogh",
 	"metadata":     defaultRootDir + "/metadata",
-	"output_files": defaultRootDir,
+	"output_files": defaultRootDir + "/output",
 	"recycle_bin":  defaultRootDir + "/recycle_bin",
 	"videos":       defaultRootDir + "/videos",
 }

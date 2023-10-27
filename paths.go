@@ -91,7 +91,7 @@ func relRecycleBinPath(p string) (string, error) {
 }
 
 func AbsSkipListPath() (string, error) {
-	ifdp, err := GetAbsDir(InputFiles)
+	ifdp, err := GetAbsDir(Input)
 	return filepath.Join(ifdp, skipListFilename), err
 }
 
@@ -113,11 +113,11 @@ func AbsLocalImagePath(imageId string) (string, error) {
 }
 
 func AbsCookiePath() (string, error) {
-	ifdp, err := GetAbsDir(InputFiles)
+	ifdp, err := GetAbsDir(Input)
 	return filepath.Join(ifdp, cookiesFilename), err
 }
 
 func AbsAtomFeedPath() (string, error) {
-	ofdp, err := GetAbsDir(OutputFiles)
+	ofdp, err := GetAbsDir(Output)
 	return filepath.Join(ofdp, atomFeedFilename), err
 }

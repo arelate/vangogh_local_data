@@ -7,7 +7,7 @@ import (
 
 func addLocalTag(id, tag string, rxa kvas.ReduxAssets, tpw nod.TotalProgressWriter) error {
 	if !rxa.HasVal(LocalTagsProperty, id, tag) {
-		if err := rxa.AddVal(LocalTagsProperty, id, tag); err != nil {
+		if err := rxa.AddValues(LocalTagsProperty, id, tag); err != nil {
 			nod.Increment(tpw)
 			return err
 		}

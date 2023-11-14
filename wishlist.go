@@ -32,7 +32,7 @@ func AddToLocalWishlist(
 		}
 
 		if !rxa.HasVal(WishlistedProperty, id, TrueValue) {
-			if err := rxa.AddVal(WishlistedProperty, id, TrueValue); err != nil {
+			if err := rxa.AddValues(WishlistedProperty, id, TrueValue); err != nil {
 				if tpw != nil {
 					tpw.Increment()
 				}
@@ -75,7 +75,7 @@ func RemoveFromLocalWishlist(
 		}
 
 		if !rxa.HasVal(WishlistedProperty, id, FalseValue) {
-			if err := rxa.AddVal(WishlistedProperty, id, FalseValue); err != nil {
+			if err := rxa.AddValues(WishlistedProperty, id, FalseValue); err != nil {
 				if tpw != nil {
 					tpw.Increment()
 				}

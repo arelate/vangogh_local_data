@@ -64,7 +64,7 @@ func CreateTag(httpClient *http.Client, tagName string) error {
 	}
 
 	if !rxa.HasVal(TagNameProperty, ctResp.Id, tagName) {
-		if err := rxa.AddVal(TagNameProperty, ctResp.Id, tagName); err != nil {
+		if err := rxa.AddValues(TagNameProperty, ctResp.Id, tagName); err != nil {
 			return err
 		}
 	}
@@ -130,7 +130,7 @@ func AddTags(
 				return fmt.Errorf("failed to add tag %s", tag)
 			}
 
-			if err := rxa.AddVal(TagIdProperty, id, tag); err != nil {
+			if err := rxa.AddValues(TagIdProperty, id, tag); err != nil {
 				nod.Increment(tpw)
 				return err
 			}

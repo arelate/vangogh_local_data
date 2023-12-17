@@ -64,6 +64,14 @@ func IsHLTBProduct(pt ProductType) bool {
 		IsHLTBDetailProduct(pt)
 }
 
+func IsProtonDBDetailProduct(pt ProductType) bool {
+	return containsProductType(ProtonDBDetailProducts(), pt)
+}
+
+func IsProtonDBProduct(pt ProductType) bool {
+	return IsProtonDBDetailProduct(pt)
+}
+
 func IsFastPageFetchProduct(pt ProductType) bool {
 	return containsProductType(FastPageFetchProducts(), pt)
 }

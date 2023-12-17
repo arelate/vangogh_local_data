@@ -23,12 +23,17 @@ const (
 	SteamAppNews
 	SteamReviews
 	SteamStorePage
+	SteamAppDetails // currently not implemented - requires implementing throttling support
+	SteamDeckCompatibilityReport
 	// PCGamingWiki product types
 	PCGWPageId
 	PCGWEngine
 	PCGWExternalLinks
+	// HLTB product types
 	HLTBRootPage
 	HLTBData
+	// ProtonDB product types
+	ProtonDBSummary
 )
 
 var productTypeStrings = map[ProductType]string{
@@ -48,10 +53,12 @@ var productTypeStrings = map[ProductType]string{
 	OrderPage:            "order-page",
 	Orders:               "orders",
 	// Steam product types
-	SteamAppList:   "steam-app-list",
-	SteamAppNews:   "steam-app-news",
-	SteamReviews:   "steam-reviews",
-	SteamStorePage: "steam-store-page",
+	SteamAppList:                 "steam-app-list",
+	SteamAppNews:                 "steam-app-news",
+	SteamReviews:                 "steam-reviews",
+	SteamStorePage:               "steam-store-page",
+	SteamAppDetails:              "steam-app-details",
+	SteamDeckCompatibilityReport: "steam-deck-compatibility-report",
 	// PCGamingWiki product types
 	PCGWPageId:        "pcgw-pageid",
 	PCGWEngine:        "pcgw-engine",
@@ -59,6 +66,8 @@ var productTypeStrings = map[ProductType]string{
 	// HLTB product types
 	HLTBRootPage: "hltb-root-page",
 	HLTBData:     "hltb-data",
+	// ProtonDB product types
+	ProtonDBSummary: "protondb-summary",
 }
 
 // the list is intentionally scoped to very few types we anticipate
@@ -157,6 +166,14 @@ var steamDetailMainProductTypes = map[ProductType][]ProductType{
 		CatalogProducts,
 		AccountProducts,
 	},
+	SteamAppDetails: {
+		CatalogProducts,
+		AccountProducts,
+	},
+	SteamDeckCompatibilityReport: {
+		CatalogProducts,
+		AccountProducts,
+	},
 }
 
 var pcgwDetailMainProductTypes = map[ProductType][]ProductType{
@@ -177,6 +194,13 @@ var pcgwDetailMainProductTypes = map[ProductType][]ProductType{
 
 var hltbDetailMainProductTypes = map[ProductType][]ProductType{
 	HLTBData: {
+		CatalogProducts,
+		AccountProducts,
+	},
+}
+
+var protonDBDetailMainProductTypes = map[ProductType][]ProductType{
+	ProtonDBSummary: {
 		CatalogProducts,
 		AccountProducts,
 	},
@@ -210,6 +234,8 @@ func HLTBDetailProducts() []ProductType {
 	return detailProducts(hltbDetailMainProductTypes)
 }
 
+func ProtonDBDetailProducts() []ProductType { return detailProducts(protonDBDetailMainProductTypes) }
+
 func MainProductTypes(pt ProductType) []ProductType {
 	if IsGOGDetailProduct(pt) {
 		return gogMainProductTypes(pt)
@@ -219,6 +245,8 @@ func MainProductTypes(pt ProductType) []ProductType {
 		return pcgwMainProductTypes(pt)
 	} else if IsHLTBDetailProduct(pt) {
 		return hltbMainProductTypes(pt)
+	} else if IsProtonDBDetailProduct(pt) {
+		return protonDBMainProductTypes(pt)
 	} else {
 		return nil
 	}
@@ -238,6 +266,10 @@ func pcgwMainProductTypes(pt ProductType) []ProductType {
 
 func hltbMainProductTypes(pt ProductType) []ProductType {
 	return hltbDetailMainProductTypes[pt]
+}
+
+func protonDBMainProductTypes(pt ProductType) []ProductType {
+	return protonDBDetailMainProductTypes[pt]
 }
 
 func GOGRemoteProducts() []ProductType {
@@ -260,6 +292,10 @@ func HLTBRemoteProducts() []ProductType {
 	return append(remote, HLTBDetailProducts()...)
 }
 
+func ProtonDBRemoteProducts() []ProductType {
+	return ProtonDBDetailProducts()
+}
+
 func LocalProducts() []ProductType {
 	lps := make([]ProductType, 0, len(splitProductTypes))
 	for _, spt := range splitProductTypes {
@@ -278,6 +314,7 @@ func RemoteProducts() []ProductType {
 	rps = append(rps, SteamRemoteProducts()...)
 	rps = append(rps, PCGWRemoteProducts()...)
 	rps = append(rps, HLTBRemoteProducts()...)
+	rps = append(rps, ProtonDBRemoteProducts()...)
 
 	return rps
 }
@@ -317,11 +354,14 @@ var supportsGetItems = []ProductType{
 	SteamAppNews,
 	SteamReviews,
 	SteamStorePage,
+	SteamAppDetails,
+	SteamDeckCompatibilityReport,
 	PCGWPageId,
 	PCGWEngine,
 	PCGWExternalLinks,
 	HLTBRootPage,
 	HLTBData,
+	ProtonDBSummary,
 }
 
 var supportedImageTypes = map[ProductType][]ImageType{

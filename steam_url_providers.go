@@ -1,6 +1,7 @@
 package vangogh_local_data
 
 import (
+	"github.com/arelate/southern_light/protondb_integration"
 	"github.com/arelate/southern_light/steam_integration"
 	"github.com/boggydigital/kvas"
 	"net/url"
@@ -8,9 +9,13 @@ import (
 )
 
 var steamProductTypeUrlGetters = map[ProductType]func(uint32) *url.URL{
-	SteamAppNews:   steam_integration.NewsForAppUrl,
-	SteamReviews:   steam_integration.AppReviewsUrl,
-	SteamStorePage: steam_integration.StorePageUrl,
+	SteamAppNews:                 steam_integration.NewsForAppUrl,
+	SteamReviews:                 steam_integration.AppReviewsUrl,
+	SteamStorePage:               steam_integration.StorePageUrl,
+	SteamAppDetails:              steam_integration.AppDetailsUrl,
+	SteamDeckCompatibilityReport: steam_integration.DeckAppCompatibilityReportUrl,
+	// ProtonDB product types are using Steam AppID
+	ProtonDBSummary: protondb_integration.SummaryUrl,
 }
 
 type SteamUrlProvider struct {

@@ -153,6 +153,17 @@ func (vr *ValueReader) SteamAppReviews(id string) (steamAppReviews *steam_integr
 	return steamAppReviews, err
 }
 
+func (vr *ValueReader) SteamDeckAppCompatibilityReport(id string) (deckAppCompatibilityReport *steam_integration.DeckAppCompatibilityReport, err error) {
+	err = vr.readValue(id, &deckAppCompatibilityReport)
+	// empty results are passed as an empty array [], not a struct
+	if ute, ok := err.(*json.UnmarshalTypeError); ok {
+		if ute.Field == "results" && ute.Value == "array" {
+			err = nil
+		}
+	}
+	return deckAppCompatibilityReport, err
+}
+
 func (vr *ValueReader) UserWishlistProduct(id string) (userWishlistProduct string, err error) {
 	userWishlistProduct, err = id, nil
 	return userWishlistProduct, err
@@ -243,6 +254,8 @@ func (vr *ValueReader) ReadValue(key string) (interface{}, error) {
 		return vr.SteamStorePage(key)
 	case SteamAppList:
 		return vr.SteamAppList()
+	case SteamDeckCompatibilityReport:
+		return vr.SteamDeckAppCompatibilityReport(key)
 	case PCGWPageId:
 		return vr.PCGWPageId(key)
 	case PCGWEngine:

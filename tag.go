@@ -26,12 +26,12 @@ func postTagResp(httpClient *http.Client, url *url.URL, respVal interface{}) err
 
 func TagIdByName(tagName string) (string, error) {
 
-	rxa, err := ConnectReduxAssets(TagNameProperty)
+	rxa, err := ReduxReader(TagNameProperty)
 	if err != nil {
 		return "", err
 	}
 
-	tagIds := rxa.Match(map[string][]string{TagNameProperty: {tagName}}, true, true)
+	tagIds := rxa.Match(map[string][]string{TagNameProperty: {tagName}})
 	if len(tagIds) == 0 {
 		return "", fmt.Errorf("unknown tag-name %s", tagName)
 	}
@@ -41,7 +41,7 @@ func TagIdByName(tagName string) (string, error) {
 			tagIds)
 	}
 	tagId := ""
-	for ti := range tagIds {
+	for _, ti := range tagIds {
 		tagId = ti
 	}
 	return tagId, nil
@@ -49,7 +49,7 @@ func TagIdByName(tagName string) (string, error) {
 
 func CreateTag(httpClient *http.Client, tagName string) error {
 
-	rxa, err := ConnectReduxAssets(TagNameProperty)
+	rdx, err := ReduxWriter(TagNameProperty)
 	if err != nil {
 		return err
 	}
@@ -63,8 +63,8 @@ func CreateTag(httpClient *http.Client, tagName string) error {
 		return fmt.Errorf("invalid create tag response")
 	}
 
-	if !rxa.HasVal(TagNameProperty, ctResp.Id, tagName) {
-		if err := rxa.AddValues(TagNameProperty, ctResp.Id, tagName); err != nil {
+	if !rdx.HasValue(TagNameProperty, ctResp.Id, tagName) {
+		if err := rdx.AddValues(TagNameProperty, ctResp.Id, tagName); err != nil {
 			return err
 		}
 	}
@@ -74,7 +74,7 @@ func CreateTag(httpClient *http.Client, tagName string) error {
 
 func DeleteTag(httpClient *http.Client, tagName, tagId string) error {
 
-	rxa, err := ConnectReduxAssets(TagNameProperty)
+	rdx, err := ReduxWriter(TagNameProperty)
 	if err != nil {
 		return err
 	}
@@ -88,8 +88,8 @@ func DeleteTag(httpClient *http.Client, tagName, tagId string) error {
 		return fmt.Errorf("invalid delete tag response")
 	}
 
-	if rxa.HasVal(TagNameProperty, tagId, tagName) {
-		if err := rxa.CutVal(TagNameProperty, tagId, tagName); err != nil {
+	if rdx.HasValue(TagNameProperty, tagId, tagName) {
+		if err := rdx.CutValues(TagNameProperty, tagId, tagName); err != nil {
 			return err
 		}
 	}
@@ -102,7 +102,7 @@ func AddTags(
 	ids, tags []string,
 	tpw nod.TotalProgressWriter) error {
 
-	rxa, err := ConnectReduxAssets(TagIdProperty)
+	rxa, err := ReduxWriter(TagIdProperty)
 	if err != nil {
 		return err
 	}
@@ -112,7 +112,7 @@ func AddTags(
 	for _, id := range ids {
 		for _, tag := range tags {
 
-			if rxa.HasVal(TagIdProperty, id, tag) {
+			if rxa.HasValue(TagIdProperty, id, tag) {
 				nod.Increment(tpw)
 				continue
 			}
@@ -147,7 +147,7 @@ func RemoveTags(
 	ids, tags []string,
 	tpw nod.TotalProgressWriter) error {
 
-	rxa, err := ConnectReduxAssets(TagIdProperty)
+	rxa, err := ReduxWriter(TagIdProperty)
 	if err != nil {
 		return err
 	}
@@ -157,7 +157,7 @@ func RemoveTags(
 	for _, id := range ids {
 		for _, tag := range tags {
 
-			if !rxa.HasVal(TagIdProperty, id, tag) {
+			if !rxa.HasValue(TagIdProperty, id, tag) {
 				nod.Increment(tpw)
 				continue
 			}
@@ -173,7 +173,7 @@ func RemoveTags(
 				return fmt.Errorf("failed to remove tag %s", tag)
 			}
 
-			if err := rxa.CutVal(TagIdProperty, id, tag); err != nil {
+			if err := rxa.CutValues(TagIdProperty, id, tag); err != nil {
 				nod.Increment(tpw)
 				return err
 			}
@@ -193,7 +193,7 @@ func diffTagProperty(
 	add = make([]string, 0)
 	rem = make([]string, 0)
 
-	rxa, err := ConnectReduxAssets(tagProperty)
+	rxa, err := ReduxReader(tagProperty)
 	if err != nil {
 		return add, rem, err
 	}

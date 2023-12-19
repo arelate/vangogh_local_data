@@ -8,13 +8,14 @@ import (
 	"github.com/arelate/southern_light/pcgw_integration"
 	"github.com/arelate/southern_light/steam_integration"
 	"github.com/boggydigital/kvas"
+	"github.com/boggydigital/nod"
 	"golang.org/x/net/html"
 	"io"
 )
 
 type ValueReader struct {
 	productType ProductType
-	valueSet    kvas.KeyValues
+	keyValues   kvas.KeyValues
 }
 
 func NewReader(pt ProductType) (*ValueReader, error) {
@@ -23,21 +24,21 @@ func NewReader(pt ProductType) (*ValueReader, error) {
 		return nil, err
 	}
 
-	vs, err := kvas.ConnectLocal(dst, kvas.JsonExt)
+	kv, err := kvas.ConnectLocal(dst, kvas.JsonExt)
 	if err != nil {
 		return nil, err
 	}
 
 	vr := &ValueReader{
 		productType: pt,
-		valueSet:    vs,
+		keyValues:   kv,
 	}
 
 	return vr, nil
 }
 
 func (vr *ValueReader) readValue(id string, val interface{}) error {
-	spReadCloser, err := vr.valueSet.Get(id)
+	spReadCloser, err := vr.keyValues.Get(id)
 	if err != nil {
 		return err
 	}
@@ -56,31 +57,31 @@ func (vr *ValueReader) readValue(id string, val interface{}) error {
 }
 
 func (vr *ValueReader) Keys() []string {
-	return vr.valueSet.Keys()
+	return vr.keyValues.Keys()
 }
 
 func (vr *ValueReader) Has(id string) bool {
-	return vr.valueSet.Has(id)
+	return vr.keyValues.Has(id)
 }
 
 func (vr *ValueReader) Set(id string, data io.Reader) error {
-	return vr.valueSet.Set(id, data)
+	return vr.keyValues.Set(id, data)
 }
 
 func (vr *ValueReader) Cut(id string) (bool, error) {
-	return vr.valueSet.Cut(id)
+	return vr.keyValues.Cut(id)
 }
 
 func (vr *ValueReader) CreatedAfter(timestamp int64) []string {
-	return vr.valueSet.CreatedAfter(timestamp)
+	return vr.keyValues.CreatedAfter(timestamp)
 }
 
 func (vr *ValueReader) ModifiedAfter(timestamp int64, excludeCreated bool) []string {
-	return vr.valueSet.ModifiedAfter(timestamp, excludeCreated)
+	return vr.keyValues.ModifiedAfter(timestamp, excludeCreated)
 }
 
 func (vr *ValueReader) IsModifiedAfter(id string, timestamp int64) bool {
-	return vr.valueSet.IsModifiedAfter(id, timestamp)
+	return vr.keyValues.IsModifiedAfter(id, timestamp)
 }
 
 func (vr *ValueReader) CatalogProduct(id string) (catalogProduct *gog_integration.CatalogProduct, err error) {
@@ -170,7 +171,7 @@ func (vr *ValueReader) UserWishlistProduct(id string) (userWishlistProduct strin
 }
 
 func (vr *ValueReader) SteamStorePage(id string) (*steam_integration.StorePage, error) {
-	spReadCloser, err := vr.valueSet.Get(id)
+	spReadCloser, err := vr.keyValues.Get(id)
 	if err != nil {
 		return nil, err
 	}
@@ -186,7 +187,7 @@ func (vr *ValueReader) SteamStorePage(id string) (*steam_integration.StorePage, 
 }
 
 func (vr *ValueReader) HLTBRootPage() (*hltb_integration.RootPage, error) {
-	spReadCloser, err := vr.valueSet.Get(HLTBRootPage.String())
+	spReadCloser, err := vr.keyValues.Get(HLTBRootPage.String())
 	if err != nil {
 		return nil, err
 	}
@@ -294,9 +295,17 @@ func (vr *ValueReader) ProductsGetter(page string) (productsGetter gog_integrati
 }
 
 func (vr *ValueReader) IndexCurrentModTime() (int64, error) {
-	return vr.valueSet.IndexCurrentModTime()
+	return vr.keyValues.IndexCurrentModTime()
 }
 
 func (vr *ValueReader) CurrentModTime(id string) (int64, error) {
-	return vr.valueSet.CurrentModTime(id)
+	return vr.keyValues.CurrentModTime(id)
+}
+
+func (vr *ValueReader) VetIndexOnly(fix bool, tpw nod.TotalProgressWriter) ([]string, error) {
+	return vr.keyValues.VetIndexOnly(fix, tpw)
+}
+
+func (vr *ValueReader) VetIndexMissing(fix bool, tpw nod.TotalProgressWriter) ([]string, error) {
+	return vr.keyValues.VetIndexMissing(fix, tpw)
 }

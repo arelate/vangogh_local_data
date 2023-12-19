@@ -11,7 +11,7 @@ func AddToLocalWishlist(
 
 	processedIds := make([]string, 0, len(ids))
 
-	rxa, err := ConnectReduxAssets(WishlistedProperty)
+	rxa, err := ReduxWriter(WishlistedProperty)
 	if err != nil {
 		return processedIds, err
 	}
@@ -22,8 +22,8 @@ func AddToLocalWishlist(
 
 	for _, id := range ids {
 		// remove "false" reduction
-		if rxa.HasVal(WishlistedProperty, id, FalseValue) {
-			if err := rxa.CutVal(WishlistedProperty, id, FalseValue); err != nil {
+		if rxa.HasValue(WishlistedProperty, id, FalseValue) {
+			if err := rxa.CutValues(WishlistedProperty, id, FalseValue); err != nil {
 				if tpw != nil {
 					tpw.Increment()
 				}
@@ -31,7 +31,7 @@ func AddToLocalWishlist(
 			}
 		}
 
-		if !rxa.HasVal(WishlistedProperty, id, TrueValue) {
+		if !rxa.HasValue(WishlistedProperty, id, TrueValue) {
 			if err := rxa.AddValues(WishlistedProperty, id, TrueValue); err != nil {
 				if tpw != nil {
 					tpw.Increment()
@@ -55,7 +55,7 @@ func RemoveFromLocalWishlist(
 
 	processedIds := make([]string, 0, len(ids))
 
-	rxa, err := ConnectReduxAssets(WishlistedProperty)
+	rxa, err := ReduxWriter(WishlistedProperty)
 	if err != nil {
 		return processedIds, err
 	}
@@ -65,8 +65,8 @@ func RemoveFromLocalWishlist(
 	}
 
 	for _, id := range ids {
-		if rxa.HasVal(WishlistedProperty, id, TrueValue) {
-			if err := rxa.CutVal(WishlistedProperty, id, TrueValue); err != nil {
+		if rxa.HasValue(WishlistedProperty, id, TrueValue) {
+			if err := rxa.CutValues(WishlistedProperty, id, TrueValue); err != nil {
 				if tpw != nil {
 					tpw.Increment()
 				}
@@ -74,7 +74,7 @@ func RemoveFromLocalWishlist(
 			}
 		}
 
-		if !rxa.HasVal(WishlistedProperty, id, FalseValue) {
+		if !rxa.HasValue(WishlistedProperty, id, FalseValue) {
 			if err := rxa.AddValues(WishlistedProperty, id, FalseValue); err != nil {
 				if tpw != nil {
 					tpw.Increment()

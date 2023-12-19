@@ -1,5 +1,7 @@
 package vangogh_local_data
 
+import "golang.org/x/exp/maps"
+
 type ProductType int
 
 const (
@@ -206,16 +208,16 @@ var protonDBDetailMainProductTypes = map[ProductType][]ProductType{
 	},
 }
 
-func detailProducts(dmp map[ProductType][]ProductType) []ProductType {
-	pts := make([]ProductType, 0, len(dmp))
-	for pt := range dmp {
-		pts = append(pts, pt)
-	}
-	return pts
-}
+//func detailProducts(dmp map[ProductType][]ProductType) []ProductType {
+//	pts := make([]ProductType, 0, len(dmp))
+//	for pt := range dmp {
+//		pts = append(pts, pt)
+//	}
+//	return pts
+//}
 
 func GOGDetailProducts() []ProductType {
-	return detailProducts(gogDetailMainProductTypes)
+	return maps.Keys(gogDetailMainProductTypes)
 }
 
 func SteamArrayProducts() []ProductType {
@@ -223,18 +225,18 @@ func SteamArrayProducts() []ProductType {
 }
 
 func SteamDetailProducts() []ProductType {
-	return detailProducts(steamDetailMainProductTypes)
+	return maps.Keys(steamDetailMainProductTypes)
 }
 
 func PCGWDetailProducts() []ProductType {
-	return detailProducts(pcgwDetailMainProductTypes)
+	return maps.Keys(pcgwDetailMainProductTypes)
 }
 
 func HLTBDetailProducts() []ProductType {
-	return detailProducts(hltbDetailMainProductTypes)
+	return maps.Keys(hltbDetailMainProductTypes)
 }
 
-func ProtonDBDetailProducts() []ProductType { return detailProducts(protonDBDetailMainProductTypes) }
+func ProtonDBDetailProducts() []ProductType { return maps.Keys(protonDBDetailMainProductTypes) }
 
 func MainProductTypes(pt ProductType) []ProductType {
 	if IsGOGDetailProduct(pt) {
@@ -297,10 +299,11 @@ func ProtonDBRemoteProducts() []ProductType {
 }
 
 func LocalProducts() []ProductType {
-	lps := make([]ProductType, 0, len(splitProductTypes))
-	for _, spt := range splitProductTypes {
-		lps = append(lps, spt)
-	}
+	lps := maps.Values(splitProductTypes)
+	//lps := make([]ProductType, 0, len(splitProductTypes))
+	//for _, spt := range splitProductTypes {
+	//	lps = append(lps, spt)
+	//}
 	lps = append(lps, GOGDetailProducts()...)
 	lps = append(lps, SteamDetailProducts()...)
 	lps = append(lps, PCGWRemoteProducts()...)

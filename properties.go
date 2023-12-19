@@ -1,12 +1,12 @@
 package vangogh_local_data
 
 import (
+	"fmt"
 	"github.com/arelate/southern_light/gog_integration"
 	"github.com/arelate/southern_light/hltb_integration"
 	"github.com/arelate/southern_light/ign_integration"
 	"github.com/arelate/southern_light/pcgw_integration"
 	"github.com/arelate/southern_light/steam_integration"
-	"github.com/boggydigital/kvas"
 	"strconv"
 	"time"
 )
@@ -466,14 +466,6 @@ var supportedProperties = map[ProductType][]string{
 	},
 }
 
-func ConnectReduxAssets(properties ...string) (kvas.ReduxAssets, error) {
-	rdp, err := GetAbsRelDir(Redux)
-	if err != nil {
-		return nil, err
-	}
-	return kvas.ConnectReduxAssets(rdp, properties...)
-}
-
 func GetProperties(
 	id string,
 	reader *ValueReader,
@@ -658,7 +650,7 @@ func getPropertyValues(value interface{}, property string) []string {
 	case SteamTagsProperty:
 		return value.(steam_integration.SteamTagsGetter).GetSteamTags()
 	case SteamDeckAppCompatibilityCategoryProperty:
-		if dacr, ok := value.(steam_integration.DeckAppCompatibilityReport); ok {
+		if dacr, ok := value.(fmt.Stringer); ok {
 			return getSlice(dacr.String)
 		}
 	case StoreTagsProperty:

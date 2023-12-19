@@ -91,25 +91,25 @@ func (dl *Download) String() string {
 
 type DownloadsList []Download
 
-func FromDetails(det *gog_integration.Details, rxa kvas.ReduxAssets) (DownloadsList, error) {
-	return fromGameDetails(det, rxa)
+func FromDetails(det *gog_integration.Details, rdx kvas.ReadableRedux) (DownloadsList, error) {
+	return fromGameDetails(det, rdx)
 }
 
-func fromGameDetails(det *gog_integration.Details, rxa kvas.ReduxAssets) (DownloadsList, error) {
+func fromGameDetails(det *gog_integration.Details, rdx kvas.ReadableRedux) (DownloadsList, error) {
 	dlList := make(DownloadsList, 0)
 
 	if det == nil {
 		return dlList, fmt.Errorf("details are nil")
 	}
 
-	installerDls, err := convertGameDetails(det, rxa, Installer)
+	installerDls, err := convertGameDetails(det, rdx, Installer)
 	if err != nil {
 		return dlList, err
 	}
 	dlList = append(dlList, installerDls...)
 
 	for _, dlc := range det.DLCs {
-		dlcDls, err := convertGameDetails(&dlc, rxa, DLC)
+		dlcDls, err := convertGameDetails(&dlc, rdx, DLC)
 		if err != nil {
 			return dlList, err
 		}
@@ -119,11 +119,11 @@ func fromGameDetails(det *gog_integration.Details, rxa kvas.ReduxAssets) (Downlo
 	return dlList, nil
 }
 
-func convertGameDetails(det *gog_integration.Details, rxa kvas.ReduxAssets, dt DownloadType) (DownloadsList, error) {
+func convertGameDetails(det *gog_integration.Details, rdx kvas.ReadableRedux, dt DownloadType) (DownloadsList, error) {
 
 	dlList := make(DownloadsList, 0)
 
-	if err := rxa.IsSupported(NativeLanguageNameProperty); err != nil {
+	if err := rdx.MustHave(NativeLanguageNameProperty); err != nil {
 		return dlList, err
 	}
 
@@ -134,16 +134,15 @@ func convertGameDetails(det *gog_integration.Details, rxa kvas.ReduxAssets, dt D
 
 	for _, dl := range downloads {
 
-		langCodes := rxa.Match(
+		langCodes := rdx.Match(
 			map[string][]string{NativeLanguageNameProperty: {dl.Language}},
-			true,
-			false)
+			kvas.FullMatch)
 		if len(langCodes) != 1 {
 			return dlList, fmt.Errorf("invalid native language %s", dl.Language)
 		}
 
 		langCode := ""
-		for lc := range langCodes {
+		for _, lc := range langCodes {
 			langCode = lc
 		}
 
@@ -234,7 +233,7 @@ type DownloadsListProcessor interface {
 
 func MapDownloads(
 	idSet map[string]bool,
-	rxa kvas.ReduxAssets,
+	rdx kvas.ReadableRedux,
 	operatingSystems []OperatingSystem,
 	downloadTypes []DownloadType,
 	langCodes []string,
@@ -245,7 +244,7 @@ func MapDownloads(
 		return fmt.Errorf("vangogh_downloads: map downloads list processor is nil")
 	}
 
-	if err := rxa.IsSupported(
+	if err := rdx.MustHave(
 		SlugProperty,
 		NativeLanguageNameProperty); err != nil {
 		return err
@@ -260,7 +259,7 @@ func MapDownloads(
 
 	for id := range idSet {
 
-		detSlug, ok := rxa.GetFirstVal(SlugProperty, id)
+		detSlug, ok := rdx.GetFirstVal(SlugProperty, id)
 
 		if !vrDetails.Has(id) || !ok {
 			tpw.Increment()
@@ -272,7 +271,7 @@ func MapDownloads(
 			return err
 		}
 
-		downloads, err := FromDetails(det, rxa)
+		downloads, err := FromDetails(det, rdx)
 		if err != nil {
 			return err
 		}

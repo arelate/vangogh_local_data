@@ -20,22 +20,22 @@ var steamProductTypeUrlGetters = map[ProductType]func(uint32) *url.URL{
 
 type SteamUrlProvider struct {
 	pt  ProductType
-	rxa kvas.ReduxAssets
+	rdx kvas.ReadableRedux
 }
 
-func NewSteamUrlProvider(pt ProductType, rxa kvas.ReduxAssets) (*SteamUrlProvider, error) {
-	if err := rxa.IsSupported(SteamAppIdProperty); err != nil {
+func NewSteamUrlProvider(pt ProductType, rdx kvas.ReadableRedux) (*SteamUrlProvider, error) {
+	if err := rdx.MustHave(SteamAppIdProperty); err != nil {
 		return nil, err
 	}
 
 	return &SteamUrlProvider{
 		pt:  pt,
-		rxa: rxa,
+		rdx: rdx,
 	}, nil
 }
 
 func (sup *SteamUrlProvider) GOGIdToSteamAppId(gogId string) uint32 {
-	if appIdStr, ok := sup.rxa.GetFirstVal(SteamAppIdProperty, gogId); ok {
+	if appIdStr, ok := sup.rdx.GetFirstVal(SteamAppIdProperty, gogId); ok {
 		if appId, err := strconv.ParseUint(appIdStr, 10, 32); err == nil {
 			return uint32(appId)
 		}

@@ -23,7 +23,7 @@ const (
 	SteamAppNews
 	SteamReviews
 	SteamStorePage
-	SteamAppDetails // currently not implemented - requires implementing throttling support
+	//SteamAppDetails // currently not implemented - requires implementing throttling support
 	SteamDeckCompatibilityReport
 	// PCGamingWiki product types
 	PCGWPageId
@@ -53,11 +53,11 @@ var productTypeStrings = map[ProductType]string{
 	OrderPage:            "order-page",
 	Orders:               "orders",
 	// Steam product types
-	SteamAppList:                 "steam-app-list",
-	SteamAppNews:                 "steam-app-news",
-	SteamReviews:                 "steam-reviews",
-	SteamStorePage:               "steam-store-page",
-	SteamAppDetails:              "steam-app-details",
+	SteamAppList:   "steam-app-list",
+	SteamAppNews:   "steam-app-news",
+	SteamReviews:   "steam-reviews",
+	SteamStorePage: "steam-store-page",
+	//SteamAppDetails:              "steam-app-details",
 	SteamDeckCompatibilityReport: "steam-deck-compatibility-report",
 	// PCGamingWiki product types
 	PCGWPageId:        "pcgw-pageid",
@@ -166,10 +166,10 @@ var steamDetailMainProductTypes = map[ProductType][]ProductType{
 		CatalogProducts,
 		AccountProducts,
 	},
-	SteamAppDetails: {
-		CatalogProducts,
-		AccountProducts,
-	},
+	//SteamAppDetails: {
+	//	CatalogProducts,
+	//	AccountProducts,
+	//},
 	SteamDeckCompatibilityReport: {
 		CatalogProducts,
 		AccountProducts,
@@ -354,7 +354,7 @@ var supportsGetItems = []ProductType{
 	SteamAppNews,
 	SteamReviews,
 	SteamStorePage,
-	SteamAppDetails,
+	//SteamAppDetails,
 	SteamDeckCompatibilityReport,
 	PCGWPageId,
 	PCGWEngine,

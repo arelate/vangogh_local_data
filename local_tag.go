@@ -5,9 +5,13 @@ import (
 	"github.com/boggydigital/nod"
 )
 
-func addLocalTag(id, tag string, rxa kvas.ReduxAssets, tpw nod.TotalProgressWriter) error {
-	if !rxa.HasVal(LocalTagsProperty, id, tag) {
-		if err := rxa.AddValues(LocalTagsProperty, id, tag); err != nil {
+func addLocalTag(id, tag string, rdx kvas.WriteableRedux, tpw nod.TotalProgressWriter) error {
+	if err := rdx.MustHave(LocalTagsProperty); err != nil {
+		return err
+	}
+
+	if !rdx.HasValue(LocalTagsProperty, id, tag) {
+		if err := rdx.AddValues(LocalTagsProperty, id, tag); err != nil {
 			nod.Increment(tpw)
 			return err
 		}
@@ -16,9 +20,13 @@ func addLocalTag(id, tag string, rxa kvas.ReduxAssets, tpw nod.TotalProgressWrit
 	return nil
 }
 
-func removeLocalTag(id, tag string, rxa kvas.ReduxAssets, tpw nod.TotalProgressWriter) error {
-	if rxa.HasVal(LocalTagsProperty, id, tag) {
-		if err := rxa.CutVal(LocalTagsProperty, id, tag); err != nil {
+func removeLocalTag(id, tag string, rdx kvas.WriteableRedux, tpw nod.TotalProgressWriter) error {
+	if err := rdx.MustHave(LocalTagsProperty); err != nil {
+		return err
+	}
+
+	if rdx.HasValue(LocalTagsProperty, id, tag) {
+		if err := rdx.CutValues(LocalTagsProperty, id, tag); err != nil {
 			nod.Increment(tpw)
 			return err
 		}
@@ -29,7 +37,7 @@ func removeLocalTag(id, tag string, rxa kvas.ReduxAssets, tpw nod.TotalProgressW
 }
 
 func AddLocalTags(ids, tags []string, tpw nod.TotalProgressWriter) error {
-	rxa, err := ConnectReduxAssets(LocalTagsProperty)
+	rxa, err := ReduxWriter(LocalTagsProperty)
 	if err != nil {
 		return err
 	}
@@ -48,7 +56,7 @@ func AddLocalTags(ids, tags []string, tpw nod.TotalProgressWriter) error {
 }
 
 func RemoveLocalTags(ids, tags []string, tpw nod.TotalProgressWriter) error {
-	rxa, err := ConnectReduxAssets(LocalTagsProperty)
+	rxa, err := ReduxWriter(LocalTagsProperty)
 	if err != nil {
 		return err
 	}

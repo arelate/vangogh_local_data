@@ -8,22 +8,22 @@ import (
 
 type PCGWUrlProvider struct {
 	pt  ProductType
-	rxa kvas.ReduxAssets
+	rdx kvas.ReadableRedux
 }
 
-func NewPCGWUrlProvider(pt ProductType, rxa kvas.ReduxAssets) (*PCGWUrlProvider, error) {
-	if err := rxa.IsSupported(PCGWPageIdProperty); err != nil {
+func NewPCGWUrlProvider(pt ProductType, rdx kvas.ReadableRedux) (*PCGWUrlProvider, error) {
+	if err := rdx.MustHave(PCGWPageIdProperty); err != nil {
 		return nil, err
 	}
 
 	return &PCGWUrlProvider{
 		pt:  pt,
-		rxa: rxa,
+		rdx: rdx,
 	}, nil
 }
 
 func (pcgwup *PCGWUrlProvider) GOGIdToPCGWPageId(gogId string) string {
-	if pageId, ok := pcgwup.rxa.GetFirstVal(PCGWPageIdProperty, gogId); ok {
+	if pageId, ok := pcgwup.rdx.GetFirstVal(PCGWPageIdProperty, gogId); ok {
 		return pageId
 	}
 	return ""

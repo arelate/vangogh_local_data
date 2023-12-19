@@ -136,12 +136,12 @@ func IsSupportedProperty(pt ProductType, property string) bool {
 	return false
 }
 
-func IsProductDownloaded(id string, rxa kvas.ReduxAssets) (bool, error) {
-	if err := rxa.IsSupported(SlugProperty); err != nil {
+func IsProductDownloaded(id string, rdx kvas.ReadableRedux) (bool, error) {
+	if err := rdx.MustHave(SlugProperty); err != nil {
 		return false, err
 	}
 
-	slug, ok := rxa.GetFirstVal(SlugProperty, id)
+	slug, ok := rdx.GetFirstVal(SlugProperty, id)
 	if !ok {
 		return false, nil
 	}

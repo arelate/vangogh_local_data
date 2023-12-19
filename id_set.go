@@ -13,26 +13,26 @@ const (
 	DefaultDesc = false
 )
 
-func idSetFromSlugs(slugs []string, rxa kvas.ReduxAssets) (map[string]bool, error) {
+func idSetFromSlugs(slugs []string, rdx kvas.ReadableRedux) (map[string]bool, error) {
 
 	var err error
-	if rxa == nil && len(slugs) > 0 {
-		rxa, err = ConnectReduxAssets(SlugProperty)
+	if rdx == nil && len(slugs) > 0 {
+		rdx, err = ReduxReader(SlugProperty)
 		if err != nil {
 			return map[string]bool{}, err
 		}
 	}
 
-	if rxa != nil {
-		if err := rxa.IsSupported(SlugProperty); err != nil {
+	if rdx != nil {
+		if err := rdx.MustHave(SlugProperty); err != nil {
 			return map[string]bool{}, err
 		}
 	}
 
 	idSet := make(map[string]bool)
 	for _, slug := range slugs {
-		if slug != "" && rxa != nil {
-			for id := range rxa.Match(map[string][]string{SlugProperty: {slug}}, true, false) {
+		if slug != "" && rdx != nil {
+			for _, id := range rdx.Match(map[string][]string{SlugProperty: {slug}}, kvas.FullMatch) {
 				idSet[id] = true
 			}
 		}
@@ -42,10 +42,10 @@ func idSetFromSlugs(slugs []string, rxa kvas.ReduxAssets) (map[string]bool, erro
 }
 
 func PropertyListsFromIdSet(
-	idSet map[string]bool,
+	ids []string,
 	propertyFilter map[string][]string,
 	properties []string,
-	rxa kvas.ReduxAssets) (map[string][]string, error) {
+	rdx kvas.ReadableRedux) (map[string][]string, error) {
 
 	propSet := make(map[string]bool)
 	for _, p := range properties {
@@ -53,9 +53,9 @@ func PropertyListsFromIdSet(
 	}
 	propSet[TitleProperty] = true
 
-	if rxa == nil {
+	if rdx == nil {
 		var err error
-		rxa, err = ConnectReduxAssets(maps.Keys(propSet)...)
+		rdx, err = ReduxReader(maps.Keys(propSet)...)
 		if err != nil {
 			return nil, err
 		}
@@ -63,8 +63,8 @@ func PropertyListsFromIdSet(
 
 	itps := make(map[string][]string)
 
-	for id := range idSet {
-		itp, err := propertyListFromId(id, propertyFilter, maps.Keys(propSet), rxa)
+	for _, id := range ids {
+		itp, err := propertyListFromId(id, propertyFilter, maps.Keys(propSet), rdx)
 		if err != nil {
 			return itps, err
 		}
@@ -80,13 +80,13 @@ func propertyListFromId(
 	id string,
 	propertyFilter map[string][]string,
 	properties []string,
-	rxa kvas.ReduxAssets) (map[string][]string, error) {
+	rdx kvas.ReadableRedux) (map[string][]string, error) {
 
-	if err := rxa.IsSupported(properties...); err != nil {
+	if err := rdx.MustHave(properties...); err != nil {
 		return nil, err
 	}
 
-	title, ok := rxa.GetFirstVal(TitleProperty, id)
+	title, ok := rdx.GetFirstVal(TitleProperty, id)
 	if !ok {
 		return nil, nil
 	}
@@ -102,7 +102,7 @@ func propertyListFromId(
 			prop == TitleProperty {
 			continue
 		}
-		values, ok := rxa.GetAllValues(prop, id)
+		values, ok := rdx.GetAllValues(prop, id)
 		if !ok || len(values) == 0 {
 			continue
 		}

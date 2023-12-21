@@ -6,6 +6,7 @@ import (
 	"github.com/arelate/southern_light/gog_integration"
 	"github.com/arelate/southern_light/hltb_integration"
 	"github.com/arelate/southern_light/pcgw_integration"
+	"github.com/arelate/southern_light/protondb_integration"
 	"github.com/arelate/southern_light/steam_integration"
 	"github.com/boggydigital/kvas"
 	"github.com/boggydigital/nod"
@@ -165,6 +166,11 @@ func (vr *ValueReader) SteamDeckAppCompatibilityReport(id string) (deckAppCompat
 	return deckAppCompatibilityReport, err
 }
 
+func (vr *ValueReader) ProtonDBSummary(id string) (summary *protondb_integration.Summary, err error) {
+	err = vr.readValue(id, &summary)
+	return summary, err
+}
+
 func (vr *ValueReader) UserWishlistProduct(id string) (userWishlistProduct string, err error) {
 	userWishlistProduct, err = id, nil
 	return userWishlistProduct, err
@@ -267,6 +273,8 @@ func (vr *ValueReader) ReadValue(key string) (interface{}, error) {
 		return vr.HLTBRootPage()
 	case HLTBData:
 		return vr.HLTBData(key)
+	case ProtonDBSummary:
+		return vr.ProtonDBSummary(key)
 	default:
 		return nil, fmt.Errorf("vangogh_values: cannot create %s value", vr.productType)
 	}

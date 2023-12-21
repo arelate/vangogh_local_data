@@ -6,6 +6,7 @@ import (
 	"github.com/arelate/southern_light/hltb_integration"
 	"github.com/arelate/southern_light/ign_integration"
 	"github.com/arelate/southern_light/pcgw_integration"
+	"github.com/arelate/southern_light/protondb_integration"
 	"github.com/arelate/southern_light/steam_integration"
 	"strconv"
 	"time"
@@ -96,6 +97,8 @@ const (
 	IGNWikiSlugProperty                       = "ign-wiki-slug"
 	EnginesProperty                           = "engines"
 	EnginesBuildsProperty                     = "engines-builds"
+	ProtonDBTierProperty                      = "protondb-tier"
+	ProtonDBConfidenceProperty                = "protondb-confidence"
 
 	// property values
 	TrueValue  = "true"
@@ -250,6 +253,8 @@ func ExternalDataSourcesProperties() []string {
 		WineHQIdProperty,
 		VNDBIdProperty,
 		IGNWikiSlugProperty,
+		ProtonDBTierProperty,
+		ProtonDBConfidenceProperty,
 	}
 }
 
@@ -319,6 +324,8 @@ func DigestibleProperties() []string {
 		HLTBPlatformsProperty,
 		HLTBGenresProperty,
 		EnginesProperty,
+		ProtonDBTierProperty,
+		ProtonDBConfidenceProperty,
 	}
 }
 
@@ -463,6 +470,10 @@ var supportedProperties = map[ProductType][]string{
 		HLTBPlatformsProperty,
 		HLTBReviewScoreProperty,
 		IGNWikiSlugProperty,
+	},
+	ProtonDBSummary: {
+		ProtonDBTierProperty,
+		ProtonDBConfidenceProperty,
 	},
 }
 
@@ -620,6 +631,14 @@ func getPropertyValues(value interface{}, property string) []string {
 	case ProductTypeProperty:
 		if gpt, ok := value.(gog_integration.ProductTypeGetter); ok {
 			return getSlice(gpt.GetProductType)
+		}
+	case ProtonDBConfidenceProperty:
+		if sum, ok := value.(protondb_integration.ConfidenceGetter); ok {
+			return getSlice(sum.GetConfidence)
+		}
+	case ProtonDBTierProperty:
+		if sum, ok := value.(fmt.Stringer); ok {
+			return getSlice(sum.String)
 		}
 	case PublishersProperty:
 		return value.(gog_integration.PublishersGetter).GetPublishers()

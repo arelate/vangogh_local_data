@@ -308,6 +308,7 @@ func LocalProducts() []ProductType {
 	lps = append(lps, SteamDetailProducts()...)
 	lps = append(lps, PCGWRemoteProducts()...)
 	lps = append(lps, HLTBRemoteProducts()...)
+	lps = append(lps, ProtonDBRemoteProducts()...)
 
 	return lps
 }

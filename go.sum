@@ -10,6 +10,8 @@ github.com/arelate/southern_light v0.1.33 h1:dvf1AmQ/rknI0DUDO7yJCKz+iBs41UmZv4s
 github.com/arelate/southern_light v0.1.33/go.mod h1:IR7j2+TrHdoNfZrTNeXOvL3UYsotcNED3aOAEpm7VCY=
 github.com/arelate/southern_light v0.1.34 h1:VDmJLkjYJRW+7qr51GJsUKuE2Am2mRD3NyTN5lEoXLk=
 github.com/arelate/southern_light v0.1.34/go.mod h1:IR7j2+TrHdoNfZrTNeXOvL3UYsotcNED3aOAEpm7VCY=
+github.com/arelate/southern_light v0.1.35 h1:5/OQIZRzyKfsqUzsAFG7cSmygM/noYs3AyIq96m0T3E=
+github.com/arelate/southern_light v0.1.35/go.mod h1:IR7j2+TrHdoNfZrTNeXOvL3UYsotcNED3aOAEpm7VCY=
 github.com/boggydigital/kvas v0.3.29 h1:uISZcsSRFsQNQGUH6pXxAKsYkts+UCtcetj1QVYEQZ8=
 github.com/boggydigital/kvas v0.3.29/go.mod h1:ZKvlZY8ygEgdsH4LXpr3TL456O2HJ8Spr3KYCtQxzD0=
 github.com/boggydigital/kvas v0.3.31 h1:Ifgfyflbug1fz9YwPLnFcEdv6zZMukKQVOrnpp8ST9k=

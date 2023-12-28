@@ -11,7 +11,7 @@ func AddToLocalWishlist(
 
 	processedIds := make([]string, 0, len(ids))
 
-	rxa, err := ReduxWriter(WishlistedProperty)
+	rxa, err := NewReduxWriter(WishlistedProperty)
 	if err != nil {
 		return processedIds, err
 	}
@@ -55,7 +55,7 @@ func RemoveFromLocalWishlist(
 
 	processedIds := make([]string, 0, len(ids))
 
-	rxa, err := ReduxWriter(WishlistedProperty)
+	rxa, err := NewReduxWriter(WishlistedProperty)
 	if err != nil {
 		return processedIds, err
 	}

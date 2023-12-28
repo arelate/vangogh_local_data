@@ -26,7 +26,7 @@ func postTagResp(httpClient *http.Client, url *url.URL, respVal interface{}) err
 
 func TagIdByName(tagName string) (string, error) {
 
-	rxa, err := ReduxReader(TagNameProperty)
+	rxa, err := NewReduxReader(TagNameProperty)
 	if err != nil {
 		return "", err
 	}
@@ -49,7 +49,7 @@ func TagIdByName(tagName string) (string, error) {
 
 func CreateTag(httpClient *http.Client, tagName string) error {
 
-	rdx, err := ReduxWriter(TagNameProperty)
+	rdx, err := NewReduxWriter(TagNameProperty)
 	if err != nil {
 		return err
 	}
@@ -74,7 +74,7 @@ func CreateTag(httpClient *http.Client, tagName string) error {
 
 func DeleteTag(httpClient *http.Client, tagName, tagId string) error {
 
-	rdx, err := ReduxWriter(TagNameProperty)
+	rdx, err := NewReduxWriter(TagNameProperty)
 	if err != nil {
 		return err
 	}
@@ -102,7 +102,7 @@ func AddTags(
 	ids, tags []string,
 	tpw nod.TotalProgressWriter) error {
 
-	rxa, err := ReduxWriter(TagIdProperty)
+	rxa, err := NewReduxWriter(TagIdProperty)
 	if err != nil {
 		return err
 	}
@@ -147,7 +147,7 @@ func RemoveTags(
 	ids, tags []string,
 	tpw nod.TotalProgressWriter) error {
 
-	rxa, err := ReduxWriter(TagIdProperty)
+	rxa, err := NewReduxWriter(TagIdProperty)
 	if err != nil {
 		return err
 	}
@@ -193,7 +193,7 @@ func diffTagProperty(
 	add = make([]string, 0)
 	rem = make([]string, 0)
 
-	rxa, err := ReduxReader(tagProperty)
+	rxa, err := NewReduxReader(tagProperty)
 	if err != nil {
 		return add, rem, err
 	}

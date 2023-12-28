@@ -37,7 +37,7 @@ func removeLocalTag(id, tag string, rdx kvas.WriteableRedux, tpw nod.TotalProgre
 }
 
 func AddLocalTags(ids, tags []string, tpw nod.TotalProgressWriter) error {
-	rxa, err := ReduxWriter(LocalTagsProperty)
+	rxa, err := NewReduxWriter(LocalTagsProperty)
 	if err != nil {
 		return err
 	}
@@ -56,7 +56,7 @@ func AddLocalTags(ids, tags []string, tpw nod.TotalProgressWriter) error {
 }
 
 func RemoveLocalTags(ids, tags []string, tpw nod.TotalProgressWriter) error {
-	rxa, err := ReduxWriter(LocalTagsProperty)
+	rxa, err := NewReduxWriter(LocalTagsProperty)
 	if err != nil {
 		return err
 	}

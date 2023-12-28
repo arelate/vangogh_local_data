@@ -17,7 +17,7 @@ func idSetFromSlugs(slugs []string, rdx kvas.ReadableRedux) (map[string]bool, er
 
 	var err error
 	if rdx == nil && len(slugs) > 0 {
-		rdx, err = ReduxReader(SlugProperty)
+		rdx, err = NewReduxReader(SlugProperty)
 		if err != nil {
 			return map[string]bool{}, err
 		}
@@ -55,7 +55,7 @@ func PropertyListsFromIdSet(
 
 	if rdx == nil {
 		var err error
-		rdx, err = ReduxReader(maps.Keys(propSet)...)
+		rdx, err = NewReduxReader(maps.Keys(propSet)...)
 		if err != nil {
 			return nil, err
 		}

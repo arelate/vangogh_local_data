@@ -7,9 +7,9 @@ import (
 	"strings"
 )
 
-const (
-	DefaultVangoghRootDir = "/var/lib/vangogh"
+const DefaultVangoghRootDir = "/var/lib/vangogh"
 
+const (
 	Backups    pathology.AbsDir = "backups"
 	Metadata   pathology.AbsDir = "metadata"
 	Input      pathology.AbsDir = "input"

@@ -2,122 +2,60 @@ package vangogh_local_data
 
 import (
 	"fmt"
-	"os"
+	"github.com/boggydigital/pathology"
 	"path/filepath"
 	"strings"
 )
 
-type AbsDir int
-
 const (
-	Backups AbsDir = iota
-	Downloads
-	Images
-	Input
-	Items
-	Metadata
-	Output
-	RecycleBin
-	Videos
+	DefaultVangoghRootDir = "/var/lib/vangogh"
+
+	Backups    pathology.AbsDir = "backups"
+	Metadata   pathology.AbsDir = "metadata"
+	Input      pathology.AbsDir = "input"
+	Output     pathology.AbsDir = "output"
+	Images     pathology.AbsDir = "images"
+	Videos     pathology.AbsDir = "videos"
+	Items      pathology.AbsDir = "items"
+	Downloads  pathology.AbsDir = "downloads"
+	RecycleBin pathology.AbsDir = "recycle_bin"
+	Logs       pathology.AbsDir = "logs"
 )
 
-var absDirsStrings = map[AbsDir]string{
-	Backups:    "backups",
-	Downloads:  "downloads",
-	Images:     "images",
-	Input:      "input",
-	Items:      "items",
-	Metadata:   "metadata",
-	Output:     "output",
-	RecycleBin: "recycle_bin",
-	Videos:     "videos",
+var AllAbsDirs = []pathology.AbsDir{
+	Backups,
+	Metadata,
+	Input,
+	Output,
+	Images,
+	Videos,
+	Items,
+	Downloads,
+	RecycleBin,
+	Logs,
 }
-
-var absDirsPaths = map[AbsDir]string{}
-
-type RelDir int
 
 const (
-	Checksums RelDir = iota
-	DLCs
-	Extras
-	Redux
-	VideoThumbnails
+	Redux           pathology.RelDir = "_redux"
+	Checksums       pathology.RelDir = "_checksums"
+	DLCs            pathology.RelDir = "dlc"
+	Extras          pathology.RelDir = "extras"
+	VideoThumbnails pathology.RelDir = "_thumbnails"
 )
 
-var relDirsStrings = map[RelDir]string{
-	Checksums:       "_checksums",
-	DLCs:            "dlc",
-	Extras:          "extras",
-	Redux:           "_redux",
-	VideoThumbnails: "_thumbnails",
-}
-
-var relToAbsDir = map[RelDir]AbsDir{
-	Checksums:       Downloads,
+var RelToAbsDirs = map[pathology.RelDir]pathology.AbsDir{
 	Redux:           Metadata,
+	Checksums:       Downloads,
+	DLCs:            Downloads,
+	Extras:          Downloads,
 	VideoThumbnails: Videos,
-}
-
-func GetRelDir(rd RelDir) (string, error) {
-	if rds, ok := relDirsStrings[rd]; ok && rds != "" {
-		return rds, nil
-	} else {
-		return "", fmt.Errorf("unknown rel dir")
-	}
-}
-
-func SetAbsDirs(kv map[string]string) error {
-	for adk, ads := range absDirsStrings {
-		if d, ok := kv[ads]; ok && d != "" {
-			if d != DefaultDirs[ads] {
-				// make sure directory exists
-				if _, err := os.Stat(d); err != nil {
-					return err
-				}
-			}
-			absDirsPaths[adk] = d
-		} else {
-			return fmt.Errorf("missing required abs dir %s", ads)
-		}
-	}
-	return nil
-}
-
-func GetAbsDir(ad AbsDir) (string, error) {
-	if _, ok := absDirsStrings[ad]; !ok {
-		return "", fmt.Errorf("unknown abs dir")
-	}
-
-	if adp, ok := absDirsPaths[ad]; ok && adp != "" {
-		return adp, nil
-	}
-	return "", fmt.Errorf("abs dir %s not set", absDirsStrings[ad])
-}
-
-func GetAbsRelDir(rd RelDir) (string, error) {
-	if _, ok := relDirsStrings[rd]; !ok {
-		return "", fmt.Errorf("unknown rel dir")
-	}
-
-	if ad, ok := relToAbsDir[rd]; ok {
-
-		adp, err := GetAbsDir(ad)
-		if err != nil {
-			return "", err
-		}
-
-		return filepath.Join(adp, relDirsStrings[rd]), nil
-	} else {
-		return "", fmt.Errorf("%s dir relativity not set", relDirsStrings[rd])
-	}
 }
 
 func AbsVideoDirByVideoId(videoId string) (string, error) {
 	if videoId == "" || len(videoId) < 1 {
 		return "", fmt.Errorf("videoId cannot be empty")
 	}
-	vdp, err := GetAbsDir(Videos)
+	vdp, err := pathology.GetAbsDir(Videos)
 	return filepath.Join(vdp, strings.ToLower(videoId[0:1])), err
 }
 
@@ -125,7 +63,7 @@ func AbsVideoThumbnailsDirByVideoId(videoId string) (string, error) {
 	if videoId == "" || len(videoId) < 1 {
 		return "", fmt.Errorf("videoId cannot be empty")
 	}
-	vdp, err := GetAbsRelDir(VideoThumbnails)
+	vdp, err := pathology.GetAbsRelDir(VideoThumbnails)
 	return filepath.Join(vdp, strings.ToLower(videoId[0:1])), err
 }
 
@@ -140,7 +78,7 @@ func AbsImagesDirByImageId(imageId string) (string, error) {
 		return "", fmt.Errorf("imageId is too short")
 	}
 
-	idp, err := GetAbsDir(Images)
+	idp, err := pathology.GetAbsDir(Images)
 	return filepath.Join(idp, imageId[0:2]), err
 }
 
@@ -159,7 +97,7 @@ func AbsItemPath(path string) (string, error) {
 		return "", fmt.Errorf("sanitized item path cannot be empty")
 	}
 
-	idp, err := GetAbsDir(Items)
+	idp, err := pathology.GetAbsDir(Items)
 	if err != nil {
 		return "", err
 	}
@@ -171,7 +109,7 @@ func AbsLocalProductTypeDir(pt ProductType) (string, error) {
 	if !IsValidProductType(pt) {
 		return "", fmt.Errorf("no local destination for product type %s", pt)
 	}
-	amd, err := GetAbsDir(Metadata)
+	amd, err := pathology.GetAbsDir(Metadata)
 	if err != nil {
 		return "", err
 	}
@@ -197,7 +135,7 @@ func AbsProductDownloadsDir(slug string) (string, error) {
 }
 
 func AbsDownloadDirFromRel(p string) (string, error) {
-	adp, err := GetAbsDir(Downloads)
+	adp, err := pathology.GetAbsDir(Downloads)
 	if err != nil {
 		return "", err
 	}

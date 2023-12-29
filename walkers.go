@@ -1,6 +1,7 @@
 package vangogh_local_data
 
 import (
+	"github.com/boggydigital/pathology"
 	"io/fs"
 	"os"
 	"path"
@@ -30,7 +31,7 @@ func filenameAsId(p string) (string, error) {
 }
 
 func LocalImageIds() (map[string]bool, error) {
-	idp, err := GetAbsDir(Images)
+	idp, err := pathology.GetAbsDir(Images)
 	if err != nil {
 		return nil, err
 	}
@@ -38,7 +39,7 @@ func LocalImageIds() (map[string]bool, error) {
 }
 
 func LocalVideoIds() (map[string]bool, error) {
-	vdp, err := GetAbsDir(Videos)
+	vdp, err := pathology.GetAbsDir(Videos)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +47,7 @@ func LocalVideoIds() (map[string]bool, error) {
 }
 
 func LocalVideoThumbnailIds() (map[string]bool, error) {
-	vtdp, err := GetAbsRelDir(VideoThumbnails)
+	vtdp, err := pathology.GetAbsRelDir(VideoThumbnails)
 	if err != nil {
 		return nil, err
 	}
@@ -54,7 +55,7 @@ func LocalVideoThumbnailIds() (map[string]bool, error) {
 }
 
 func RecycleBinDirs() (map[string]bool, error) {
-	rbdp, err := GetAbsDir(RecycleBin)
+	rbdp, err := pathology.GetAbsDir(RecycleBin)
 	if err != nil {
 		return nil, err
 	}
@@ -62,7 +63,7 @@ func RecycleBinDirs() (map[string]bool, error) {
 }
 
 func RecycleBinFiles() (map[string]bool, error) {
-	rbdp, err := GetAbsDir(RecycleBin)
+	rbdp, err := pathology.GetAbsDir(RecycleBin)
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +71,7 @@ func RecycleBinFiles() (map[string]bool, error) {
 }
 
 func LocalDownloadDirs() (map[string]bool, error) {
-	ddp, err := GetAbsDir(Downloads)
+	ddp, err := pathology.GetAbsDir(Downloads)
 	if err != nil {
 		return nil, err
 	}
@@ -122,7 +123,7 @@ func walkFiles(dir string, transformDelegate func(string) (string, error)) (map[
 }
 
 func walkDirectories(rootDir string) (map[string]bool, error) {
-	rbdp, err := GetAbsDir(RecycleBin)
+	rbdp, err := pathology.GetAbsDir(RecycleBin)
 	if err != nil {
 		return nil, err
 	}

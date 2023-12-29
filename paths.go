@@ -2,6 +2,7 @@ package vangogh_local_data
 
 import (
 	"github.com/arelate/southern_light/gog_integration"
+	"github.com/boggydigital/pathology"
 	"github.com/boggydigital/yt_urls"
 	"os"
 	"path"
@@ -38,11 +39,11 @@ func AbsLocalChecksumPath(p string) (string, error) {
 		return "", nil
 	}
 	dir, filename := path.Split(p)
-	adp, err := GetAbsDir(Downloads)
+	adp, err := pathology.GetAbsDir(Downloads)
 	if err != nil {
 		return "", err
 	}
-	cdp, err := GetAbsRelDir(Checksums)
+	cdp, err := pathology.GetAbsRelDir(Checksums)
 	if err != nil {
 		return "", err
 	}
@@ -83,7 +84,7 @@ func AbsLocalVideoThumbnailPath(videoId string) (string, error) {
 }
 
 func relRecycleBinPath(p string) (string, error) {
-	rbdp, err := GetAbsDir(RecycleBin)
+	rbdp, err := pathology.GetAbsDir(RecycleBin)
 	if err != nil {
 		return "", err
 	}
@@ -91,7 +92,7 @@ func relRecycleBinPath(p string) (string, error) {
 }
 
 func AbsSkipListPath() (string, error) {
-	ifdp, err := GetAbsDir(Input)
+	ifdp, err := pathology.GetAbsDir(Input)
 	return filepath.Join(ifdp, skipListFilename), err
 }
 
@@ -113,11 +114,11 @@ func AbsLocalImagePath(imageId string) (string, error) {
 }
 
 func AbsCookiePath() (string, error) {
-	ifdp, err := GetAbsDir(Input)
+	ifdp, err := pathology.GetAbsDir(Input)
 	return filepath.Join(ifdp, cookiesFilename), err
 }
 
 func AbsAtomFeedPath() (string, error) {
-	ofdp, err := GetAbsDir(Output)
+	ofdp, err := pathology.GetAbsDir(Output)
 	return filepath.Join(ofdp, atomFeedFilename), err
 }

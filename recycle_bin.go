@@ -2,6 +2,7 @@ package vangogh_local_data
 
 import (
 	"github.com/boggydigital/nod"
+	"github.com/boggydigital/pathology"
 	"io"
 	"os"
 	"path/filepath"
@@ -27,7 +28,7 @@ func MoveToRecycleBin(typeRootDir, absPath string) error {
 		return err
 	}
 
-	rbdp, err := GetAbsDir(RecycleBin)
+	rbdp, err := pathology.GetAbsDir(RecycleBin)
 	if err != nil {
 		return err
 	}

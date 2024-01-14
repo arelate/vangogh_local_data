@@ -4,12 +4,12 @@ go 1.21
 
 require (
 	github.com/arelate/southern_light v0.1.36
-	github.com/boggydigital/kvas v0.4.3
+	github.com/boggydigital/kvas v0.4.6
 	github.com/boggydigital/nod v0.1.21
-	github.com/boggydigital/pathology v0.1.8
-	github.com/boggydigital/yt_urls v0.1.35
-	golang.org/x/exp v0.0.0-20231226003508-02704c960a9b
-	golang.org/x/net v0.19.0
+	github.com/boggydigital/pasu v0.1.12
+	github.com/boggydigital/yt_urls v0.1.40
+	golang.org/x/exp v0.0.0-20240112132812-db7319d0e0e3
+	golang.org/x/net v0.20.0
 )
 
 require (

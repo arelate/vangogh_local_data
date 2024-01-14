@@ -2,11 +2,11 @@ package vangogh_local_data
 
 import (
 	"github.com/boggydigital/kvas"
-	"github.com/boggydigital/pathology"
+	"github.com/boggydigital/pasu"
 )
 
 func NewReduxWriter(properties ...string) (kvas.WriteableRedux, error) {
-	rdp, err := pathology.GetAbsRelDir(Redux)
+	rdp, err := pasu.GetAbsRelDir(Redux)
 	if err != nil {
 		return nil, err
 	}
@@ -14,7 +14,7 @@ func NewReduxWriter(properties ...string) (kvas.WriteableRedux, error) {
 }
 
 func NewReduxReader(properties ...string) (kvas.ReadableRedux, error) {
-	rdp, err := pathology.GetAbsRelDir(Redux)
+	rdp, err := pasu.GetAbsRelDir(Redux)
 	if err != nil {
 		return nil, err
 	}
@@ -22,7 +22,7 @@ func NewReduxReader(properties ...string) (kvas.ReadableRedux, error) {
 }
 
 func NewReduxVetter(properties ...string) (kvas.IndexVetter, error) {
-	rdp, err := pathology.GetAbsRelDir(Redux)
+	rdp, err := pasu.GetAbsRelDir(Redux)
 	if err != nil {
 		return nil, err
 	}

@@ -250,7 +250,7 @@ func MapDownloads(
 		return err
 	}
 
-	vrDetails, err := NewReader(Details)
+	vrDetails, err := NewProductReader(Details)
 	if err != nil {
 		return err
 	}

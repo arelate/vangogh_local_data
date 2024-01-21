@@ -479,7 +479,7 @@ var supportedProperties = map[ProductType][]string{
 
 func GetProperties(
 	id string,
-	reader *ValueReader,
+	reader *ProductReader,
 	properties []string) (propValues map[string][]string, err error) {
 	supProps := SupportedPropertiesOnly(reader.ProductType(), properties)
 	value, err := reader.ReadValue(id)

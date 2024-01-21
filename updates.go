@@ -22,7 +22,7 @@ func Updates(since int64) (map[string]map[string]bool, error) {
 
 	for _, pt := range LocalProducts() {
 
-		vr, err := NewReader(pt)
+		vr, err := NewProductReader(pt)
 		if err != nil {
 			return updates, err
 		}

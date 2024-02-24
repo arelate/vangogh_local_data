@@ -7,6 +7,7 @@ import (
 	"github.com/boggydigital/nod"
 	"log"
 	"math"
+	"path"
 	"strconv"
 	"strings"
 )
@@ -16,6 +17,7 @@ const (
 	gbSuffix  = "GB"
 	bytesInGB = 1024 * 1024 * 1024
 	bytesInMB = 1024 * 1024
+	patchStr  = "patch"
 )
 
 type Download struct {
@@ -167,7 +169,8 @@ func convertGameDetails(det *gog_integration.Details, rdx kvas.ReadableRedux, dt
 func (list DownloadsList) Only(
 	operatingSystems []OperatingSystem,
 	downloadTypes []DownloadType,
-	langCodes []string) DownloadsList {
+	langCodes []string,
+	excludePatches bool) DownloadsList {
 	osSet := make(map[OperatingSystem]bool)
 	for _, os := range operatingSystems {
 		if os == AnyOperatingSystem {
@@ -210,6 +213,12 @@ func (list DownloadsList) Only(
 			continue
 		}
 
+		if excludePatches {
+			if base := path.Base(dl.ManualUrl); strings.Contains(base, patchStr) {
+				continue
+			}
+		}
+
 		matchingList = append(matchingList, dl)
 	}
 	return matchingList
@@ -237,6 +246,7 @@ func MapDownloads(
 	operatingSystems []OperatingSystem,
 	downloadTypes []DownloadType,
 	langCodes []string,
+	excludePatches bool,
 	dlProcessor DownloadsListProcessor,
 	tpw nod.TotalProgressWriter) error {
 
@@ -278,7 +288,7 @@ func MapDownloads(
 
 		filteredDownloads := make([]Download, 0)
 
-		for _, dl := range downloads.Only(operatingSystems, downloadTypes, langCodes) {
+		for _, dl := range downloads.Only(operatingSystems, downloadTypes, langCodes, excludePatches) {
 			//some manualUrls have "0 MB" specified as size and don't seem to be used to create user clickable links.
 			//resolving such manualUrls leads to an empty filename
 			//given they don't contribute anything to download, size or validate commands - we're filtering them

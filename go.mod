@@ -9,7 +9,7 @@ require (
 	github.com/boggydigital/pasu v0.1.12
 	github.com/boggydigital/yt_urls v0.1.45
 	golang.org/x/exp v0.0.0-20240222234643-814bf88cf225
-	golang.org/x/net v0.21.0
+	golang.org/x/net v0.23.0
 )
 
 require (

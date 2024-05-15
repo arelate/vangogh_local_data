@@ -2,7 +2,7 @@ package vangogh_local_data
 
 import (
 	"fmt"
-	"github.com/boggydigital/pasu"
+	"github.com/boggydigital/pathways"
 	"path/filepath"
 	"strings"
 )
@@ -10,19 +10,19 @@ import (
 const DefaultVangoghRootDir = "/var/lib/vangogh"
 
 const (
-	Backups    pasu.AbsDir = "backups"
-	Metadata   pasu.AbsDir = "metadata"
-	Input      pasu.AbsDir = "input"
-	Output     pasu.AbsDir = "output"
-	Images     pasu.AbsDir = "images"
-	Videos     pasu.AbsDir = "videos"
-	Items      pasu.AbsDir = "items"
-	Downloads  pasu.AbsDir = "downloads"
-	RecycleBin pasu.AbsDir = "recycle_bin"
-	Logs       pasu.AbsDir = "logs"
+	Backups    pathways.AbsDir = "backups"
+	Metadata   pathways.AbsDir = "metadata"
+	Input      pathways.AbsDir = "input"
+	Output     pathways.AbsDir = "output"
+	Images     pathways.AbsDir = "images"
+	Videos     pathways.AbsDir = "videos"
+	Items      pathways.AbsDir = "items"
+	Downloads  pathways.AbsDir = "downloads"
+	RecycleBin pathways.AbsDir = "recycle_bin"
+	Logs       pathways.AbsDir = "logs"
 )
 
-var AllAbsDirs = []pasu.AbsDir{
+var AllAbsDirs = []pathways.AbsDir{
 	Backups,
 	Metadata,
 	Input,
@@ -36,14 +36,14 @@ var AllAbsDirs = []pasu.AbsDir{
 }
 
 const (
-	Redux           pasu.RelDir = "_redux"
-	Checksums       pasu.RelDir = "_checksums"
-	DLCs            pasu.RelDir = "dlc"
-	Extras          pasu.RelDir = "extras"
-	VideoThumbnails pasu.RelDir = "_thumbnails"
+	Redux           pathways.RelDir = "_redux"
+	Checksums       pathways.RelDir = "_checksums"
+	DLCs            pathways.RelDir = "dlc"
+	Extras          pathways.RelDir = "extras"
+	VideoThumbnails pathways.RelDir = "_thumbnails"
 )
 
-var RelToAbsDirs = map[pasu.RelDir]pasu.AbsDir{
+var RelToAbsDirs = map[pathways.RelDir]pathways.AbsDir{
 	Redux:           Metadata,
 	Checksums:       Downloads,
 	DLCs:            Downloads,
@@ -55,7 +55,7 @@ func AbsVideoDirByVideoId(videoId string) (string, error) {
 	if videoId == "" || len(videoId) < 1 {
 		return "", fmt.Errorf("videoId cannot be empty")
 	}
-	vdp, err := pasu.GetAbsDir(Videos)
+	vdp, err := pathways.GetAbsDir(Videos)
 	return filepath.Join(vdp, strings.ToLower(videoId[0:1])), err
 }
 
@@ -63,7 +63,7 @@ func AbsVideoThumbnailsDirByVideoId(videoId string) (string, error) {
 	if videoId == "" || len(videoId) < 1 {
 		return "", fmt.Errorf("videoId cannot be empty")
 	}
-	vdp, err := pasu.GetAbsRelDir(VideoThumbnails)
+	vdp, err := pathways.GetAbsRelDir(VideoThumbnails)
 	return filepath.Join(vdp, strings.ToLower(videoId[0:1])), err
 }
 
@@ -78,7 +78,7 @@ func AbsImagesDirByImageId(imageId string) (string, error) {
 		return "", fmt.Errorf("imageId is too short")
 	}
 
-	idp, err := pasu.GetAbsDir(Images)
+	idp, err := pathways.GetAbsDir(Images)
 	return filepath.Join(idp, imageId[0:2]), err
 }
 
@@ -97,7 +97,7 @@ func AbsItemPath(path string) (string, error) {
 		return "", fmt.Errorf("sanitized item path cannot be empty")
 	}
 
-	idp, err := pasu.GetAbsDir(Items)
+	idp, err := pathways.GetAbsDir(Items)
 	if err != nil {
 		return "", err
 	}
@@ -109,7 +109,7 @@ func AbsLocalProductTypeDir(pt ProductType) (string, error) {
 	if !IsValidProductType(pt) {
 		return "", fmt.Errorf("no local destination for product type %s", pt)
 	}
-	amd, err := pasu.GetAbsDir(Metadata)
+	amd, err := pathways.GetAbsDir(Metadata)
 	if err != nil {
 		return "", err
 	}
@@ -135,7 +135,7 @@ func AbsProductDownloadsDir(slug string) (string, error) {
 }
 
 func AbsDownloadDirFromRel(p string) (string, error) {
-	adp, err := pasu.GetAbsDir(Downloads)
+	adp, err := pathways.GetAbsDir(Downloads)
 	if err != nil {
 		return "", err
 	}

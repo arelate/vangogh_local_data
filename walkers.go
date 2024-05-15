@@ -1,7 +1,7 @@
 package vangogh_local_data
 
 import (
-	"github.com/boggydigital/pasu"
+	"github.com/boggydigital/pathways"
 	"io/fs"
 	"os"
 	"path"
@@ -31,7 +31,7 @@ func filenameAsId(p string) (string, error) {
 }
 
 func LocalImageIds() (map[string]bool, error) {
-	idp, err := pasu.GetAbsDir(Images)
+	idp, err := pathways.GetAbsDir(Images)
 	if err != nil {
 		return nil, err
 	}
@@ -39,7 +39,7 @@ func LocalImageIds() (map[string]bool, error) {
 }
 
 func LocalVideoIds() (map[string]bool, error) {
-	vdp, err := pasu.GetAbsDir(Videos)
+	vdp, err := pathways.GetAbsDir(Videos)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +47,7 @@ func LocalVideoIds() (map[string]bool, error) {
 }
 
 func LocalVideoThumbnailIds() (map[string]bool, error) {
-	vtdp, err := pasu.GetAbsRelDir(VideoThumbnails)
+	vtdp, err := pathways.GetAbsRelDir(VideoThumbnails)
 	if err != nil {
 		return nil, err
 	}
@@ -55,7 +55,7 @@ func LocalVideoThumbnailIds() (map[string]bool, error) {
 }
 
 func RecycleBinDirs() (map[string]bool, error) {
-	rbdp, err := pasu.GetAbsDir(RecycleBin)
+	rbdp, err := pathways.GetAbsDir(RecycleBin)
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +63,7 @@ func RecycleBinDirs() (map[string]bool, error) {
 }
 
 func RecycleBinFiles() (map[string]bool, error) {
-	rbdp, err := pasu.GetAbsDir(RecycleBin)
+	rbdp, err := pathways.GetAbsDir(RecycleBin)
 	if err != nil {
 		return nil, err
 	}
@@ -71,7 +71,7 @@ func RecycleBinFiles() (map[string]bool, error) {
 }
 
 func LocalDownloadDirs() (map[string]bool, error) {
-	ddp, err := pasu.GetAbsDir(Downloads)
+	ddp, err := pathways.GetAbsDir(Downloads)
 	if err != nil {
 		return nil, err
 	}
@@ -123,7 +123,7 @@ func walkFiles(dir string, transformDelegate func(string) (string, error)) (map[
 }
 
 func walkDirectories(rootDir string) (map[string]bool, error) {
-	rbdp, err := pasu.GetAbsDir(RecycleBin)
+	rbdp, err := pathways.GetAbsDir(RecycleBin)
 	if err != nil {
 		return nil, err
 	}

@@ -93,7 +93,7 @@ func RemoveFromLocalWishlist(
 	if err != nil {
 		return processedIds, err
 	}
-	kvPt, err := kvas.ConnectLocal(ptDir, kvas.JsonExt)
+	kvPt, err := kvas.NewKeyValues(ptDir, kvas.JsonExt)
 	if err != nil {
 		return processedIds, err
 	}

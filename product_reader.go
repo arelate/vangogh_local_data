@@ -25,7 +25,7 @@ func NewProductReader(pt ProductType) (*ProductReader, error) {
 		return nil, err
 	}
 
-	kv, err := kvas.ConnectLocal(dst, kvas.JsonExt)
+	kv, err := kvas.NewKeyValues(dst, kvas.JsonExt)
 	if err != nil {
 		return nil, err
 	}

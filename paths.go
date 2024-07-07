@@ -3,7 +3,7 @@ package vangogh_local_data
 import (
 	"github.com/arelate/southern_light/gog_integration"
 	"github.com/boggydigital/pathways"
-	"github.com/boggydigital/yt_urls"
+	"github.com/boggydigital/yet_urls/youtube_urls"
 	"os"
 	"path"
 	"path/filepath"
@@ -72,7 +72,7 @@ func AbsLocalVideoPath(videoId string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return absLocalVideoPath(videoId, vdp, yt_urls.DefaultVideoExt), nil
+	return absLocalVideoPath(videoId, vdp, youtube_urls.DefaultVideoExt), nil
 }
 
 func AbsLocalVideoThumbnailPath(videoId string) (string, error) {
@@ -80,7 +80,7 @@ func AbsLocalVideoThumbnailPath(videoId string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return absLocalVideoPath(videoId, vtdp, yt_urls.DefaultThumbnailExt), nil
+	return absLocalVideoPath(videoId, vtdp, youtube_urls.DefaultThumbnailExt), nil
 }
 
 func relRecycleBinPath(p string) (string, error) {

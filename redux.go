@@ -1,30 +1,22 @@
 package vangogh_local_data
 
 import (
-	"github.com/boggydigital/kvas"
+	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/pathways"
 )
 
-func NewReduxWriter(properties ...string) (kvas.WriteableRedux, error) {
+func NewReduxWriter(properties ...string) (kevlar.WriteableRedux, error) {
 	rdp, err := pathways.GetAbsRelDir(Redux)
 	if err != nil {
 		return nil, err
 	}
-	return kvas.NewReduxWriter(rdp, properties...)
+	return kevlar.NewReduxWriter(rdp, properties...)
 }
 
-func NewReduxReader(properties ...string) (kvas.ReadableRedux, error) {
+func NewReduxReader(properties ...string) (kevlar.ReadableRedux, error) {
 	rdp, err := pathways.GetAbsRelDir(Redux)
 	if err != nil {
 		return nil, err
 	}
-	return kvas.NewReduxReader(rdp, properties...)
-}
-
-func NewReduxVetter(properties ...string) (kvas.IndexVetter, error) {
-	rdp, err := pathways.GetAbsRelDir(Redux)
-	if err != nil {
-		return nil, err
-	}
-	return kvas.NewReduxVetter(rdp, properties...)
+	return kevlar.NewReduxReader(rdp, properties...)
 }

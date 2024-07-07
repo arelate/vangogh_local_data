@@ -3,7 +3,7 @@ package vangogh_local_data
 import (
 	"github.com/arelate/southern_light/protondb_integration"
 	"github.com/arelate/southern_light/steam_integration"
-	"github.com/boggydigital/kvas"
+	"github.com/boggydigital/kevlar"
 	"net/url"
 	"strconv"
 )
@@ -20,10 +20,10 @@ var steamProductTypeUrlGetters = map[ProductType]func(uint32) *url.URL{
 
 type SteamUrlProvider struct {
 	pt  ProductType
-	rdx kvas.ReadableRedux
+	rdx kevlar.ReadableRedux
 }
 
-func NewSteamUrlProvider(pt ProductType, rdx kvas.ReadableRedux) (*SteamUrlProvider, error) {
+func NewSteamUrlProvider(pt ProductType, rdx kevlar.ReadableRedux) (*SteamUrlProvider, error) {
 	if err := rdx.MustHave(SteamAppIdProperty); err != nil {
 		return nil, err
 	}
@@ -35,7 +35,7 @@ func NewSteamUrlProvider(pt ProductType, rdx kvas.ReadableRedux) (*SteamUrlProvi
 }
 
 func (sup *SteamUrlProvider) GOGIdToSteamAppId(gogId string) uint32 {
-	if appIdStr, ok := sup.rdx.GetFirstVal(SteamAppIdProperty, gogId); ok {
+	if appIdStr, ok := sup.rdx.GetLastVal(SteamAppIdProperty, gogId); ok {
 		if appId, err := strconv.ParseUint(appIdStr, 10, 32); err == nil {
 			return uint32(appId)
 		}

@@ -18,23 +18,31 @@ var interestingUpdatedProductTypes = map[ProductType]bool{
 }
 
 func Updates(since int64) (map[string]map[string]bool, error) {
-	updates := make(map[string]map[string]bool, 0)
+	updates := make(map[string]map[string]bool)
 
 	for _, pt := range LocalProducts() {
 
 		vr, err := NewProductReader(pt)
 		if err != nil {
-			return updates, err
+			return nil, err
 		}
 
 		if interestingNewProductTypes[pt] {
-			categorize(vr.CreatedAfter(since),
+			createdAfter, err := vr.CreatedAfter(since)
+			if err != nil {
+				return nil, err
+			}
+			categorize(createdAfter,
 				fmt.Sprintf("new in %s", pt.HumanReadableString()),
 				updates)
 		}
 
 		if interestingUpdatedProductTypes[pt] {
-			categorize(vr.ModifiedAfter(since, true),
+			updatedAfter, err := vr.UpdatedAfter(since)
+			if err != nil {
+				return nil, err
+			}
+			categorize(updatedAfter,
 				fmt.Sprintf("updates in %s", pt.HumanReadableString()),
 				updates)
 		}

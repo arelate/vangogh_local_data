@@ -2,16 +2,16 @@ package vangogh_local_data
 
 import (
 	"github.com/arelate/southern_light/pcgw_integration"
-	"github.com/boggydigital/kvas"
+	"github.com/boggydigital/kevlar"
 	"net/url"
 )
 
 type PCGWUrlProvider struct {
 	pt  ProductType
-	rdx kvas.ReadableRedux
+	rdx kevlar.ReadableRedux
 }
 
-func NewPCGWUrlProvider(pt ProductType, rdx kvas.ReadableRedux) (*PCGWUrlProvider, error) {
+func NewPCGWUrlProvider(pt ProductType, rdx kevlar.ReadableRedux) (*PCGWUrlProvider, error) {
 	if err := rdx.MustHave(PCGWPageIdProperty); err != nil {
 		return nil, err
 	}
@@ -23,7 +23,7 @@ func NewPCGWUrlProvider(pt ProductType, rdx kvas.ReadableRedux) (*PCGWUrlProvide
 }
 
 func (pcgwup *PCGWUrlProvider) GOGIdToPCGWPageId(gogId string) string {
-	if pageId, ok := pcgwup.rdx.GetFirstVal(PCGWPageIdProperty, gogId); ok {
+	if pageId, ok := pcgwup.rdx.GetLastVal(PCGWPageIdProperty, gogId); ok {
 		return pageId
 	}
 	return ""

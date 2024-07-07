@@ -3,7 +3,7 @@ package vangogh_local_data
 import (
 	"fmt"
 	"github.com/arelate/southern_light/gog_integration"
-	"github.com/boggydigital/kvas"
+	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
 	"log"
 	"math"
@@ -93,11 +93,11 @@ func (dl *Download) String() string {
 
 type DownloadsList []Download
 
-func FromDetails(det *gog_integration.Details, rdx kvas.ReadableRedux) (DownloadsList, error) {
+func FromDetails(det *gog_integration.Details, rdx kevlar.ReadableRedux) (DownloadsList, error) {
 	return fromGameDetails(det, rdx)
 }
 
-func fromGameDetails(det *gog_integration.Details, rdx kvas.ReadableRedux) (DownloadsList, error) {
+func fromGameDetails(det *gog_integration.Details, rdx kevlar.ReadableRedux) (DownloadsList, error) {
 	dlList := make(DownloadsList, 0)
 
 	if det == nil {
@@ -121,7 +121,7 @@ func fromGameDetails(det *gog_integration.Details, rdx kvas.ReadableRedux) (Down
 	return dlList, nil
 }
 
-func convertGameDetails(det *gog_integration.Details, rdx kvas.ReadableRedux, dt DownloadType) (DownloadsList, error) {
+func convertGameDetails(det *gog_integration.Details, rdx kevlar.ReadableRedux, dt DownloadType) (DownloadsList, error) {
 
 	dlList := make(DownloadsList, 0)
 
@@ -138,7 +138,7 @@ func convertGameDetails(det *gog_integration.Details, rdx kvas.ReadableRedux, dt
 
 		langCodes := rdx.Match(
 			map[string][]string{NativeLanguageNameProperty: {dl.Language}},
-			kvas.FullMatch)
+			kevlar.FullMatch)
 		if len(langCodes) != 1 {
 			return dlList, fmt.Errorf("invalid native language %s", dl.Language)
 		}
@@ -242,7 +242,7 @@ type DownloadsListProcessor interface {
 
 func MapDownloads(
 	idSet map[string]bool,
-	rdx kvas.ReadableRedux,
+	rdx kevlar.ReadableRedux,
 	operatingSystems []OperatingSystem,
 	downloadTypes []DownloadType,
 	langCodes []string,
@@ -269,9 +269,14 @@ func MapDownloads(
 
 	for id := range idSet {
 
-		detSlug, ok := rdx.GetFirstVal(SlugProperty, id)
+		detSlug, ok := rdx.GetLastVal(SlugProperty, id)
 
-		if !vrDetails.Has(id) || !ok {
+		has, err := vrDetails.Has(id)
+		if err != nil {
+			return err
+		}
+
+		if !has || !ok {
 			tpw.Increment()
 			continue
 		}

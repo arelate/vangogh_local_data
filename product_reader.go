@@ -8,15 +8,14 @@ import (
 	"github.com/arelate/southern_light/pcgw_integration"
 	"github.com/arelate/southern_light/protondb_integration"
 	"github.com/arelate/southern_light/steam_integration"
-	"github.com/boggydigital/kvas"
-	"github.com/boggydigital/nod"
+	"github.com/boggydigital/kevlar"
 	"golang.org/x/net/html"
 	"io"
 )
 
 type ProductReader struct {
 	productType ProductType
-	keyValues   kvas.KeyValues
+	keyValues   kevlar.KeyValues
 }
 
 func NewProductReader(pt ProductType) (*ProductReader, error) {
@@ -25,7 +24,7 @@ func NewProductReader(pt ProductType) (*ProductReader, error) {
 		return nil, err
 	}
 
-	kv, err := kvas.NewKeyValues(dst, kvas.JsonExt)
+	kv, err := kevlar.NewKeyValues(dst, kevlar.JsonExt)
 	if err != nil {
 		return nil, err
 	}
@@ -57,11 +56,11 @@ func (pr *ProductReader) readValue(id string, val interface{}) error {
 	return nil
 }
 
-func (pr *ProductReader) Keys() []string {
+func (pr *ProductReader) Keys() ([]string, error) {
 	return pr.keyValues.Keys()
 }
 
-func (pr *ProductReader) Has(id string) bool {
+func (pr *ProductReader) Has(id string) (bool, error) {
 	return pr.keyValues.Has(id)
 }
 
@@ -81,16 +80,24 @@ func (pr *ProductReader) Cut(id string) (bool, error) {
 	return pr.keyValues.Cut(id)
 }
 
-func (pr *ProductReader) CreatedAfter(timestamp int64) []string {
+func (pr *ProductReader) IsCurrent() (bool, int64) {
+	return pr.keyValues.IsCurrent()
+}
+
+func (pr *ProductReader) CreatedAfter(timestamp int64) ([]string, error) {
 	return pr.keyValues.CreatedAfter(timestamp)
 }
 
-func (pr *ProductReader) ModifiedAfter(timestamp int64, excludeCreated bool) []string {
-	return pr.keyValues.ModifiedAfter(timestamp, excludeCreated)
+func (pr *ProductReader) UpdatedAfter(timestamp int64) ([]string, error) {
+	return pr.keyValues.UpdatedAfter(timestamp)
 }
 
-func (pr *ProductReader) IsModifiedAfter(id string, timestamp int64) bool {
-	return pr.keyValues.IsModifiedAfter(id, timestamp)
+func (pr *ProductReader) CreatedOrUpdatedAfter(timestamp int64) ([]string, error) {
+	return pr.keyValues.CreatedOrUpdatedAfter(timestamp)
+}
+
+func (pr *ProductReader) IsUpdatedAfter(id string, timestamp int64) (bool, error) {
+	return pr.keyValues.IsUpdatedAfter(id, timestamp)
 }
 
 func (pr *ProductReader) CatalogProduct(id string) (catalogProduct *gog_integration.CatalogProduct, err error) {
@@ -310,22 +317,6 @@ func (pr *ProductReader) ProductsGetter(page string) (productsGetter gog_integra
 	return productsGetter, err
 }
 
-func (pr *ProductReader) IndexCurrentModTime() (int64, error) {
-	return pr.keyValues.IndexCurrentModTime()
-}
-
-func (pr *ProductReader) CurrentModTime(id string) (int64, error) {
-	return pr.keyValues.CurrentModTime(id)
-}
-
-func (pr *ProductReader) IndexRefresh() error {
-	return pr.keyValues.IndexRefresh()
-}
-
-func (pr *ProductReader) VetIndexOnly(fix bool, tpw nod.TotalProgressWriter) ([]string, error) {
-	return pr.keyValues.VetIndexOnly(fix, tpw)
-}
-
-func (pr *ProductReader) VetIndexMissing(fix bool, tpw nod.TotalProgressWriter) ([]string, error) {
-	return pr.keyValues.VetIndexMissing(fix, tpw)
+func (pr *ProductReader) ModTime(id string) (int64, error) {
+	return pr.keyValues.ModTime(id)
 }

@@ -3,7 +3,7 @@ package vangogh_local_data
 import (
 	"errors"
 	"fmt"
-	"github.com/boggydigital/kvas"
+	"github.com/boggydigital/kevlar"
 	"net/url"
 )
 
@@ -11,7 +11,7 @@ type UrlProvider interface {
 	Url(gogId string) *url.URL
 }
 
-func NewUrlProvider(pt ProductType, rdx kvas.ReadableRedux) (UrlProvider, error) {
+func NewUrlProvider(pt ProductType, rdx kevlar.ReadableRedux) (UrlProvider, error) {
 	if IsGOGProduct(pt) {
 		return NewGOGUrlProvider(pt)
 	} else if IsSteamProduct(pt) {

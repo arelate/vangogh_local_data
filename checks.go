@@ -1,7 +1,7 @@
 package vangogh_local_data
 
 import (
-	"github.com/boggydigital/kvas"
+	"github.com/boggydigital/kevlar"
 	"os"
 	"path"
 )
@@ -136,12 +136,12 @@ func IsSupportedProperty(pt ProductType, property string) bool {
 	return false
 }
 
-func IsProductDownloaded(id string, rdx kvas.ReadableRedux) (bool, error) {
+func IsProductDownloaded(id string, rdx kevlar.ReadableRedux) (bool, error) {
 	if err := rdx.MustHave(SlugProperty); err != nil {
 		return false, err
 	}
 
-	slug, ok := rdx.GetFirstVal(SlugProperty, id)
+	slug, ok := rdx.GetLastVal(SlugProperty, id)
 	if !ok {
 		return false, nil
 	}

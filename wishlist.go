@@ -1,7 +1,7 @@
 package vangogh_local_data
 
 import (
-	"github.com/boggydigital/kvas"
+	"github.com/boggydigital/kevlar"
 	"github.com/boggydigital/nod"
 )
 
@@ -93,7 +93,7 @@ func RemoveFromLocalWishlist(
 	if err != nil {
 		return processedIds, err
 	}
-	kvPt, err := kvas.NewKeyValues(ptDir, kvas.JsonExt)
+	kvPt, err := kevlar.NewKeyValues(ptDir, kevlar.JsonExt)
 	if err != nil {
 		return processedIds, err
 	}

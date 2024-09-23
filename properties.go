@@ -13,92 +13,95 @@ import (
 )
 
 const (
-	IdProperty                                = "id"
-	TitleProperty                             = "title"
-	DevelopersProperty                        = "developers"
-	PublishersProperty                        = "publishers"
-	ImageProperty                             = "image"
-	VerticalImageProperty                     = "vertical-image"
-	ScreenshotsProperty                       = "screenshots"
-	RatingProperty                            = "rating"
-	IncludesGamesProperty                     = "includes-games"
-	IsIncludedByGamesProperty                 = "is-included-by-games"
-	RequiresGamesProperty                     = "requires-games"
-	IsRequiredByGamesProperty                 = "is-required-by-games"
-	GenresProperty                            = "genres"
-	StoreTagsProperty                         = "store-tags"
-	FeaturesProperty                          = "features"
-	SeriesProperty                            = "series"
-	TagIdProperty                             = "tag"
-	TagNameProperty                           = "tag-name"
-	VideoIdProperty                           = "video-id"
-	MissingVideoUrlProperty                   = "missing-video-url"
-	MissingVideoThumbnailProperty             = "missing-video-thumbnail"
-	OperatingSystemsProperty                  = "os"
-	LanguageCodeProperty                      = "lang-code"
-	LanguageNameProperty                      = "lang-name"
-	NativeLanguageNameProperty                = "native-lang-name"
-	SlugProperty                              = "slug"
-	GOGReleaseDateProperty                    = "gog-release-date"
-	GOGOrderDateProperty                      = "gog-order-date"
-	GlobalReleaseDateProperty                 = "global-release-date"
-	TypesProperty                             = "types"
-	LocalManualUrlProperty                    = "local-manual-url"
-	DownloadStatusErrorProperty               = "download-status-error"
-	StoreUrlProperty                          = "store-url"
-	ForumUrlProperty                          = "forum-url"
-	SupportUrlProperty                        = "support-url"
-	ChangelogProperty                         = "changelog"
-	DescriptionOverviewProperty               = "description-overview"
-	DescriptionFeaturesProperty               = "description-features"
-	AdditionalRequirementsProperty            = "additional-requirements"
-	CopyrightsProperty                        = "copyrights"
-	WishlistedProperty                        = "wishlisted"
-	OwnedProperty                             = "owned"
-	ProductTypeProperty                       = "product-type"
-	InDevelopmentProperty                     = "in-development"
-	PreOrderProperty                          = "pre-order"
-	ComingSoonProperty                        = "coming-soon"
-	BasePriceProperty                         = "base-price"
-	PriceProperty                             = "price"
-	IsFreeProperty                            = "is-free"
-	IsDiscountedProperty                      = "is-discounted"
-	DiscountPercentageProperty                = "discount-percentage"
-	SteamAppIdProperty                        = "steam-app-id"
-	LocalTagsProperty                         = "local-tags"
-	SortProperty                              = "sort"
-	DescendingProperty                        = "desc"
-	SteamReviewScoreDescProperty              = "steam-review-score-desc"
-	SteamTagsProperty                         = "steam-tags"
-	SteamDeckAppCompatibilityCategoryProperty = "steam-deck-app-compatibility-category"
-	DehydratedImageProperty                   = "dehydrated-image"
-	DehydratedImageModifiedProperty           = "dehydrated-image-modified"
-	DehydratedVerticalImageProperty           = "dehydrated-vertical-image"
-	DehydratedVerticalImageModifiedProperty   = "dehydrated-vertical-image-modified"
-	SyncEventsProperty                        = "sync-events"
-	LastSyncUpdatesProperty                   = "last-sync-updates"
-	ValidationResultProperty                  = "validation-result"
-	ValidationCompletedProperty               = "validation-completed"
-	PCGWPageIdProperty                        = "pcgw-page-id"
-	HLTBIdProperty                            = "hltb-id"
-	HLTBBuildIdProperty                       = "hltb-next-build"
-	HLTBHoursToCompleteMainProperty           = "hltb-comp-main"
-	HLTBHoursToCompletePlusProperty           = "hltb-comp-plus"
-	HLTBHoursToComplete100Property            = "hltb-comp-100"
-	HLTBReviewScoreProperty                   = "hltb-review-score"
-	HLTBGenresProperty                        = "hltb-genres"
-	HLTBPlatformsProperty                     = "hltb-platforms"
-	IGDBIdProperty                            = "igdb-id"
-	StrategyWikiIdProperty                    = "strategy-wiki-id"
-	MobyGamesIdProperty                       = "moby-games-id"
-	WikipediaIdProperty                       = "wikipedia-id"
-	WineHQIdProperty                          = "winehq-id"
-	VNDBIdProperty                            = "vndb-id"
-	IGNWikiSlugProperty                       = "ign-wiki-slug"
-	EnginesProperty                           = "engines"
-	EnginesBuildsProperty                     = "engines-builds"
-	ProtonDBTierProperty                      = "protondb-tier"
-	ProtonDBConfidenceProperty                = "protondb-confidence"
+	IdProperty                                    = "id"
+	TitleProperty                                 = "title"
+	DevelopersProperty                            = "developers"
+	PublishersProperty                            = "publishers"
+	ImageProperty                                 = "image"
+	VerticalImageProperty                         = "vertical-image"
+	ScreenshotsProperty                           = "screenshots"
+	RatingProperty                                = "rating"
+	IncludesGamesProperty                         = "includes-games"
+	IsIncludedByGamesProperty                     = "is-included-by-games"
+	RequiresGamesProperty                         = "requires-games"
+	IsRequiredByGamesProperty                     = "is-required-by-games"
+	GenresProperty                                = "genres"
+	StoreTagsProperty                             = "store-tags"
+	FeaturesProperty                              = "features"
+	SeriesProperty                                = "series"
+	TagIdProperty                                 = "tag"
+	TagNameProperty                               = "tag-name"
+	VideoIdProperty                               = "video-id"
+	MissingVideoUrlProperty                       = "missing-video-url"
+	MissingVideoThumbnailProperty                 = "missing-video-thumbnail"
+	OperatingSystemsProperty                      = "os"
+	LanguageCodeProperty                          = "lang-code"
+	LanguageNameProperty                          = "lang-name"
+	NativeLanguageNameProperty                    = "native-lang-name"
+	SlugProperty                                  = "slug"
+	GOGReleaseDateProperty                        = "gog-release-date"
+	GOGOrderDateProperty                          = "gog-order-date"
+	GlobalReleaseDateProperty                     = "global-release-date"
+	TypesProperty                                 = "types"
+	LocalManualUrlProperty                        = "local-manual-url"
+	DownloadStatusErrorProperty                   = "download-status-error"
+	StoreUrlProperty                              = "store-url"
+	ForumUrlProperty                              = "forum-url"
+	SupportUrlProperty                            = "support-url"
+	ChangelogProperty                             = "changelog"
+	DescriptionOverviewProperty                   = "description-overview"
+	DescriptionFeaturesProperty                   = "description-features"
+	AdditionalRequirementsProperty                = "additional-requirements"
+	CopyrightsProperty                            = "copyrights"
+	WishlistedProperty                            = "wishlisted"
+	OwnedProperty                                 = "owned"
+	ProductTypeProperty                           = "product-type"
+	InDevelopmentProperty                         = "in-development"
+	PreOrderProperty                              = "pre-order"
+	ComingSoonProperty                            = "coming-soon"
+	BasePriceProperty                             = "base-price"
+	PriceProperty                                 = "price"
+	IsFreeProperty                                = "is-free"
+	IsDiscountedProperty                          = "is-discounted"
+	DiscountPercentageProperty                    = "discount-percentage"
+	SteamAppIdProperty                            = "steam-app-id"
+	LocalTagsProperty                             = "local-tags"
+	SortProperty                                  = "sort"
+	DescendingProperty                            = "desc"
+	SteamReviewScoreDescProperty                  = "steam-review-score-desc"
+	SteamTagsProperty                             = "steam-tags"
+	SteamDeckAppCompatibilityCategoryProperty     = "steam-deck-app-compatibility-category"
+	SteamDeckAppCompatibilityResultsProperty      = "steam-deck-app-compatibility-results"
+	SteamDeckAppCompatibilityDisplayTypesProperty = "steam-deck-app-compatibility-display-types"
+	SteamDeckAppCompatibilityBlogUrlProperty      = "steam-deck-app-compatibility-blog-url"
+	DehydratedImageProperty                       = "dehydrated-image"
+	DehydratedImageModifiedProperty               = "dehydrated-image-modified"
+	DehydratedVerticalImageProperty               = "dehydrated-vertical-image"
+	DehydratedVerticalImageModifiedProperty       = "dehydrated-vertical-image-modified"
+	SyncEventsProperty                            = "sync-events"
+	LastSyncUpdatesProperty                       = "last-sync-updates"
+	ValidationResultProperty                      = "validation-result"
+	ValidationCompletedProperty                   = "validation-completed"
+	PCGWPageIdProperty                            = "pcgw-page-id"
+	HLTBIdProperty                                = "hltb-id"
+	HLTBBuildIdProperty                           = "hltb-next-build"
+	HLTBHoursToCompleteMainProperty               = "hltb-comp-main"
+	HLTBHoursToCompletePlusProperty               = "hltb-comp-plus"
+	HLTBHoursToComplete100Property                = "hltb-comp-100"
+	HLTBReviewScoreProperty                       = "hltb-review-score"
+	HLTBGenresProperty                            = "hltb-genres"
+	HLTBPlatformsProperty                         = "hltb-platforms"
+	IGDBIdProperty                                = "igdb-id"
+	StrategyWikiIdProperty                        = "strategy-wiki-id"
+	MobyGamesIdProperty                           = "moby-games-id"
+	WikipediaIdProperty                           = "wikipedia-id"
+	WineHQIdProperty                              = "winehq-id"
+	VNDBIdProperty                                = "vndb-id"
+	IGNWikiSlugProperty                           = "ign-wiki-slug"
+	EnginesProperty                               = "engines"
+	EnginesBuildsProperty                         = "engines-builds"
+	ProtonDBTierProperty                          = "protondb-tier"
+	ProtonDBConfidenceProperty                    = "protondb-confidence"
 
 	// property values
 	TrueValue  = "true"
@@ -243,6 +246,9 @@ func ExternalDataSourcesProperties() []string {
 		SteamReviewScoreDescProperty,
 		SteamTagsProperty,
 		SteamDeckAppCompatibilityCategoryProperty,
+		SteamDeckAppCompatibilityResultsProperty,
+		SteamDeckAppCompatibilityDisplayTypesProperty,
+		SteamDeckAppCompatibilityBlogUrlProperty,
 		PCGWPageIdProperty,
 		HLTBIdProperty,
 		HLTBBuildIdProperty,
@@ -439,6 +445,9 @@ var supportedProperties = map[ProductType][]string{
 	},
 	SteamDeckCompatibilityReport: {
 		SteamDeckAppCompatibilityCategoryProperty,
+		SteamDeckAppCompatibilityResultsProperty,
+		SteamDeckAppCompatibilityDisplayTypesProperty,
+		SteamDeckAppCompatibilityBlogUrlProperty,
 	},
 	PCGWPageId: {
 		PCGWPageIdProperty,
@@ -671,6 +680,18 @@ func getPropertyValues(value interface{}, property string) []string {
 	case SteamDeckAppCompatibilityCategoryProperty:
 		if dacr, ok := value.(fmt.Stringer); ok {
 			return getSlice(dacr.String)
+		}
+	case SteamDeckAppCompatibilityResultsProperty:
+		if dacr, ok := value.(steam_integration.ResultsGetter); ok {
+			return dacr.GetResults()
+		}
+	case SteamDeckAppCompatibilityDisplayTypesProperty:
+		if dacr, ok := value.(steam_integration.DisplayTypesGetter); ok {
+			return dacr.GetDisplayTypes()
+		}
+	case SteamDeckAppCompatibilityBlogUrlProperty:
+		if dacr, ok := value.(steam_integration.BlogUrlGetter); ok {
+			return getSlice(dacr.GetBlogUrl)
 		}
 	case StoreTagsProperty:
 		return value.(gog_integration.StoreTagsGetter).GetStoreTags()

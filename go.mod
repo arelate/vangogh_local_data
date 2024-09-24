@@ -3,7 +3,7 @@ module github.com/arelate/vangogh_local_data
 go 1.23.0
 
 require (
-	github.com/arelate/southern_light v0.1.48
+	github.com/arelate/southern_light v0.1.49
 	github.com/boggydigital/kevlar v0.5.19
 	github.com/boggydigital/nod v0.1.21
 	github.com/boggydigital/pathways v0.1.14

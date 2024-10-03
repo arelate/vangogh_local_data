@@ -38,22 +38,6 @@ func LocalImageIds() (map[string]bool, error) {
 	return walkFiles(idp, filenameAsId)
 }
 
-func LocalVideoIds() (map[string]bool, error) {
-	vdp, err := pathways.GetAbsDir(Videos)
-	if err != nil {
-		return nil, err
-	}
-	return walkFiles(vdp, filenameAsId)
-}
-
-func LocalVideoThumbnailIds() (map[string]bool, error) {
-	vtdp, err := pathways.GetAbsRelDir(VideoThumbnails)
-	if err != nil {
-		return nil, err
-	}
-	return walkFiles(vtdp, filenameAsId)
-}
-
 func RecycleBinDirs() (map[string]bool, error) {
 	rbdp, err := pathways.GetAbsDir(RecycleBin)
 	if err != nil {

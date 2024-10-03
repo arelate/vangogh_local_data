@@ -15,7 +15,6 @@ const (
 	Input      pathways.AbsDir = "input"
 	Output     pathways.AbsDir = "output"
 	Images     pathways.AbsDir = "images"
-	Videos     pathways.AbsDir = "videos"
 	Items      pathways.AbsDir = "items"
 	Downloads  pathways.AbsDir = "downloads"
 	RecycleBin pathways.AbsDir = "recycle_bin"
@@ -28,7 +27,6 @@ var AllAbsDirs = []pathways.AbsDir{
 	Input,
 	Output,
 	Images,
-	Videos,
 	Items,
 	Downloads,
 	RecycleBin,
@@ -36,35 +34,17 @@ var AllAbsDirs = []pathways.AbsDir{
 }
 
 const (
-	Redux           pathways.RelDir = "_redux"
-	Checksums       pathways.RelDir = "_checksums"
-	DLCs            pathways.RelDir = "dlc"
-	Extras          pathways.RelDir = "extras"
-	VideoThumbnails pathways.RelDir = "_thumbnails"
+	Redux     pathways.RelDir = "_redux"
+	Checksums pathways.RelDir = "_checksums"
+	DLCs      pathways.RelDir = "dlc"
+	Extras    pathways.RelDir = "extras"
 )
 
 var RelToAbsDirs = map[pathways.RelDir]pathways.AbsDir{
-	Redux:           Metadata,
-	Checksums:       Downloads,
-	DLCs:            Downloads,
-	Extras:          Downloads,
-	VideoThumbnails: Videos,
-}
-
-func AbsVideoDirByVideoId(videoId string) (string, error) {
-	if videoId == "" || len(videoId) < 1 {
-		return "", fmt.Errorf("videoId cannot be empty")
-	}
-	vdp, err := pathways.GetAbsDir(Videos)
-	return filepath.Join(vdp, strings.ToLower(videoId[0:1])), err
-}
-
-func AbsVideoThumbnailsDirByVideoId(videoId string) (string, error) {
-	if videoId == "" || len(videoId) < 1 {
-		return "", fmt.Errorf("videoId cannot be empty")
-	}
-	vdp, err := pathways.GetAbsRelDir(VideoThumbnails)
-	return filepath.Join(vdp, strings.ToLower(videoId[0:1])), err
+	Redux:     Metadata,
+	Checksums: Downloads,
+	DLCs:      Downloads,
+	Extras:    Downloads,
 }
 
 func AbsImagesDirByImageId(imageId string) (string, error) {

@@ -175,9 +175,11 @@ func AllTextProperties() []string {
 	)
 }
 
-func VideoIdProperties() []string {
+func VideoProperties() []string {
 	return []string{
 		VideoIdProperty,
+		VideoTitleProperty,
+		VideoDurationProperty,
 		MissingVideoUrlProperty,
 	}
 }
@@ -290,7 +292,7 @@ func ValidationProperties() []string {
 func ReduxProperties() []string {
 	all := TextProperties()
 	all = append(all, AllTextProperties()...)
-	all = append(all, VideoIdProperties()...)
+	all = append(all, VideoProperties()...)
 	all = append(all, ComputedProperties()...)
 	all = append(all, ImageIdProperties()...)
 	all = append(all, DehydratedImagesProperties()...)

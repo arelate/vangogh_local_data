@@ -34,8 +34,7 @@ const (
 	VideoIdProperty                           = "video-id"
 	VideoTitleProperty                        = "video-title"
 	VideoDurationProperty                     = "video-duration"
-	MissingVideoUrlProperty                   = "missing-video-url"
-	MissingVideoThumbnailProperty             = "missing-video-thumbnail"
+	VideoErrorProperty                        = "video-error"
 	OperatingSystemsProperty                  = "os"
 	LanguageCodeProperty                      = "lang-code"
 	LanguageNameProperty                      = "lang-name"
@@ -180,7 +179,7 @@ func VideoProperties() []string {
 		VideoIdProperty,
 		VideoTitleProperty,
 		VideoDurationProperty,
-		MissingVideoUrlProperty,
+		VideoErrorProperty,
 	}
 }
 
@@ -321,7 +320,6 @@ func DigestibleProperties() []string {
 		TagIdProperty,
 		LanguageCodeProperty,
 		OperatingSystemsProperty,
-		MissingVideoUrlProperty,
 		SteamReviewScoreDescProperty,
 		SteamTagsProperty,
 		SteamDeckAppCompatibilityCategoryProperty,

@@ -8,6 +8,8 @@ github.com/arelate/southern_light v0.1.49 h1:IWwa1s9rTjSITcPkDwKHR0nsIVKKPW+Y5UA
 github.com/arelate/southern_light v0.1.49/go.mod h1:IR7j2+TrHdoNfZrTNeXOvL3UYsotcNED3aOAEpm7VCY=
 github.com/arelate/southern_light v0.1.50 h1:ED0PHmUqCJU55eaaGQ/1rduoXjSIysv6HS8Wk9ZPr0w=
 github.com/arelate/southern_light v0.1.50/go.mod h1:IR7j2+TrHdoNfZrTNeXOvL3UYsotcNED3aOAEpm7VCY=
+github.com/arelate/southern_light v0.1.51 h1:psjmTcMw2SZFxsUm2SKDNo6lrB5j/V3raHZ1DVQCGSI=
+github.com/arelate/southern_light v0.1.51/go.mod h1:IR7j2+TrHdoNfZrTNeXOvL3UYsotcNED3aOAEpm7VCY=
 github.com/boggydigital/busan v0.1.0 h1:mUpe4b3vdt9Kcf4Z/C2YSuX5L7ru+J/iZW+IcSfW0cM=
 github.com/boggydigital/busan v0.1.0/go.mod h1:0IjeMKwqaO94r8f28at/2UHhqV2FAN6ufFaLEbur/YU=
 github.com/boggydigital/kevlar v0.5.15 h1:4peRYGWuGwuaEoHp1qKM0/I0gkDFW9Fz2L5PO768Uok=

@@ -76,6 +76,8 @@ const (
 	DehydratedImageModifiedProperty           = "dehydrated-image-modified"
 	DehydratedVerticalImageProperty           = "dehydrated-vertical-image"
 	DehydratedVerticalImageModifiedProperty   = "dehydrated-vertical-image-modified"
+	RepImageColorProperty                     = "rep-image-color"
+	RepVerticalImageColorProperty             = "rep-vertical-image-color"
 	SyncEventsProperty                        = "sync-events"
 	LastSyncUpdatesProperty                   = "last-sync-updates"
 	ValidationResultProperty                  = "validation-result"
@@ -265,6 +267,8 @@ func DehydratedImagesProperties() []string {
 	return []string{
 		DehydratedImageProperty,
 		DehydratedVerticalImageProperty,
+		RepImageColorProperty,
+		RepVerticalImageColorProperty,
 	}
 }
 

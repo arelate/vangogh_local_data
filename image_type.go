@@ -93,7 +93,7 @@ func ImageTypeDehydratedModifiedProperty(it ImageType) string {
 	return ""
 }
 
-func RepColorImageProperty(it ImageType) string {
+func ImageTypeRepColorProperty(it ImageType) string {
 	if rcip, ok := repColorImageProperties[it]; ok {
 		return rcip
 	}

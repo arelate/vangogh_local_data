@@ -9,6 +9,7 @@ type DownloadMetadata struct {
 
 type DownloadLink struct {
 	ManualUrl      string `json:"manual-url"`
+	Name           string `json:"name"`
 	LocalFilename  string `json:"local-filename"`
 	Md5            string `json:"md5"`
 	OS             string `json:"os"`

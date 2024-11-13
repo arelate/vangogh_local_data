@@ -42,7 +42,7 @@ func AbsLocalChecksumPath(p string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	cdp, err := pathways.GetAbsRelDir(Checksums)
+	cdp, err := pathways.GetAbsDir(Checksums)
 	if err != nil {
 		return "", err
 	}

@@ -30,6 +30,7 @@ var AllAbsDirs = []pathways.AbsDir{
 	Images,
 	Items,
 	Downloads,
+	Checksums,
 	RecycleBin,
 	Logs,
 }

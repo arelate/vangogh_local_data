@@ -7,6 +7,17 @@ import (
 	"time"
 )
 
+const (
+	imageTypeParam       = "image-type"
+	operatingSystemParam = OperatingSystemsProperty
+	downloadTypeParam    = "download-type"
+	productTypeParam     = ProductTypeProperty
+	idParam              = IdProperty
+	slugParam            = SlugProperty
+	propertyParam        = "property"
+	sinceHoursAgoParam   = "since-hours-ago"
+)
+
 func ValueFromUrl(u *url.URL, arg string) string {
 	if u == nil {
 		return ""
@@ -39,15 +50,15 @@ func FlagFromUrl(u *url.URL, arg string) bool {
 }
 
 func PropertyFromUrl(u *url.URL) string {
-	return ValueFromUrl(u, "property")
+	return ValueFromUrl(u, propertyParam)
 }
 
 func PropertiesFromUrl(u *url.URL) []string {
-	return ValuesFromUrl(u, "property")
+	return ValuesFromUrl(u, propertyParam)
 }
 
 func ImageTypesFromUrl(u *url.URL) []ImageType {
-	imageTypes := ValuesFromUrl(u, "image-type")
+	imageTypes := ValuesFromUrl(u, imageTypeParam)
 	its := make([]ImageType, 0, len(imageTypes))
 	for _, imageType := range imageTypes {
 		its = append(its, ParseImageType(imageType))
@@ -56,27 +67,27 @@ func ImageTypesFromUrl(u *url.URL) []ImageType {
 }
 
 func ProductTypeFromUrl(u *url.URL) ProductType {
-	return ParseProductType(ValueFromUrl(u, "product-type"))
+	return ParseProductType(ValueFromUrl(u, productTypeParam))
 }
 
 func OperatingSystemsFromUrl(u *url.URL) []OperatingSystem {
-	osStrings := ValuesFromUrl(u, "operating-system")
+	osStrings := ValuesFromUrl(u, operatingSystemParam)
 	return ParseManyOperatingSystems(osStrings)
 }
 
 func DownloadTypesFromUrl(u *url.URL) []DownloadType {
-	dtStrings := ValuesFromUrl(u, "download-type")
+	dtStrings := ValuesFromUrl(u, downloadTypeParam)
 	return ParseManyDownloadTypes(dtStrings)
 }
 
 func IdSetFromUrl(u *url.URL) (map[string]bool, error) {
 
 	idSet := make(map[string]bool)
-	for _, id := range ValuesFromUrl(u, "id") {
+	for _, id := range ValuesFromUrl(u, idParam) {
 		idSet[id] = true
 	}
 
-	slugs := ValuesFromUrl(u, "slug")
+	slugs := ValuesFromUrl(u, slugParam)
 
 	slugIds, err := idSetFromSlugs(slugs, nil)
 	if err != nil {
@@ -90,7 +101,7 @@ func IdSetFromUrl(u *url.URL) (map[string]bool, error) {
 }
 
 func SinceFromUrl(u *url.URL) (int64, error) {
-	str := ValueFromUrl(u, "since-hours-ago")
+	str := ValueFromUrl(u, sinceHoursAgoParam)
 	var sha int
 	var err error
 	if str != "" {

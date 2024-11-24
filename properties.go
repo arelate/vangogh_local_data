@@ -37,6 +37,7 @@ const (
 	VideoErrorProperty                        = "video-error"
 	OperatingSystemsProperty                  = "os"
 	LanguageCodeProperty                      = "lang-code"
+	DownloadTypeProperty                      = "download-type"
 	LanguageNameProperty                      = "lang-name"
 	NativeLanguageNameProperty                = "native-lang-name"
 	SlugProperty                              = "slug"

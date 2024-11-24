@@ -1,6 +1,7 @@
 package vangogh_local_data
 
 import (
+	"errors"
 	"fmt"
 	"github.com/boggydigital/kevlar"
 	"golang.org/x/exp/maps"
@@ -13,32 +14,33 @@ const (
 	DefaultDesc = false
 )
 
-func idSetFromSlugs(slugs []string, rdx kevlar.ReadableRedux) (map[string]bool, error) {
+func idsFromSlugs(slugs []string, rdx kevlar.ReadableRedux) ([]string, error) {
 
 	var err error
 	if rdx == nil && len(slugs) > 0 {
 		rdx, err = NewReduxReader(SlugProperty)
 		if err != nil {
-			return map[string]bool{}, err
+			return nil, err
 		}
 	}
 
-	if rdx != nil {
-		if err := rdx.MustHave(SlugProperty); err != nil {
-			return map[string]bool{}, err
-		}
+	if rdx == nil {
+		return nil, errors.New("converting slugs to ids requires redux")
 	}
 
-	idSet := make(map[string]bool)
+	if err := rdx.MustHave(SlugProperty); err != nil {
+		return nil, err
+	}
+
+	var ids []string
 	for _, slug := range slugs {
-		if slug != "" && rdx != nil {
-			for _, id := range rdx.Match(map[string][]string{SlugProperty: {slug}}, kevlar.FullMatch) {
-				idSet[id] = true
-			}
+		if slug != "" {
+			matchedIds := rdx.Match(map[string][]string{SlugProperty: {slug}}, kevlar.FullMatch)
+			ids = append(ids, matchedIds...)
 		}
 	}
 
-	return idSet, nil
+	return ids, nil
 }
 
 func PropertyListsFromIdSet(
@@ -107,15 +109,6 @@ func propertyListFromId(
 			continue
 		}
 		filterValues := propertyFilter[prop]
-
-		//if len(values) > 1 && IsPropertiesJoinPreferred(prop) {
-		//	joinedValue := strings.Join(values, ",")
-		//	if isPropertyValueFiltered(joinedValue, filterValues) {
-		//		continue
-		//	}
-		//	itp[idTitle] = append(itp[idTitle], fmt.Sprintf("%s:%s", prop, joinedValue))
-		//	continue
-		//}
 
 		for _, val := range values {
 			if isPropertyValueFiltered(val, filterValues) {

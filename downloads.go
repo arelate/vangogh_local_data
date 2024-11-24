@@ -241,7 +241,7 @@ type DownloadsListProcessor interface {
 }
 
 func MapDownloads(
-	idSet map[string]bool,
+	ids []string,
 	rdx kevlar.ReadableRedux,
 	operatingSystems []OperatingSystem,
 	downloadTypes []DownloadType,
@@ -265,9 +265,9 @@ func MapDownloads(
 		return err
 	}
 
-	tpw.TotalInt(len(idSet))
+	tpw.TotalInt(len(ids))
 
-	for id := range idSet {
+	for _, id := range ids {
 
 		detSlug, ok := rdx.GetLastVal(SlugProperty, id)
 

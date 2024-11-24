@@ -80,24 +80,19 @@ func DownloadTypesFromUrl(u *url.URL) []DownloadType {
 	return ParseManyDownloadTypes(dtStrings)
 }
 
-func IdSetFromUrl(u *url.URL) (map[string]bool, error) {
+func IdsFromUrl(u *url.URL) ([]string, error) {
 
-	idSet := make(map[string]bool)
-	for _, id := range ValuesFromUrl(u, idParam) {
-		idSet[id] = true
+	ids := ValuesFromUrl(u, idParam)
+
+	if slugs := ValuesFromUrl(u, slugParam); len(slugs) > 0 {
+		slugIds, err := idsFromSlugs(slugs, nil)
+		if err != nil {
+			return nil, err
+		}
+		ids = append(ids, slugIds...)
 	}
 
-	slugs := ValuesFromUrl(u, slugParam)
-
-	slugIds, err := idSetFromSlugs(slugs, nil)
-	if err != nil {
-		return idSet, err
-	}
-	for id := range slugIds {
-		idSet[id] = true
-	}
-
-	return idSet, err
+	return ids, nil
 }
 
 func SinceFromUrl(u *url.URL) (int64, error) {

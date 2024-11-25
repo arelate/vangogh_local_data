@@ -81,28 +81,29 @@ const (
 	RepVerticalImageColorProperty             = "rep-vertical-image-color"
 	SyncEventsProperty                        = "sync-events"
 	LastSyncUpdatesProperty                   = "last-sync-updates"
-	ValidationResultProperty                  = "validation-result"
-	ValidationCompletedProperty               = "validation-completed"
-	PCGWPageIdProperty                        = "pcgw-page-id"
-	HLTBIdProperty                            = "hltb-id"
-	HLTBBuildIdProperty                       = "hltb-next-build"
-	HLTBHoursToCompleteMainProperty           = "hltb-comp-main"
-	HLTBHoursToCompletePlusProperty           = "hltb-comp-plus"
-	HLTBHoursToComplete100Property            = "hltb-comp-100"
-	HLTBReviewScoreProperty                   = "hltb-review-score"
-	HLTBGenresProperty                        = "hltb-genres"
-	HLTBPlatformsProperty                     = "hltb-platforms"
-	IGDBIdProperty                            = "igdb-id"
-	StrategyWikiIdProperty                    = "strategy-wiki-id"
-	MobyGamesIdProperty                       = "moby-games-id"
-	WikipediaIdProperty                       = "wikipedia-id"
-	WineHQIdProperty                          = "winehq-id"
-	VNDBIdProperty                            = "vndb-id"
-	IGNWikiSlugProperty                       = "ign-wiki-slug"
-	EnginesProperty                           = "engines"
-	EnginesBuildsProperty                     = "engines-builds"
-	ProtonDBTierProperty                      = "protondb-tier"
-	ProtonDBConfidenceProperty                = "protondb-confidence"
+	//ValidationResultProperty                  = "validation-result"
+	//ValidationCompletedProperty               = "validation-completed"
+	ManualUrlStatusProperty         = "manual-url-status"
+	PCGWPageIdProperty              = "pcgw-page-id"
+	HLTBIdProperty                  = "hltb-id"
+	HLTBBuildIdProperty             = "hltb-next-build"
+	HLTBHoursToCompleteMainProperty = "hltb-comp-main"
+	HLTBHoursToCompletePlusProperty = "hltb-comp-plus"
+	HLTBHoursToComplete100Property  = "hltb-comp-100"
+	HLTBReviewScoreProperty         = "hltb-review-score"
+	HLTBGenresProperty              = "hltb-genres"
+	HLTBPlatformsProperty           = "hltb-platforms"
+	IGDBIdProperty                  = "igdb-id"
+	StrategyWikiIdProperty          = "strategy-wiki-id"
+	MobyGamesIdProperty             = "moby-games-id"
+	WikipediaIdProperty             = "wikipedia-id"
+	WineHQIdProperty                = "winehq-id"
+	VNDBIdProperty                  = "vndb-id"
+	IGNWikiSlugProperty             = "ign-wiki-slug"
+	EnginesProperty                 = "engines"
+	EnginesBuildsProperty           = "engines-builds"
+	ProtonDBTierProperty            = "protondb-tier"
+	ProtonDBConfidenceProperty      = "protondb-confidence"
 
 	// property values
 	TrueValue  = "true"
@@ -283,15 +284,16 @@ func SyncProperties() []string {
 func DownloadProperties() []string {
 	return []string{
 		LocalManualUrlProperty,
+		ManualUrlStatusProperty,
 	}
 }
 
-func ValidationProperties() []string {
-	return []string{
-		ValidationResultProperty,
-		ValidationCompletedProperty,
-	}
-}
+//func ValidationProperties() []string {
+//	return []string{
+//		ValidationResultProperty,
+//		ValidationCompletedProperty,
+//	}
+//}
 
 func ReduxProperties() []string {
 	all := TextProperties()
@@ -309,7 +311,7 @@ func ReduxProperties() []string {
 	all = append(all, ExternalDataSourcesProperties()...)
 	all = append(all, SyncProperties()...)
 	all = append(all, DownloadProperties()...)
-	all = append(all, ValidationProperties()...)
+	//all = append(all, ValidationProperties()...)
 	all = append(all, EnginesProperties()...)
 	return all
 }

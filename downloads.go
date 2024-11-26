@@ -168,8 +168,8 @@ func convertGameDetails(det *gog_integration.Details, rdx kevlar.ReadableRedux, 
 
 func (list DownloadsList) Only(
 	operatingSystems []OperatingSystem,
-	downloadTypes []DownloadType,
 	langCodes []string,
+	downloadTypes []DownloadType,
 	excludePatches bool) DownloadsList {
 	osSet := make(map[OperatingSystem]bool)
 	for _, os := range operatingSystems {
@@ -244,8 +244,8 @@ func MapDownloads(
 	ids []string,
 	rdx kevlar.ReadableRedux,
 	operatingSystems []OperatingSystem,
-	downloadTypes []DownloadType,
 	langCodes []string,
+	downloadTypes []DownloadType,
 	excludePatches bool,
 	dlProcessor DownloadsListProcessor,
 	tpw nod.TotalProgressWriter) error {
@@ -293,7 +293,7 @@ func MapDownloads(
 
 		filteredDownloads := make([]Download, 0)
 
-		for _, dl := range downloads.Only(operatingSystems, downloadTypes, langCodes, excludePatches) {
+		for _, dl := range downloads.Only(operatingSystems, langCodes, downloadTypes, excludePatches) {
 			//some manualUrls have "0 MB" specified as size and don't seem to be used to create user clickable links.
 			//resolving such manualUrls leads to an empty filename
 			//given they don't contribute anything to download, size or validate commands - we're filtering them

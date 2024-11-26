@@ -33,10 +33,10 @@ func RemoteChecksumPath(p string) string {
 }
 
 func AbsLocalChecksumPath(p string) (string, error) {
-	ext := path.Ext(p)
-	if !validatedExtensions[ext] {
-		return "", nil
-	}
+	//ext := path.Ext(p)
+	//if !validatedExtensions[ext] {
+	//	return "", nil
+	//}
 	dir, filename := path.Split(p)
 	adp, err := pathways.GetAbsDir(Downloads)
 	if err != nil {

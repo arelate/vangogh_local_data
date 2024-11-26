@@ -3,6 +3,7 @@ package vangogh_local_data
 import (
 	"fmt"
 	"github.com/boggydigital/nod"
+	"strconv"
 	"strings"
 )
 
@@ -10,7 +11,8 @@ func PrintParams(
 	ids []string,
 	operatingSystems []OperatingSystem,
 	langCodes []string,
-	downloadTypes []DownloadType) {
+	downloadTypes []DownloadType,
+	noPatches bool) {
 
 	ppa := nod.Begin("operating parameters:")
 	defer ppa.End()
@@ -32,6 +34,8 @@ func PrintParams(
 	for _, dt := range downloadTypes {
 		params[DownloadTypeProperty] = append(params[DownloadTypeProperty], dt.String())
 	}
+
+	params[NoPatchesProperty] = append(params[NoPatchesProperty], strconv.FormatBool(noPatches))
 
 	pvs := make([]string, 0, len(params))
 	for _, p := range []string{

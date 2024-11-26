@@ -38,6 +38,7 @@ const (
 	OperatingSystemsProperty                  = "os"
 	LanguageCodeProperty                      = "lang-code"
 	DownloadTypeProperty                      = "download-type"
+	NoPatchesProperty                         = "no-patches"
 	LanguageNameProperty                      = "lang-name"
 	NativeLanguageNameProperty                = "native-lang-name"
 	SlugProperty                              = "slug"
@@ -46,6 +47,9 @@ const (
 	GlobalReleaseDateProperty                 = "global-release-date"
 	TypesProperty                             = "types"
 	LocalManualUrlProperty                    = "local-manual-url"
+	ManualUrlStatusProperty                   = "manual-url-status"
+	ManualUrlValidationResultProperty         = "manual-url-validation-result"
+	ManualUrlGeneratedChecksumProperty        = "manual-url-generated-checksum"
 	DownloadStatusErrorProperty               = "download-status-error"
 	StoreUrlProperty                          = "store-url"
 	ForumUrlProperty                          = "forum-url"
@@ -81,34 +85,30 @@ const (
 	RepVerticalImageColorProperty             = "rep-vertical-image-color"
 	SyncEventsProperty                        = "sync-events"
 	LastSyncUpdatesProperty                   = "last-sync-updates"
-	//ValidationResultProperty                  = "validation-result"
-	//ValidationCompletedProperty               = "validation-completed"
-	ManualUrlStatusProperty         = "manual-url-status"
-	PCGWPageIdProperty              = "pcgw-page-id"
-	HLTBIdProperty                  = "hltb-id"
-	HLTBBuildIdProperty             = "hltb-next-build"
-	HLTBHoursToCompleteMainProperty = "hltb-comp-main"
-	HLTBHoursToCompletePlusProperty = "hltb-comp-plus"
-	HLTBHoursToComplete100Property  = "hltb-comp-100"
-	HLTBReviewScoreProperty         = "hltb-review-score"
-	HLTBGenresProperty              = "hltb-genres"
-	HLTBPlatformsProperty           = "hltb-platforms"
-	IGDBIdProperty                  = "igdb-id"
-	StrategyWikiIdProperty          = "strategy-wiki-id"
-	MobyGamesIdProperty             = "moby-games-id"
-	WikipediaIdProperty             = "wikipedia-id"
-	WineHQIdProperty                = "winehq-id"
-	VNDBIdProperty                  = "vndb-id"
-	IGNWikiSlugProperty             = "ign-wiki-slug"
-	EnginesProperty                 = "engines"
-	EnginesBuildsProperty           = "engines-builds"
-	ProtonDBTierProperty            = "protondb-tier"
-	ProtonDBConfidenceProperty      = "protondb-confidence"
+	PCGWPageIdProperty                        = "pcgw-page-id"
+	HLTBIdProperty                            = "hltb-id"
+	HLTBBuildIdProperty                       = "hltb-next-build"
+	HLTBHoursToCompleteMainProperty           = "hltb-comp-main"
+	HLTBHoursToCompletePlusProperty           = "hltb-comp-plus"
+	HLTBHoursToComplete100Property            = "hltb-comp-100"
+	HLTBReviewScoreProperty                   = "hltb-review-score"
+	HLTBGenresProperty                        = "hltb-genres"
+	HLTBPlatformsProperty                     = "hltb-platforms"
+	IGDBIdProperty                            = "igdb-id"
+	StrategyWikiIdProperty                    = "strategy-wiki-id"
+	MobyGamesIdProperty                       = "moby-games-id"
+	WikipediaIdProperty                       = "wikipedia-id"
+	WineHQIdProperty                          = "winehq-id"
+	VNDBIdProperty                            = "vndb-id"
+	IGNWikiSlugProperty                       = "ign-wiki-slug"
+	EnginesProperty                           = "engines"
+	EnginesBuildsProperty                     = "engines-builds"
+	ProtonDBTierProperty                      = "protondb-tier"
+	ProtonDBConfidenceProperty                = "protondb-confidence"
 
 	// property values
 	TrueValue  = "true"
 	FalseValue = "false"
-	OKValue    = "OK"
 )
 
 func AllProperties() []string {
@@ -281,19 +281,14 @@ func SyncProperties() []string {
 	}
 }
 
-func DownloadProperties() []string {
+func ManualUrlProperties() []string {
 	return []string{
 		LocalManualUrlProperty,
 		ManualUrlStatusProperty,
+		ManualUrlValidationResultProperty,
+		ManualUrlGeneratedChecksumProperty,
 	}
 }
-
-//func ValidationProperties() []string {
-//	return []string{
-//		ValidationResultProperty,
-//		ValidationCompletedProperty,
-//	}
-//}
 
 func ReduxProperties() []string {
 	all := TextProperties()
@@ -310,8 +305,7 @@ func ReduxProperties() []string {
 	all = append(all, PriceProperties()...)
 	all = append(all, ExternalDataSourcesProperties()...)
 	all = append(all, SyncProperties()...)
-	all = append(all, DownloadProperties()...)
-	//all = append(all, ValidationProperties()...)
+	all = append(all, ManualUrlProperties()...)
 	all = append(all, EnginesProperties()...)
 	return all
 }
@@ -448,9 +442,6 @@ var supportedProperties = map[ProductType][]string{
 	},
 	SteamDeckCompatibilityReport: {
 		SteamDeckAppCompatibilityCategoryProperty,
-		//SteamDeckAppCompatibilityResultsProperty,
-		//SteamDeckAppCompatibilityDisplayTypesProperty,
-		//SteamDeckAppCompatibilityBlogUrlProperty,
 	},
 	PCGWPageId: {
 		PCGWPageIdProperty,

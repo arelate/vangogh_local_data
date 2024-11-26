@@ -8,13 +8,15 @@ type DownloadMetadata struct {
 }
 
 type DownloadLink struct {
-	ManualUrl      string `json:"manual-url"`
-	Name           string `json:"name"`
-	LocalFilename  string `json:"local-filename"`
-	Md5            string `json:"md5"`
-	OS             string `json:"os"`
-	Type           string `json:"type"`
-	LanguageCode   string `json:"language-code"`
-	Version        string `json:"version"`
-	EstimatedBytes int    `json:"estimated-bytes"`
+	ManualUrl        string `json:"manual-url"`
+	Name             string `json:"name"`
+	Status           string `json:"status"`
+	ValidationResult string `json:"validation-result"`
+	LocalFilename    string `json:"local-filename"`
+	Md5              string `json:"md5"`
+	OS               string `json:"os"`
+	Type             string `json:"type"`
+	LanguageCode     string `json:"language-code"`
+	Version          string `json:"version"`
+	EstimatedBytes   int    `json:"estimated-bytes"`
 }

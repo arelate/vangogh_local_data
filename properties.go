@@ -49,6 +49,7 @@ const (
 	LocalManualUrlProperty                    = "local-manual-url"
 	ManualUrlStatusProperty                   = "manual-url-status"
 	ManualUrlValidationResultProperty         = "manual-url-validation-result"
+	ProductValidationResultProperty           = "product-validation-result"
 	ManualUrlGeneratedChecksumProperty        = "manual-url-generated-checksum"
 	DownloadStatusErrorProperty               = "download-status-error"
 	StoreUrlProperty                          = "store-url"
@@ -281,12 +282,13 @@ func SyncProperties() []string {
 	}
 }
 
-func ManualUrlProperties() []string {
+func StatusValidationResultsProperties() []string {
 	return []string{
 		LocalManualUrlProperty,
 		ManualUrlStatusProperty,
 		ManualUrlValidationResultProperty,
 		ManualUrlGeneratedChecksumProperty,
+		ProductValidationResultProperty,
 	}
 }
 
@@ -305,7 +307,7 @@ func ReduxProperties() []string {
 	all = append(all, PriceProperties()...)
 	all = append(all, ExternalDataSourcesProperties()...)
 	all = append(all, SyncProperties()...)
-	all = append(all, ManualUrlProperties()...)
+	all = append(all, StatusValidationResultsProperties()...)
 	all = append(all, EnginesProperties()...)
 	return all
 }
